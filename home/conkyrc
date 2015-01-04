@@ -1,0 +1,88 @@
+background yes
+use_xft yes
+xftfont DejaVu Sans Mono:size=12
+xftalpha 0.1
+update_interval 0.5
+total_run_times 0
+own_window yes
+own_window_class Conky
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 250 5
+maximum_width 400
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+default_color gray
+default_shade_color red
+default_outline_color green
+alignment top_left
+gap_x 1930
+gap_y 10
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+net_avg_samples 1
+override_utf8_locale no
+use_spacer right
+
+TEXT
+
+$alignc${font openlogos:size=20}U${font Arial:size=20}${color Tan1}ARCH ${color Ivory}LINUX${font openlogos:size=20}t
+
+${voffset -90}
+${color DimGray}
+${font}
+${font Arial:bold:size=10}${color Tan1}SYSTEM ${color DarkSlateGray} ${hr 2}
+$font${color DimGray}$sysname $kernel $alignr $machine
+Intel I7 $alignr${freq_g cpu0}Ghz
+Uptime $alignr${uptime}
+File System $alignr${fs_type}
+
+${font Arial:bold:size=10}${color Tan1}PROCESSORS ${color DarkSlateGray}${hr 2}
+$font${color DimGray}CPU1  ${cpu cpu1}% ${cpubar cpu1}
+CPU2  ${cpu cpu2}% ${cpubar cpu2}
+
+${font Arial:bold:size=10}${color Tan1}MEMORY ${color DarkSlateGray}${hr 2}
+$font${color DimGray}MEM $alignc $mem / $memmax $alignr $memperc%
+$membar
+
+${font Arial:bold:size=10}${color Tan1}HDD ${color DarkSlateGray}${hr 2}
+$font${color DimGray}/ $alignc ${fs_used /} / ${fs_size /} $alignr ${fs_free_perc /}%
+${fs_bar /}
+$font${color DimGray}/home $alignc ${fs_used /home} / ${fs_size /home} $alignr ${fs_free_perc /home}%
+${fs_bar /home}
+/vista $alignc ${fs_used /mnt/vista} / ${fs_size /mnt/vista} $alignr ${fs_free_perc /mnt/vista}%
+${fs_bar /mnt/vista}
+
+${font Arial:bold:size=10}${color Tan1}TOP PROCESSES ${color DarkSlateGray}${hr 2}
+${color DimGray}$font${top_mem name 2}${alignr}${top mem 2} %
+$font${top_mem name 3}${alignr}${top mem 3} %
+$font${top_mem name 4}${alignr}${top mem 4} %
+$font${top_mem name 5}${alignr}${top mem 5} %
+
+${font Arial:bold:size=10}${color Tan2}NETWORK ${color DarkSlateGray}${hr 2}
+$font${color DimGray}IP on eno1 $alignr ${addr eno1}
+$font${color DimGray}IP on ppp0 $alignr ${addr ppp0}
+
+Down $alignr ${downspeed eno1} kb/s
+Up $alignr ${upspeed eno1} kb/s
+
+Downloaded: $alignr  ${totaldown eno1}
+Uploaded: $alignr  ${totalup eno1}
+
+${font Arial:bold:size=10}${color Tan2}MUSIC ${color DarkSlateGray}${hr 2}
+${color DimGray}$font${if_running audacious}
+${audacious_title 400}
+Bitrate $audacious_bitrate kbits/s
+$audacious_status $audacious_position/$audacious_length
+$audacious_bar
+$endif
+
+${font Arial:bold:size=10}${color Tan2}TIME ${color DarkSlateGray}${hr 2}
+
+${color DarkSlateGray} ${font :size=30}$alignc${time %l:%M %p}
+${voffset -30}${font :bold:size=10}$alignc${time %A, %b. %d %Y}
