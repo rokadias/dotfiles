@@ -1,4 +1,4 @@
-(setq theme-preferences '(flatland twilight))
+(setq theme-preferences '(junio flatland twilight))
 
 (require 'cl)
 

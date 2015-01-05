@@ -7,7 +7,28 @@ mkdir ~/.xmonad/
 ln -s $PWD/xmonad/xmonad.hs ~/.xmonad/
 
 ln -s $PWD/emacs/emacs ~/.emacs
-mkdir ~/.emacs.d
+mkdir -p ~/.emacs.d/srokadia
+ln -s $PWD/emacs/emacs.d/srokadia/bindings.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/csharp.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/custom.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/erc.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/functions.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/generalfunctions.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/global.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/hg.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/haskell.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/html.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/javascript.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/package.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/powershell.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/progmodefunctions.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/shell.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/theme.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/yasnippet.el ~/.emacs.d/srokadia/
+
+ln -s $PWD/emacs/emacs.d/elpa ~/.emacs.d/
+ln -s $PWD/emacs/emacs.d/lisp ~/.emacs.d/
+ln -s $PWD/emacs/emacs.d/plugins ~/.emacs.d/
 
 ln -s $PWD/home/bashrc ~/.bashrc
 ln -s $PWD/home/bash_profile ~/.bash_profile

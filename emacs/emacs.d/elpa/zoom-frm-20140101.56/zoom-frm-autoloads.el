@@ -1,11 +1,10 @@
 ;;; zoom-frm-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (toggle-zoom-frame zoom-frm-unzoom zoom-frm-out
-;;;;;;  zoom-frm-in frame-zoom-font-difference zoom) "zoom-frm" "zoom-frm.el"
-;;;;;;  (21307 47729 874814 462000))
+;;;### (autoloads nil "zoom-frm" "zoom-frm.el" (21673 55157 800212
+;;;;;;  317000))
 ;;; Generated autoloads from zoom-frm.el
 
 (let ((loads (get 'zoom 'custom-loads))) (if (member '"zoom-frm" loads) nil (put 'zoom 'custom-loads (cons '"zoom-frm" loads))))
@@ -51,16 +50,9 @@ Alternately zoom/unzoom FRAME by `frame-zoom-font-difference'.
 
 ;;;***
 
-;;;### (autoloads nil nil ("zoom-frm-pkg.el") (21307 47729 894458
-;;;;;;  894000))
-
-;;;***
-
-(provide 'zoom-frm-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; zoom-frm-autoloads.el ends here
