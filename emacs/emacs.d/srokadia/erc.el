@@ -5,11 +5,11 @@
       erc-interpret-mirc-color t
       erc-modules '(autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands notify readonly ring services sound stamp track)
       erc-auto-query 'bury
-      erc-keywords '("FloRidaBrownBear" "FloRidaBrownBear")
+      erc-keywords '("BrownBear" "BrownBear")
       erc-timestamp-mode t
       erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT" "MODE" "333" "353"))
       erc-track-list-changed-hook '(lambda () (ding t))
-      erc-fill-column 115
+      erc-fill-column 105
       erc-fools '("DevParrot")
       erc-mode-line-format "%n@%t %a"
       erc-fill-function 'erc-fill-static
@@ -23,9 +23,6 @@
       erc-log-write-after-insert t
       erc-enable-logging t
       erc-generate-log-file-name-function 'erc-generate-log-file-name-short)
-
-(set-face-foreground 'erc-timestamp-face "#555555")
-(set-face-foreground 'erc-input-face "#dc8cc3")
 
 (when (package-installed-p 'erc-highlight-nicknames)
  (add-to-list 'erc-modules 'highlight-nicknames)

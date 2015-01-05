@@ -36,3 +36,17 @@
 
 ;; Comparing
 (global-set-key [(control c) (b)] 'ediff-buffers)
+
+;; Find-in-files
+(global-set-key [(control x) (control meta f)] 'find-file-in-repository)
+
+(autoload 'omnisharp-mode "omnisharp-mode" "Minor mode for C# intellisense." t)
+(require 'omnisharp)
+;; omnisharp config
+(define-key omnisharp-mode-map (kbd "C-; C-b") 'omnisharp-go-to-definition)
+(define-key omnisharp-mode-map (kbd "C-; C-k") 'omnisharp-find-usages)
+(define-key omnisharp-mode-map (kbd "C-; C-,") 'omnisharp-navigate-to-solution-file)
+(define-key omnisharp-mode-map (kbd "C-; C-s") 'omnisharp-navigate-to-current-file-member)
+(define-key omnisharp-mode-map (kbd "C-; C-r") 'omnisharp-fix-usings)
+(define-key omnisharp-mode-map (kbd "C-; C-.") 'omnisharp-show-overloads-at-point)
+(define-key omnisharp-mode-map (kbd "C-; C-SPC") 'omnisharp-auto-complete)

@@ -11,7 +11,7 @@
 (dolist (library
          '("package" "generalfunctions" "theme" "global" "bindings"
            "progmodefunctions" "erc" "powershell"
-           "yasnippet" "csharp" "html" "javascript" "hg"))
+           "yasnippet" "csharp" "haskell" "html" "javascript" "hg"))
   (load (concat uid "/" library)))
 
 ;; assume files in the private directory are order-independent, and

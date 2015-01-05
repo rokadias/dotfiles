@@ -55,3 +55,18 @@ If point was already at that position, move point to beginning of line."
 
 (defun exists-in-exec-path (exact-name)
   (not (null (find-in-exec-path exact-name))))
+
+(when (and (package-installed-p 'find-file-in-repository) is-w32)
+  (defun ffir-shell-command (command file-separator working-dir)
+  "Executes 'command' and returns the list of printed files in
+   the form '((short/file/name . full/path/to/file) ...). The
+   'file-separator' character is used to split the file names
+   printed by the shell command and is usually set to \\n or \\0"
+  (let ((command-output (shell-command-to-string
+                         (format "cd %s && %s"
+                                 (shell-quote-argument working-dir) command))))
+    (let ((files (delete "" (split-string command-output file-separator))))
+      (mapcar (lambda (file)
+                (cons file (expand-file-name file working-dir)))
+              files)))))
+  

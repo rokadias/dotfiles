@@ -69,4 +69,5 @@
 (ad-activate 'grep-compute-defaults)
 
 (setq visible-bell t)
-(set-message-beep 'silent)
+(when is-w32
+  (set-message-beep 'silent))

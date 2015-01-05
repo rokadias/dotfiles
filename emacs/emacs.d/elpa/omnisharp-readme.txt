@@ -18,7 +18,9 @@ Work in progress! Judge gently!
 (require 'popup)
 (require 'etags)
 (require 'flycheck)
-(require 'auto-complete)
+
+(add-to-list 'load-path (expand-file-name "./src/"))
+(require 'omnisharp-utils)
 
 (defgroup omnisharp ()
   "Omnisharp-emacs is a port of the awesome OmniSharp server to

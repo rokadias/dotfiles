@@ -114,6 +114,7 @@
   ; Give extra fill space to compensate for namespace nesting.
   (setq fill-column (+ c-basic-offset fill-column))
   (setq tab-width c-basic-offset) ; maintain sanity when encountering tab-ridden code
+  (setq show-trailing-whitespace t)
 
   ; Use xml documentation tags as paragraph separators so filling
   ; works nicely in elements for which multi-line comments are preferred.
@@ -134,8 +135,15 @@
     (when project-file
       (message "Found project file at %s" project-file)
       (set (make-local-variable 'compile-command)
-           (concat "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe /m /v:q /p:GenerateFullPaths=true \"" project-file "\" /p:StyleCop=false /p:BuildProjectReferences=true")))))
+           (if is-w32
+               (concat "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe "
+                       "/m /v:q /p:GenerateFullPaths=true \"" project-file
+                       "\" /p:StyleCop=false /p:BuildProjectReferences=true")
+               (concat "msbuild.sh " project-file))))))
 
 (add-hook 'csharp-mode-hook 'on-csharp-loaded)
 (add-hook 'csharp-mode-hook 'c-set-style-stroustrup)
 (add-hook 'csharp-mode-hook 'comment-fill-mode-hook)
+
+;; (autoload 'omnisharp-mode "omnisharp-mode" "Minor mode for C# intellisense." t)
+;; (add-hook 'csharp-mode-hook 'omnisharp-mode)

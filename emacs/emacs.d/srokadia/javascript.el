@@ -21,6 +21,7 @@
     (local-set-key "\C-c\C-b" 'js-send-buffer-and-go)
     (local-set-key "\C-c\C-r" 'js-send-region)
     (local-set-key "\C-cl" 'js-load-file-and-go))
+  (setq show-trailing-whitespace t)
   (let ((project-file (find-project-file "\.proj$")))
     (when project-file
       (progn (message "Found project file at %s" project-file)
@@ -37,7 +38,7 @@
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
          (append '(("at\\s-*\\([^[:space:]]+\\)\\s-*line\\s-*\\([0-9]+\\)\\s-*:\\s-*\\([0-9]*\\)" 1 2 3))
-                 compilation-error-regexp-alist)))
+                 compilation-error-regexp-alist))))
 
 (add-hook 'js2-mode-hook 'on-javascript-loaded)
 (add-hook 'js2-mode-hook 'comment-fill-mode-hook)
