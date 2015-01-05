@@ -1,9 +1,9 @@
-;;; ack.el --- Emacs interface to ack           -*- lexical-binding: t; -*-
+;;; ack.el --- Interface to ack-like source code search tools   -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2012, 2013  Free Software Foundation, Inc.
+;; Copyright (C) 2012-2013  Free Software Foundation, Inc.
 
 ;; Author: Leo Liu <sdl.web@gmail.com>
-;; Version: 0.9
+;; Version: 1.3
 ;; Keywords: tools, processes, convenience
 ;; Created: 2012-03-24
 ;; URL: https://github.com/leoliu/ack-el
@@ -23,14 +23,45 @@
 
 ;;; Commentary:
 
-;; ack is a tool like grep, designed for programmers with large trees
-;; of heterogeneous source code - http://betterthangrep.com/.
+;; This package provides an interface to ack http://beyondgrep.com --
+;; a tool like grep, designed for programmers with large trees of
+;; heterogeneous source code. It builds on standard packages
+;; `compile.el' and `ansi-color.el' and lets you seamlessly run `ack'
+;; with its large set of options.
+;;
+;; Ack-like tools such as the silver search (ag) and git/hg/bzr grep
+;; are well supported too.
+
+;;; Usage:
+
+;; +  Type `M-x ack' and provide a pattern to search.
+;; +  Type `C-u M-x ack' to search from current project root.
+;; +  Type `C-u C-u M-x ack' to interactively choose a directory to
+;;    search.
+;;
+;; Note: use `ack-default-directory-function' for customised
+;; behaviour.
+;;
+;; When in the minibuffer the following key bindings may be useful:
+;;
+;; +  `M-I' inserts a template for case-insensitive file name search
+;; +  `M-G' inserts a template for `git grep', `hg grep' or `bzr grep'
+;; +  `M-Y' inserts the symbol at point from the window before entering
+;;    the minibuffer
+;; +  `TAB' completes ack options
+
+;;; Bugs: https://github.com/leoliu/ack-el/issues
 
 ;;; Code:
 
 (require 'compile)
 (require 'ansi-color)
 (autoload 'shell-completion-vars "shell")
+
+(eval-when-compile
+  (unless (fboundp 'setq-local)
+    (defmacro setq-local (var val)
+      (list 'set (list 'make-local-variable (list 'quote var)) val))))
 
 (defgroup ack nil
   "Run `ack' and display the results."
@@ -47,13 +78,15 @@
   ;; Note: on GNU/Linux ack may be renamed to ack-grep
   (concat (file-name-nondirectory (or (executable-find "ack-grep")
                                       (executable-find "ack")
+                                      (executable-find "ag")
                                       "ack")) " ")
-  "The default ack command for \\[ack].
+  "The default command for \\[ack].
 
 Note also options to ack can be specified in ACK_OPTIONS
-environment variable and ~/.ackrc, which you can disable by the
+environment variable and .ackrc, which you can disable by the
 --noenv switch."
   :type 'string
+  :safe 'stringp
   :group 'ack)
 
 (defcustom ack-buffer-name-function nil
@@ -89,6 +122,11 @@ Used by `ack-guess-project-root'."
   :type '(repeat string)
   :group 'ack)
 
+(defcustom ack-minibuffer-setup-hook nil
+  "Ack-specific hook for `minibuffer-setup-hook'."
+  :type 'hook
+  :group 'ack)
+
 ;;; ======== END of USER OPTIONS ========
 
 (defvar ack-history nil "History list for ack.")
@@ -118,11 +156,7 @@ This function is called from `compilation-filter-hook'."
     ;; Command output lines.
     (": \\(.+\\): \\(?:Permission denied\\|No such \\(?:file or directory\\|device or address\\)\\)$"
      1 'compilation-error)
-    ;; Remove match from ack-error-regexp-alist before fontifying
-    ("^Ack \\(?:started\\|finished\\) at.*"
-     (0 '(face nil compilation-message nil message nil help-echo nil mouse-face nil) t))
     ("^Ack \\(exited abnormally\\|interrupt\\|killed\\|terminated\\)\\(?:.*with code \\([0-9]+\\)\\)?.*"
-     (0 '(face nil compilation-message nil message nil help-echo nil mouse-face nil) t)
      (1 'compilation-error)
      (2 'compilation-error nil t)))
   "Additional things to highlight in ack output.
@@ -173,14 +207,15 @@ This gets tacked on the end of the generated expressions.")
 ;;; in the regexp alist has already been applied in a region.
 
 (defconst ack-error-regexp-alist
-  `(;; grouping line (--group or --heading)
+  `(;; Grouping line (--group or --heading).
     ("^\\([1-9][0-9]*\\)\\(:\\|-\\)\\(?:\\(?4:[1-9][0-9]*\\)\\2\\)?"
      ack--file 1 (ack--column-start . ack--column-end)
      nil nil (4 compilation-column-face nil t))
-    ;; none grouping line (--nogroup or --noheading)
-    ("^\\(.+?\\)\\(:\\|-\\)\\([1-9][0-9]*\\)\\2\\(?:\\(?4:[1-9][0-9]*\\)\\2\\)?"
+    ;; None grouping line (--nogroup or --noheading). Avoid matching
+    ;; 'Ack started at Thu Jun 6 12:27:53'.
+    ("^\\(.+?\\)\\(:\\|-\\)\\([1-9][0-9]*\\)\\2\\(?:\\(?:\\(?4:[1-9][0-9]*\\)\\2\\)\\|[^0-9\n]\\|[0-9][^0-9\n]\\|...\\)"
      1 3 (ack--column-start . ack--column-end)
-     nil nil (4 compilation-column-face nil t))
+     nil 1 (4 compilation-column-face nil t))
     ("^Binary file \\(.+\\) matches$" 1 nil nil 0 1))
   "Ack version of `compilation-error-regexp-alist' (which see).")
 
@@ -191,53 +226,48 @@ This gets tacked on the end of the generated expressions.")
   (when (string-match-p "^[ \t]*hg[ \t]" (car compilation-arguments))
     (setq compilation-error-regexp-alist
           '(("^\\(.+?:[0-9]+:\\)\\(?:\\([0-9]+\\):\\)?" 1 2)))
-    (make-local-variable 'compilation-parse-errors-filename-function)
-    (setq compilation-parse-errors-filename-function
-          (lambda (file)
-            (save-match-data
-              (if (string-match "\\(.+\\):\\([0-9]+\\):" file)
-                  (match-string 1 file)
-                file)))))
+    (setq-local compilation-parse-errors-filename-function
+                (lambda (file)
+                  (save-match-data
+                    (if (string-match "\\(.+\\):\\([0-9]+\\):" file)
+                        (match-string 1 file)
+                      file)))))
   ;; Handle `bzr grep' output
   (when (string-match-p "^[ \t]*bzr[ \t]" (car compilation-arguments))
-    (make-local-variable 'compilation-parse-errors-filename-function)
-    (setq compilation-parse-errors-filename-function
-          (lambda (file)
-            (save-match-data
-              ;; 'bzr grep -r' has files like `termcolor.py~147'
-              (if (string-match "\\(.+\\)~\\([0-9]+\\)" file)
-                  (match-string 1 file)
-                file))))))
-
-(defun ack-mode-display-match ()
-  "Display in another window the match in current line."
-  (interactive)
-  (setq compilation-current-error (point))
-  (next-error-no-select 0))
+    (setq-local compilation-parse-errors-filename-function
+                (lambda (file)
+                  (save-match-data
+                    ;; 'bzr grep -r' has files like `termcolor.py~147'
+                    (if (string-match "\\(.+\\)~\\([0-9]+\\)" file)
+                        (match-string 1 file)
+                      file))))))
 
 (define-compilation-mode ack-mode "Ack"
   "A compilation mode tailored for ack."
-  (set (make-local-variable 'compilation-disable-input) t)
-  (set (make-local-variable 'compilation-error-face)
-       'compilation-info)
-  (add-hook 'compilation-filter-hook 'ack-filter nil t)
-  (define-key ack-mode-map "\C-o" #'ack-mode-display-match))
+  (setq-local compilation-disable-input t)
+  (setq-local compilation-error-face 'compilation-info)
+  (add-hook 'compilation-filter-hook 'ack-filter nil t))
 
-(defun ack-update-minibuffer-prompt (prompt)
-  "Visually replace minibuffer prompt with PROMPT."
-  (when (minibufferp)
-    (let ((inhibit-read-only t))
-      (put-text-property
-       (point-min) (minibuffer-prompt-end) 'display prompt))))
+;;; `compilation-display-error' is introduced in 24.4
+(unless (fboundp 'compilation-display-error)
+  (defun ack-mode-display-match ()
+    "Display in another window the match in current line."
+    (interactive)
+    (setq compilation-current-error (point))
+    (next-error-no-select 0))
+  (define-key ack-mode-map "\C-o" #'ack-mode-display-match))
 
 (defun ack-skel-file ()
   "Insert a template for case-insensitive file name search."
   (interactive)
   (delete-minibuffer-contents)
   (let ((ack (or (car (split-string ack-command nil t)) "ack")))
-    (skeleton-insert `(nil ,ack " -g '(?i:" _ ")'"))))
+    (if (equal ack "ag")
+        (skeleton-insert `(nil ,ack " -ig '" _ "'"))
+      (skeleton-insert `(nil ,ack " -g '(?i:" _ ")'")))))
 
-(defvar project-root)                   ; dynamically bound in `ack'
+;; Work around bug http://debbugs.gnu.org/13811
+(defvar ack--project-root nil)          ; dynamically bound in `ack'
 
 (defun ack-skel-vc-grep ()
   "Insert a template for vc grep search."
@@ -251,10 +281,7 @@ This gets tacked on the end of the generated expressions.")
          (backend (downcase (substring which 1)))
          (cmd (or (cdr (assoc which ack-vc-grep-commands))
                   (error "No command provided for `%s grep'" backend))))
-    (setq project-root root)
-    (ack-update-minibuffer-prompt
-     (format "Run %s grep in `%s': " backend
-             (file-name-nondirectory (directory-file-name project-root))))
+    (setq ack--project-root root)
     (delete-minibuffer-contents)
     (skeleton-insert `(nil ,cmd " '" _ "'"))))
 
@@ -302,6 +329,27 @@ Otherwise, interactively choose a directory."
         (ack-default-directory '(16))))
    (t (read-directory-name "In directory: " nil nil t))))
 
+(defun ack-update-minibuffer-prompt (&optional _beg _end _len)
+  (when (minibufferp)
+    (let ((inhibit-read-only t))
+      (save-excursion
+        (goto-char (minibuffer-prompt-end))
+        (when (looking-at "\\(\\w+\\)\\s-")
+          (put-text-property
+           (point-min) (minibuffer-prompt-end)
+           'display
+           (format "Run %s in `%s': "
+                   (match-string-no-properties 1)
+                   (file-name-nondirectory
+                    (directory-file-name ack--project-root)))))))))
+
+(defun ack-minibuffer-setup-function ()
+  (shell-completion-vars)
+  (add-hook 'after-change-functions
+            #'ack-update-minibuffer-prompt nil t)
+  (ack-update-minibuffer-prompt)
+  (run-hooks 'ack-minibuffer-setup-hook))
+
 ;;;###autoload
 (defun ack (command-args &optional directory)
   "Run ack using COMMAND-ARGS and collect output in a buffer.
@@ -313,18 +361,17 @@ minibuffer:
 
 \\{ack-minibuffer-local-map}"
   (interactive
-   (let ((project-root (or (funcall ack-default-directory-function
+   (let ((ack--project-root (or (funcall ack-default-directory-function
                                     current-prefix-arg)
                            default-directory))
          ;; Disable completion cycling; see http://debbugs.gnu.org/12221
          (completion-cycle-threshold nil))
-     (list (minibuffer-with-setup-hook 'shell-completion-vars
-             (read-from-minibuffer
-              (format "Run ack in `%s': "
-                      (file-name-nondirectory
-                       (directory-file-name project-root)))
-              ack-command ack-minibuffer-local-map nil 'ack-history))
-           project-root)))
+     (list (minibuffer-with-setup-hook 'ack-minibuffer-setup-function
+             (read-from-minibuffer "Ack: "
+                                   ack-command
+                                   ack-minibuffer-local-map
+                                   nil 'ack-history))
+           ack--project-root)))
   (let ((default-directory (expand-file-name
                             (or directory default-directory))))
     ;; Change to the compilation buffer so that `ack-buffer-name-function' can
