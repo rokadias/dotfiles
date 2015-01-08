@@ -25,6 +25,8 @@
   (let ((project-file (find-project-file "\.proj$")))
     (when project-file
       (progn (message "Found project file at %s" project-file)
+             (when (is-cygwin)
+               (setq project-file (concat "$(cygpath -aw " project-file ")")))
              (set (make-local-variable 'compile-command)
                   (concat "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe /p:GenerateFullPaths=true \"" project-file "\"")))))
 

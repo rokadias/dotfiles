@@ -3,7 +3,9 @@
 
 (defun comment-fill-mode-hook ()
     (auto-fill-mode 1)
-    (setq fill-column 100)
+    (setq fill-column 100
+          comment-auto-fill-only-comments t)
+
     (set (make-local-variable 'fill-nobreak-predicate)
          (lambda ()
            (not (eq (get-text-property (point) 'face)
