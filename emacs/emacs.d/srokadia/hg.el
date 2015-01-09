@@ -1,4 +1,5 @@
 ;; mercurial
+(require 'vc-hg)
 
 (defun hg-pull (&optional arg)
   (interactive "P")

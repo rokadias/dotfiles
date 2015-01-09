@@ -134,8 +134,10 @@
   (let ((project-file (find-project-file "^[^\.]+\.csproj$")))
     (when project-file
       (message "Found project file at %s" project-file)
+      (when is-cygwin
+        (setq project-file (concat "$(cygpath -aw " project-file ")")))
       (set (make-local-variable 'compile-command)
-           (if is-w32
+           (if (or is-w32 is-cygwin)
                (concat "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe "
                        "/m /v:q /p:GenerateFullPaths=true \"" project-file
                        "\" /p:StyleCop=false /p:BuildProjectReferences=true")

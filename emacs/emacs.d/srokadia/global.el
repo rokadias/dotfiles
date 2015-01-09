@@ -44,6 +44,8 @@
 (put 'upcase-region 'disabled nil)
 
 (setq is-w32 (string-equal system-type "windows-nt"))
+(setq is-cygwin (string-equal system-type "cygwin"))
+(setq server-use-tcp t)
 
 (when is-w32
   (setq find-program
@@ -53,6 +55,8 @@
                 ((file-exists-p "C:/bin/find.exe") "C:/bin/find.exe")
                 ((file-exists-p "C:/cygwin/bin/find.exe") "C:/cygwin/bin/find.exe")
                 (find-in-exec-path "find.exe")))))
+(when is-cygwin
+  (setq find-program "/cygdrive/c/cygwin/bin/find.exe"))
 
 ;; use grep whenever possible, but fallback to findstr on non-cygwin /
 ;; non-gnuwin32 windows.

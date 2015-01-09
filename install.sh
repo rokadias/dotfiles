@@ -15,15 +15,18 @@ ln -s $PWD/emacs/emacs.d/srokadia/erc.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/functions.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/generalfunctions.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/global.el ~/.emacs.d/srokadia/
-ln -s $PWD/emacs/emacs.d/srokadia/hg.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/haskell.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/hg.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/html.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/javascript.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/org.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/package.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/powershell.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/progmodefunctions.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/session.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/shell.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/theme.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/yaml.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/yasnippet.el ~/.emacs.d/srokadia/
 
 ln -s $PWD/emacs/emacs.d/elpa ~/.emacs.d/

@@ -10,10 +10,6 @@
 
 (global-set-key "\M-m" 'compile)
 
-(when (package-installed-p 'goto-last-change)
-  (require 'goto-last-change)
-  (global-set-key (kbd "C-x C-\\") 'goto-last-change))
-
 (global-set-key [(control c) (r)] 'revert-buffer)
 
 ;; Remapping beginning-of-line
@@ -30,15 +26,14 @@
 (global-set-key [(control x) (P)] 'windmove-up)
 (global-set-key [(control x) (N)] 'windmove-down)
 
-;; Window registers
-(global-set-key [(control x) (r) (w)] 'switch-to-window-configuration-to-register)
-(global-set-key [(control x) (g)] 'switch-to-window-configuration)
-
 ;; Comparing
 (global-set-key [(control c) (b)] 'ediff-buffers)
 
 ;; Find-in-files
 (global-set-key [(control x) (control meta f)] 'find-file-in-repository)
+
+(global-set-key [(control c) (l)] 'org-store-link)
+(global-set-key [(control c) (a)] 'org-agenda)
 
 (autoload 'omnisharp-mode "omnisharp-mode" "Minor mode for C# intellisense." t)
 (require 'omnisharp)
