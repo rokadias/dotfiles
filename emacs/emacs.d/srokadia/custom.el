@@ -13,7 +13,6 @@
     ("a233249cc6f90098e13e555f5f5bf6f8461563a8043c7502fb0474be02affeea" "a2c537c981b4419aa3decac8e565868217fc2995b74e1685c5ff8c6d77b198d6" "6e05b0a83b83b5efd63c74698e1ad6feaddf69a50b15a8b4a83b157aac45127c" default)))
  '(erc-irccontrols-mode t)
  '(fci-rule-color "#202325")
- '(ido-vertical-mode t)
  '(jabber-alert-presence-hooks nil)
  '(vc-annotate-background "#1f2124")
  '(vc-annotate-color-map
