@@ -1,0 +1,11 @@
+[Unit]
+Description=Runs skydns for all of the docker containers
+
+[Service]
+# assume 192.168.1.1 is your proxy server, don't use 127.0.0.1
+Type=simple
+ExecStart=
+ExecStart=/usr/bin/docker run -ip 172.17.42.1:53:53/udp --rm --name skydns crosbymichael/skydns -nameserver 8.8.8.8:53 -domain docker
+
+[Install]
+Alias=evincer.service

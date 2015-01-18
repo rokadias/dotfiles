@@ -1,0 +1,12 @@
+[Unit]
+Description=Runs the skydock container to listen for the other containers to get urls that makes sense.
+Requires=skydns.service
+
+[Service]
+# assume 192.168.1.1 is your proxy server, don't use 127.0.0.1
+Type=simple
+ExecStart=
+ExecStart=/usr/bin/docker run -i -v /var/run/docker.sock:/docker.sock --rm --name skydock crosbymichael/skydock -ttl 30 -environment dev -s /docker.sock -domain docker -name skydns
+
+[Install]
+Alias=evincer.service
