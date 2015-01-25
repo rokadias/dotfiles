@@ -10,7 +10,7 @@
 
 (dolist (library
          '("package" "generalfunctions" "theme" "global" "bindings"
-           "progmodefunctions" "erc" "powershell" "yaml" "org"
+           "progmodefunctions" "erc" "powershell" "yaml" "org" "restclient"
            "yasnippet" "csharp" "haskell" "html" "javascript" "hg" "session"))
   (load (concat elisp-root "/" library)))
 
