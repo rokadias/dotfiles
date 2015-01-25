@@ -12,6 +12,14 @@
       js3-rebind-eol-bol-keys nil
       js3-use-font-lock-faces t)
 
+(custom-set-variables
+ '(js3-lazy-commas t)
+ '(js3-lazy-operators t)
+ '(js3-expr-indent-offset 2)
+ '(js3-paren-indent-offset 2)
+ '(js3-square-indent-offset 2)
+ '(js3-curly-indent-offset 2))
+
 (defun on-javascript-loaded ()
   (when (package-installed-p 'js-comint)
     (require 'js-comint)
@@ -25,7 +33,7 @@
   (let ((project-file (find-project-file "\.proj$")))
     (when project-file
       (progn (message "Found project file at %s" project-file)
-             (when (is-cygwin)
+             (when is-cygwin
                (setq project-file (concat "$(cygpath -aw " project-file ")")))
              (set (make-local-variable 'compile-command)
                   (concat "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe /p:GenerateFullPaths=true \"" project-file "\"")))))
