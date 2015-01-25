@@ -18,6 +18,7 @@ New-Symlink $HOME\.emacs.d\srokadia\org.el $PWD\emacs\emacs.d\srokadia\org.el
 New-Symlink $HOME\.emacs.d\srokadia\package.el $PWD\emacs\emacs.d\srokadia\package.el
 New-Symlink $HOME\.emacs.d\srokadia\powershell.el $PWD\emacs\emacs.d\srokadia\powershell.el
 New-Symlink $HOME\.emacs.d\srokadia\progmodefunctions.el $PWD\emacs\emacs.d\srokadia\progmodefunctions.el
+New-Symlink $HOME\.emacs.d\srokadia\restclient.el $PWD\emacs\emacs.d\srokadia\restclient.el
 New-Symlink $HOME\.emacs.d\srokadia\session.el $PWD\emacs\emacs.d\srokadia\session.el
 New-Symlink $HOME\.emacs.d\srokadia\shell.el $PWD\emacs\emacs.d\srokadia\shell.el
 New-Symlink $HOME\.emacs.d\srokadia\theme.el $PWD\emacs\emacs.d\srokadia\theme.el
