@@ -69,4 +69,11 @@ If point was already at that position, move point to beginning of line."
       (mapcar (lambda (file)
                 (cons file (expand-file-name file working-dir)))
               files)))))
-  
+
+(defun list-keys (plist)
+  (let ((iterator plist)
+        (keys))
+    (while iterator
+      (setq keys (cons (car iterator) keys))
+      (setq iterator (cdr (cdr iterator))))
+    keys))
