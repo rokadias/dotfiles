@@ -7,7 +7,6 @@ New-Symlink $HOME\.emacs.d\srokadia\bindings.el $PWD\emacs\emacs.d\srokadia\bind
 New-Symlink $HOME\.emacs.d\srokadia\csharp.el $PWD\emacs\emacs.d\srokadia\csharp.el
 New-Symlink $HOME\.emacs.d\srokadia\custom.el $PWD\emacs\emacs.d\srokadia\custom.el
 New-Symlink $HOME\.emacs.d\srokadia\erc.el $PWD\emacs\emacs.d\srokadia\erc.el
-New-Symlink $HOME\.emacs.d\srokadia\functions.el $PWD\emacs\emacs.d\srokadia\functions.el
 New-Symlink $HOME\.emacs.d\srokadia\generalfunctions.el $PWD\emacs\emacs.d\srokadia\generalfunctions.el
 New-Symlink $HOME\.emacs.d\srokadia\global.el $PWD\emacs\emacs.d\srokadia\global.el
 New-Symlink $HOME\.emacs.d\srokadia\haskell.el $PWD\emacs\emacs.d\srokadia\haskell.el
