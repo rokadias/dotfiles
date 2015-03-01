@@ -52,3 +52,4 @@
 
 (add-hook 'js3-mode-hook 'on-javascript-loaded)
 (add-hook 'js3-mode-hook 'comment-fill-mode-hook)
+(add-hook 'js3-mode-hook 'node-resolver-start)
