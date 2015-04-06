@@ -4,7 +4,7 @@ mkdir ~/scripts
 ln -s $PWD/scripts/msbuild.sh ~/scripts/msbuild.sh
 
 mkdir ~/.xmonad/
-ln -s $PWD/xmonad/xmonad.hs ~/.xmonad/
+ln -s $PWD/home/xmonad/xmonad.hs ~/.xmonad/
 
 ln -s $PWD/emacs/emacs ~/.emacs
 mkdir -p ~/.emacs.d/srokadia
