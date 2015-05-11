@@ -15,6 +15,7 @@ ln -s $PWD/emacs/emacs.d/srokadia/custom.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/erc.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/generalfunctions.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/global.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/handlebars.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/haskell.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/hg.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/html.el ~/.emacs.d/srokadia/
