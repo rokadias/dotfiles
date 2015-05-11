@@ -3,6 +3,7 @@
 New-Symlink $HOME\.emacs $PWD\emacs\emacs
 
 mkdir -p $HOME\.emacs.d\srokadia
+New-Symlink $HOME\.emacs.d\srokadia\autocomplete.el $PWD\emacs\emacs.d\srokadia\autocomplete.el
 New-Symlink $HOME\.emacs.d\srokadia\bindings.el $PWD\emacs\emacs.d\srokadia\bindings.el
 New-Symlink $HOME\.emacs.d\srokadia\csharp.el $PWD\emacs\emacs.d\srokadia\csharp.el
 New-Symlink $HOME\.emacs.d\srokadia\custom.el $PWD\emacs\emacs.d\srokadia\custom.el

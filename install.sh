@@ -8,6 +8,7 @@ ln -s $PWD/home/xmonad/xmonad.hs ~/.xmonad/
 
 ln -s $PWD/emacs/emacs ~/.emacs
 mkdir -p ~/.emacs.d/srokadia
+ln -s $PWD/emacs/emacs.d/srokadia/autocomplete.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/bindings.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/csharp.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/custom.el ~/.emacs.d/srokadia/
