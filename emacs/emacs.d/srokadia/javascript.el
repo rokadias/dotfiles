@@ -1,24 +1,17 @@
 ;; all things javascript
 
-(autoload 'js3-mode "js3-mode" "JavaScript editing mode" t)
-(setq auto-mode-alist (append '(("\\.js$" . js3-mode)) auto-mode-alist))
+(autoload 'js2-mode "js2-mode" "JavaScript editing mode" t)
+(setq auto-mode-alist (append '(("\\.js$" . js2-mode)) auto-mode-alist))
+(setq ac-js2-evaluate-calls t)
 
-(setq js3-basic-offset 4
-      js3-bounce-indent-flag t
-      js3-cleanup-whitespace nil
-      js3-enter-indents-newline nil
-      js3-highlight-level 3
-      js3-mirror-mode nil
-      js3-rebind-eol-bol-keys nil
-      js3-use-font-lock-faces t)
-
-(custom-set-variables
- '(js3-lazy-commas t)
- '(js3-lazy-operators t)
- '(js3-expr-indent-offset 2)
- '(js3-paren-indent-offset 2)
- '(js3-square-indent-offset 2)
- '(js3-curly-indent-offset 2))
+(setq js2-basic-offset 4
+      js2-bounce-indent-flag t
+      js2-cleanup-whitespace nil
+      js2-enter-indents-newline nil
+      js2-highlight-level 3
+      js2-mirror-mode nil
+      js2-rebind-eol-bol-keys nil
+      js2-use-font-lock-faces t)
 
 (defun on-javascript-loaded ()
   (when (package-installed-p 'js-comint)
@@ -38,7 +31,7 @@
              (set (make-local-variable 'compile-command)
                   (concat "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe /p:GenerateFullPaths=true \"" project-file "\"")))))
 
-(eval-after-load "js3-mode"
+(eval-after-load "js2-mode"
   '(let ((closure-snippets "~/dev/closure-snippets/emacs"))
      (when (file-exists-p closure-snippets)
        (add-to-list 'load-path closure-snippets)
@@ -50,6 +43,7 @@
          (append '(("at\\s-*\\([^[:space:]]+\\)\\s-*line\\s-*\\([0-9]+\\)\\s-*:\\s-*\\([0-9]*\\)" 1 2 3))
                  compilation-error-regexp-alist))))
 
-(add-hook 'js3-mode-hook 'on-javascript-loaded)
-(add-hook 'js3-mode-hook 'comment-fill-mode-hook)
-(add-hook 'js3-mode-hook 'node-resolver-start)
+(add-hook 'js2-mode-hook 'on-javascript-loaded)
+(add-hook 'js2-mode-hook 'comment-fill-mode-hook)
+(add-hook 'js2-mode-hook 'node-resolver-start)
+(add-hook 'js2-mode-hook 'ac-js2-mode)
