@@ -11,7 +11,7 @@
 (dolist (library
          '("package" "generalfunctions" "theme" "global" "bindings"
            "progmodefunctions" "erc" "powershell" "yaml" "org" "restclient"
-           "yasnippet" "csharp" "haskell" "html" "javascript" "hg" "session"))
+           "autocomplete" "yasnippet" "csharp" "haskell" "html" "javascript" "hg" "session"))
   (load (concat elisp-root "/" library)))
 
 ;; assume files in the private directory are order-independent, and
