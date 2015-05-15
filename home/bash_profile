@@ -3,3 +3,5 @@
 #
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
+
+[ -s "/home/srokadia/.kre/kvm/kvm.sh" ] && . "/home/srokadia/.kre/kvm/kvm.sh" # Load kvm
