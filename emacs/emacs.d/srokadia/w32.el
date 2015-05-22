@@ -11,3 +11,6 @@
   ;; when using a machine with symantec endpoint protection, this can
   ;; prevent horrible slowdowns
   (setq w32-get-true-file-attributes nil))
+
+(unless (or is-w32 is-cygwin)
+  (modify-all-frames-parameters (list (cons 'font "DejaVu Sans Mono-9"))))
