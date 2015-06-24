@@ -1,5 +1,9 @@
 .include /usr/lib/systemd/system/docker.service
 [Service]
 # assume 192.168.1.1 is your proxy server, don't use 127.0.0.1
-ExecStart=
+Type=notify
+EnvironmentFile=-/etc/sysconfig/docker
 ExecStart=/usr/bin/docker -d --bip=172.17.42.1/16 --dns=172.17.42.1 -g /var/docker
+
+[Install]
+Also=docker.socket
