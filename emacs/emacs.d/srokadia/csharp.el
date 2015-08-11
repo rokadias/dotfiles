@@ -139,7 +139,7 @@
       (set (make-local-variable 'compile-command)
            (if (or is-w32 is-cygwin)
                (concat "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe "
-                       "/m /v:q /p:GenerateFullPaths=true \"" project-file
+                       "/m /nr:false /v:q /p:GenerateFullPaths=true \"" project-file
                        "\" /p:StyleCop=false /p:BuildProjectReferences=true")
                (concat "msbuild.sh " project-file))))))
 

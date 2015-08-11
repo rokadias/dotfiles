@@ -82,3 +82,11 @@ If point was already at that position, move point to beginning of line."
   (let ((window (get-buffer-window buffer "visible")))
     (select-frame-set-input-focus (window-frame window))
     (select-window window)))
+
+(defun list-keys (plist)
+  (let ((iterator plist)
+        (keys))
+    (while iterator
+      (setq keys (cons (car iterator) keys))
+      (setq iterator (cdr (cdr iterator))))
+    keys))

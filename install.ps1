@@ -22,6 +22,7 @@ New-Symlink $HOME\.emacs.d\srokadia\restclient.el $PWD\emacs\emacs.d\srokadia\re
 New-Symlink $HOME\.emacs.d\srokadia\session.el $PWD\emacs\emacs.d\srokadia\session.el
 New-Symlink $HOME\.emacs.d\srokadia\shell.el $PWD\emacs\emacs.d\srokadia\shell.el
 New-Symlink $HOME\.emacs.d\srokadia\theme.el $PWD\emacs\emacs.d\srokadia\theme.el
+New-Symlink $HOME\.emacs.d\srokadia\w32.el $PWD\emacs\emacs.d\srokadia\w32.el
 New-Symlink $HOME\.emacs.d\srokadia\yaml.el $PWD\emacs\emacs.d\srokadia\yaml.el
 New-Symlink $HOME\.emacs.d\srokadia\yasnippet.el $PWD\emacs\emacs.d\srokadia\yasnippet.el
 
