@@ -13,6 +13,7 @@ ln -s $PWD/emacs/emacs.d/srokadia/bindings.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/csharp.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/custom.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/erc.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/find-file-in-repository.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/generalfunctions.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/global.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/handlebars.el ~/.emacs.d/srokadia/
@@ -20,6 +21,7 @@ ln -s $PWD/emacs/emacs.d/srokadia/haskell.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/hg.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/html.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/javascript.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/key-chord.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/org.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/package.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/powershell.el ~/.emacs.d/srokadia/
@@ -53,3 +55,5 @@ sudo cp $PWD/etc/systemd/user/skydns.service /etc/systemd/user/
 sudo cp $PWD/etc/systemd/user/skydock.service /etc/systemd/user/
 sudo cp $PWD/etc/systemd/user/evincer.service /etc/systemd/user/
 sudo cp $PWD/etc/systemd/user/nexxusblog.service /etc/systemd/user/
+sudo cp $PWD/etc/systemd/user/trunk-mysql.service /etc/systemd/user/
+sudo cp $PWD/etc/systemd/user/redis-container.service /etc/systemd/user/

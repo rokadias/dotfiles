@@ -8,12 +8,14 @@ New-Symlink $HOME\.emacs.d\srokadia\bindings.el $PWD\emacs\emacs.d\srokadia\bind
 New-Symlink $HOME\.emacs.d\srokadia\csharp.el $PWD\emacs\emacs.d\srokadia\csharp.el
 New-Symlink $HOME\.emacs.d\srokadia\custom.el $PWD\emacs\emacs.d\srokadia\custom.el
 New-Symlink $HOME\.emacs.d\srokadia\erc.el $PWD\emacs\emacs.d\srokadia\erc.el
+New-Symlink $HOME\.emacs.d\srokadia\find-files-in-repository.el $PWD\emacs\emacs.d\srokadia\find-files-in-repository.el
 New-Symlink $HOME\.emacs.d\srokadia\generalfunctions.el $PWD\emacs\emacs.d\srokadia\generalfunctions.el
 New-Symlink $HOME\.emacs.d\srokadia\global.el $PWD\emacs\emacs.d\srokadia\global.el
 New-Symlink $HOME\.emacs.d\srokadia\haskell.el $PWD\emacs\emacs.d\srokadia\haskell.el
 New-Symlink $HOME\.emacs.d\srokadia\hg.el $PWD\emacs\emacs.d\srokadia\hg.el
 New-Symlink $HOME\.emacs.d\srokadia\html.el $PWD\emacs\emacs.d\srokadia\html.el
 New-Symlink $HOME\.emacs.d\srokadia\javascript.el $PWD\emacs\emacs.d\srokadia\javascript.el
+New-Symlink $HOME\.emacs.d\srokadia\key-chord.el $PWD\emacs\emacs.d\srokadia\key-chord.el
 New-Symlink $HOME\.emacs.d\srokadia\org.el $PWD\emacs\emacs.d\srokadia\org.el
 New-Symlink $HOME\.emacs.d\srokadia\package.el $PWD\emacs\emacs.d\srokadia\package.el
 New-Symlink $HOME\.emacs.d\srokadia\powershell.el $PWD\emacs\emacs.d\srokadia\powershell.el

@@ -2,9 +2,10 @@
 
 filepath=$1
 localdirpath=${filepath%/*}
+localdirpath=$(dirname $localdirpath)
 filepath=$(echo $filepath | sed -e 's/\/home\/srokadia/~/g')
 dirpath=${filepath%/*}
-# dirpath=$(dirname $dirpath)
+dirpath=$(dirname $dirpath)
 
 echo "Starting ssh win dospath."
 dosdirpath=$(ssh dev.win "cygpath -w $dirpath")
@@ -12,7 +13,7 @@ echo "Finished ssh win dospath."
 
 rsyncpath=$(echo $dirpath | sed -e 's/~\///g')
 echo "Starting rsync win."
-rsync -a $localdirpath/* dev.win:$rsyncpath
+rsync -az --delete $localdirpath/* dev.win:$rsyncpath
 echo "Finished rsync win."
 
 regexdosdir=$(echo -E "$dosdirpath\\" | sed -e 's/\\/\\\\/g')
