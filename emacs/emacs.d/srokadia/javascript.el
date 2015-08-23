@@ -4,7 +4,7 @@
 (setq auto-mode-alist (append '(("\\.js$" . js2-mode)) auto-mode-alist))
 (setq ac-js2-evaluate-calls t)
 
-(setq js2-basic-offset 4
+(setq js2-basic-offset 2
       js2-bounce-indent-flag t
       js2-cleanup-whitespace nil
       js2-enter-indents-newline nil
@@ -45,5 +45,5 @@
 
 (add-hook 'js2-mode-hook 'on-javascript-loaded)
 (add-hook 'js2-mode-hook 'comment-fill-mode-hook)
-(add-hook 'js2-mode-hook 'node-resolver-start)
+;; (add-hook 'js2-mode-hook 'node-resolver-start)
 (add-hook 'js2-mode-hook 'ac-js2-mode)
