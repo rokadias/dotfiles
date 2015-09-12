@@ -72,6 +72,12 @@
     ad-do-it))
 (ad-activate 'grep-compute-defaults)
 
+(setq 'browse-url-browser-function
+      (cond
+       (is-w32 'browse-url-default-windows-browser)
+       (t 'browse-url-chromium)))
+       
+
 (setq visible-bell t)
 (when is-w32
   (set-message-beep 'silent))
