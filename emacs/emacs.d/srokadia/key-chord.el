@@ -13,4 +13,6 @@
   (key-chord-define-global "x-" 'split-window-below)
   (key-chord-define-global "x\\" 'split-window-right)
   (key-chord-define-global "we" 'wg-switch-to-workgroup)
+  (key-chord-define-global ",." 'vc-hg-view)
+  (key-chord-define-global "./" 'vc-hg-blame)
   (setq key-chord-two-keys-delay 0.02))
