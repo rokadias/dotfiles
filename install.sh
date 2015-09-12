@@ -2,6 +2,7 @@
 
 mkdir ~/scripts
 ln -s $PWD/scripts/msbuild.sh ~/scripts/msbuild.sh
+ln -s $PWD/scripts/rsyncignore ~/scripts/rsyncignore
 
 mkdir ~/.xmonad/
 ln -s $PWD/home/xmonad/xmonad.hs ~/.xmonad/
