@@ -31,6 +31,7 @@
 
 ;; Find-in-files
 (global-set-key [(control x) (control meta f)] 'find-file-in-repository)
+(global-set-key [(control x) (control meta F)] 'find-file-in-repository-other-window)
 (global-set-key [(control c) (control r)] 'rgrep)
 
 (global-set-key [(control c) (l)] 'org-store-link)

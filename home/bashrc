@@ -9,3 +9,5 @@ alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
 xmodmap ~/.xmodmap
+
+eval $(keychain --eval --agents ssh -Q --quiet ~/.ssh/nexusssh_rsa)

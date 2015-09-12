@@ -35,7 +35,9 @@
      (320 . "#afc4db")
      (340 . "#cfe2f2")
      (360 . "#dc8cc3"))))
- '(vc-annotate-very-old-color "#dc8cc3"))
+ '(vc-annotate-very-old-color "#dc8cc3")
+ '(tab-stop-list (quote (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
