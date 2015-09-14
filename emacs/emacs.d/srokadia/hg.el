@@ -62,11 +62,9 @@
         (retrieve-changeset-hash (shell-command-to-string "hg identify")))))
 
 (defun vc-hg-get-relative-path ()
-  (let ((root (string-trim (shell-command-to-string "hg root"))))
-    (replace-regexp-in-string
-       "\\\\"
-       "/"
-       (replace-regexp-in-string root "" buffer-file-name))))
+  (let* ((root (string-trim (shell-command-to-string "hg root")))
+         (replaced-root (replace-regexp-in-string "\\\\" "/" root)))
+    (replace-regexp-in-string replaced-root "" buffer-file-name)))
 
 (defun retrieve-changeset-hash (text)
   (let ((re-changeset ".*\\([a-f0-9]\\{12\\}\\)\\(.*\n.*\\)*"))

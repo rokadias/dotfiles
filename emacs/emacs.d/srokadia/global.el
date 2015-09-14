@@ -45,6 +45,7 @@
 
 (setq is-w32 (string-equal system-type "windows-nt"))
 (setq is-cygwin (string-equal system-type "cygwin"))
+(setq is-mac (memq window-system '(mac ns)))
 (setq server-use-tcp t)
 
 (when is-w32
@@ -57,6 +58,11 @@
                 (find-in-exec-path "find.exe")))))
 (when is-cygwin
   (setq find-program "/cygdrive/c/cygwin/bin/find.exe"))
+
+(when is-mac
+  (exec-path-from-shell-initialize)
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-modifier 'super))
 
 ;; use grep whenever possible, but fallback to findstr on non-cygwin /
 ;; non-gnuwin32 windows.
