@@ -147,5 +147,19 @@
 (add-hook 'csharp-mode-hook 'c-set-style-stroustrup)
 (add-hook 'csharp-mode-hook 'comment-fill-mode-hook)
 
+(when (package-installed-p 'omnisharp)
+  (require 'omnisharp)
+  (defun omnisharp-unit-test-worker (mode)
+    "Run tests after building the solution. Mode should be one of 'single', 'fixture' or 'all'" 
+    (let ((test-command
+           (omnisharp--fix-build-command-if-on-windows
+            (cdr (assoc 'TestCommand
+                        (omnisharp-post-message-curl-as-json
+                         (concat (omnisharp-get-host) "gettestcontext") 
+                         (cons `("Type" . ,mode)
+                               (omnisharp--get-common-params))))))))
+
+      (compile test-command))))
+
 (autoload 'omnisharp-mode "omnisharp-mode" "Minor mode for C# intellisense." t)
 (add-hook 'csharp-mode-hook 'omnisharp-mode)
