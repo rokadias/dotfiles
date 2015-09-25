@@ -1,11 +1,10 @@
 ;;; session-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (session-initialize session-jump-to-last-change)
-;;;;;;  "session" "../../../../../.emacs.d/elpa/session-20120510.1700/session.el"
-;;;;;;  "50aa634ad19b1c61eef773100609f2e2")
+;;;### (autoloads nil "session" "../../../../../.emacs.d/elpa/session-20120510.1700/session.el"
+;;;;;;  "3f0e3f3f4be833faef89daf386a83905")
 ;;; Generated autoloads from ../../../../../.emacs.d/elpa/session-20120510.1700/session.el
 
 (autoload 'session-jump-to-last-change "session" "\
@@ -33,17 +32,15 @@ this function to `after-init-hook'.
 
 ;;;***
 
-;;;### (autoloads nil nil ("../../../../../.emacs.d/elpa/session-20120510.1700/session-pkg.el"
+;;;### (autoloads nil nil ("../../../../../.emacs.d/elpa/session-20120510.1700/session-autoloads.el"
 ;;;;;;  "../../../../../.emacs.d/elpa/session-20120510.1700/session.el")
-;;;;;;  (21677 48492 171000 0))
+;;;;;;  (22020 52898 396007 682000))
 
 ;;;***
 
-(provide 'session-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; session-autoloads.el ends here
