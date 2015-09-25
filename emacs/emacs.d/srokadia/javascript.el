@@ -45,5 +45,4 @@
 
 (add-hook 'js2-mode-hook 'on-javascript-loaded)
 (add-hook 'js2-mode-hook 'comment-fill-mode-hook)
-(add-hook 'js2-mode-hook 'node-resolver-start)
 (add-hook 'js2-mode-hook 'ac-js2-mode)

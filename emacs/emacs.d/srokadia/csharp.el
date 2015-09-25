@@ -147,5 +147,5 @@
 (add-hook 'csharp-mode-hook 'c-set-style-stroustrup)
 (add-hook 'csharp-mode-hook 'comment-fill-mode-hook)
 
-;; (autoload 'omnisharp-mode "omnisharp-mode" "Minor mode for C# intellisense." t)
-;; (add-hook 'csharp-mode-hook 'omnisharp-mode)
+(autoload 'omnisharp-mode "omnisharp-mode" "Minor mode for C# intellisense." t)
+(add-hook 'csharp-mode-hook 'omnisharp-mode)
