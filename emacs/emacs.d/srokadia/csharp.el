@@ -6,24 +6,6 @@
 (when (package-installed-p 'flymake)
   (require 'flymake))
 
-(eval-after-load "compile"
-  '(progn
-     (setq compilation-error-regexp-alist nil)
-
-     (setq compilation-error-regexp-alist
-           (append '(("\\(\\([_a-zA-Z]:\\)?[^:(\t\n]+\\)(\\([0-9]+\\)[,]\\([0-9]+\\)): \\(error\\|warning\\) CS[0-9]+:" 1 3 4))
-                   compilation-error-regexp-alist))
-
-     ;; SourceAnalysis
-     (setq compilation-error-regexp-alist
-           (append '(("\\([a-zA-Z0-9][0-9]*[^>\t \n]\\([_a-zA-Z]:\\)?[^:(\t\n]+\\)(\\([0-9]+\\)[,]\\([0-9]+\\)): \\(error\\|warning\\) : SA[0-9]+:" 1 3 4))
-                   compilation-error-regexp-alist))
-
-     ;; FxCop
-     (setq compilation-error-regexp-alist
-           (append '(("[ ]*\\(\\([_a-zA-Z]:\\)?[^:(\t\n]+\\)(\\([0-9]+\\)[,]\\([0-9]+\\)) : \\(error\\|warning\\)  : CA[0-9]+ : " 1 3 4))
-                   compilation-error-regexp-alist))))
-
 (let ((csharp-mode-snippets "~/dev/csharp-mode-snippets/emacs"))
   (when (file-exists-p csharp-mode-snippets)
     (add-to-list 'load-path csharp-mode-snippets)
@@ -130,7 +112,11 @@
   ;; (when (and buffer-file-name
   ;;            (string-match "scratch/.*\\.cs\\'" buffer-file-name))
   ;;   (set-scratch-file-compilation-command))
+  (set-csharp-compile-command)
+  (fix-compilation-regex)
+  )
 
+(defun set-csharp-compile-command ()
   (let ((project-file (find-project-file "^[^\.]+\.csproj$")))
     (when project-file
       (message "Found project file at %s" project-file)
@@ -141,7 +127,26 @@
                (concat "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe "
                        "/m /nr:false /v:q /p:GenerateFullPaths=true \"" project-file
                        "\" /p:StyleCop=false /p:BuildProjectReferences=true")
-               (concat "msbuild.sh " project-file))))))
+             (concat "msbuild.sh " project-file))))))
+
+(defun compile-full-msbuild ()
+  (interactive)
+  (let ((project-file (find-project-file "\.proj$")))
+    (when project-file
+      (message "Found full msbuild project file at %s" project-file)
+      (when is-cygwin
+        (setq project-file (concat "$(cygpath -aw " project-file ")")))
+      (compile
+       (if (or is-w32 is-cygwin)
+           (concat "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe "
+                   "/m /nr:false /v:q /p:GenerateFullPaths=true "
+                   "\"/t:FullReleaseBuild;MakePublishDirectory\" \"" project-file
+                   "\" /p:StyleCop=false /p:BuildProjectReferences=true")
+         (concat "fullmsbuild.sh " project-file)))
+      (set-csharp-compile-command))))
+(define-key csharp-mode-map (kbd "C-M-m") 'compile-full-msbuild)
+
+(when (package-installed-p 'csharp-mode))
 
 (add-hook 'csharp-mode-hook 'on-csharp-loaded)
 (add-hook 'csharp-mode-hook 'c-set-style-stroustrup)
@@ -159,7 +164,59 @@
                          (cons `("Type" . ,mode)
                                (omnisharp--get-common-params))))))))
 
-      (compile test-command))))
+      (compile test-command)
+      (set-csharp-compile-command))))
+
+(defconst csharp-compilation-re-msbuild-error
+  (concat
+   "^[[:blank:]]*\\(?:[[:digit:]]+>\\)?"
+   "\\([^()]+\\)(\\([0-9]+\\)\\(?:,\\([0-9]+\\)\\)?): "
+   "error [[:alnum:]]+: [^[]+\\[\\([^]]+\\)\\]$")
+  "Regexp to match compilation error from msbuild.")
+
+(defconst csharp-compilation-re-msbuild-warning
+  (concat
+   "^[[:blank:]]*\\(?:[[:digit:]]+>\\)?"
+   "\\([^()[:blank:]]+\\)(\\([0-9]+\\)\\(?:,\\([0-9]+\\)\\)?): "
+   "warning [[:alnum:]]+: [^[]+\\[\\([^]]+\\)\\]$")
+  "Regexp to match compilation warning from msbuild.")
+
+(defconst csharp-compilation-re-xbuild-error
+  (concat
+   "^[[:blank:]]*\\(?:[[:digit:]]+>\\)?"
+   "\\([^()]+\\)(\\([0-9]+\\)\\(?:,\\([0-9]+\\)\\)?): "
+   "error [[:alnum:]]+: .+$")
+  "Regexp to match compilation error from xbuild.")
+
+(defconst csharp-compilation-re-xbuild-warning
+  (concat
+   "^[[:blank:]]*\\(?:[[:digit:]]+>\\)?"
+   "\\([^()]+\\)(\\([0-9]+\\)\\(?:,\\([0-9]+\\)\\)?): "
+   "warning [[:alnum:]]+: .+$")
+  "Regexp to match compilation warning from xbuild.")
+
+(defun fix-compilation-regex()
+        (setq compilation-error-regexp-alist-alist
+            (delq (assoc 'msbuild-error compilation-error-regexp-alist-alist) compilation-error-regexp-alist-alist))
+      (dolist
+          (regexp
+           `((xbuild-error
+              ,csharp-compilation-re-xbuild-error
+              1 2 3 2)
+             (xbuild-warning
+              ,csharp-compilation-re-xbuild-warning
+              1 2 3 1)
+             (msbuild-error
+              ,csharp-compilation-re-msbuild-error
+              1 2 3 2)
+             (msbuild-warning
+              ,csharp-compilation-re-msbuild-warning
+              1 2 3 1)))
+        (message (stringp (car regexp)))
+        (setq compilation-error-regexp-alist-alist
+              (delq (assoc (car regexp) compilation-error-regexp-alist-alist)
+                    compilation-error-regexp-alist-alist))
+        (add-to-list 'compilation-error-regexp-alist-alist regexp)))
 
 (autoload 'omnisharp-mode "omnisharp-mode" "Minor mode for C# intellisense." t)
 (add-hook 'csharp-mode-hook 'omnisharp-mode)

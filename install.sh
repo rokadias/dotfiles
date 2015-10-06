@@ -2,6 +2,7 @@
 
 mkdir ~/scripts
 ln -s $PWD/scripts/msbuild.sh ~/scripts/msbuild.sh
+ln -s $PWD/scripts/fullmsbuild.sh ~/scripts/fullmsbuild.sh
 ln -s $PWD/scripts/rsyncignore ~/scripts/rsyncignore
 ln -s $PWD/scripts/nunit.sh ~/scripts/nunit.sh
 
