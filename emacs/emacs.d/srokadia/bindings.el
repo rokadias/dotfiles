@@ -48,6 +48,10 @@
 (define-key omnisharp-mode-map (kbd "C-; C-.") 'omnisharp-show-overloads-at-point)
 (define-key omnisharp-mode-map (kbd "C-; C-SPC") 'omnisharp-auto-complete)
 
+
+(define-key ac-complete-mode-map (kbd "C-n") 'ac-next)
+(define-key ac-complete-mode-map (kbd "C-p") 'ac-previous)
+
 (require 'multiple-cursors)
 
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -56,3 +60,4 @@
 (global-set-key (kbd "C-M-j") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-k") 'mc/mark-all-like-this)
 
+(global-set-key (kbd "M-m") 'compile-override)
