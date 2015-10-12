@@ -20,4 +20,5 @@ regexdosdir=$(echo -E "$dosdirpath\\" | sed -e 's/\\/\\\\/g')
 echo "Starting MSBuild."
 /bin/time ssh dev.win "TEMP=/tmp MSBuild.exe /m /nodereuse:false /v:q /p:GenerateFullPaths=true \$(cygpath -w $filepath) /p:StyleCop=false /p:BuildProjectReferences=true" | sed -e "s/$regexdosdir/~\//Ig" -e 's/\\/\//g'
 echo "Finished MSBuild."
+
 cd $(dirname $1)
