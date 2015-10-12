@@ -48,7 +48,7 @@
 (define-key omnisharp-mode-map (kbd "C-; C-.") 'omnisharp-show-overloads-at-point)
 (define-key omnisharp-mode-map (kbd "C-; C-SPC") 'omnisharp-auto-complete)
 
-
+(require 'auto-complete)
 (define-key ac-complete-mode-map (kbd "C-n") 'ac-next)
 (define-key ac-complete-mode-map (kbd "C-p") 'ac-previous)
 
