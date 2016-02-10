@@ -81,3 +81,5 @@ fi
 alias scriptcs='mono ~/OpenSource/scriptcs/scriptcs.exe'
 
 [ -s "/home/srokadia/.kre/kvm/kvm.sh" ] && . "/home/srokadia/.kre/kvm/kvm.sh" # Load kvm
+
+[ -s "/home/srokadia/.dnx/dnvm/dnvm.sh" ] && . "/home/srokadia/.dnx/dnvm/dnvm.sh" # Load dnvm

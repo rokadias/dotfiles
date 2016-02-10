@@ -62,4 +62,3 @@
 (global-set-key (kbd "C-M-j") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-k") 'mc/mark-all-like-this)
 
-(global-set-key (kbd "M-m") 'compile-override)

@@ -19,7 +19,7 @@ echo "Finished rsync win."
 regexdosdir=$(echo -E "$dosrootdirpath\\" | sed -e 's/\\/\\\\/g')
 dosfilepath=$(echo -E "$dosfilepath" | sed -e 's/\\/\\\\/g')
 echo "Starting MSBuild."
-/bin/time ssh dev.win "TEMP=/tmp MSBuild.exe /m \"/t:FxCop;MakePublishDirectory\" /nodereuse:false /v:q /p:GenerateFullPaths=true $dosfilepath" | sed -e "s/$regexdosdir/~\//Ig" -e 's/\\/\//g'
+/bin/time ssh dev.win "TEMP=/tmp MSBuild.exe /m \"/t:Build;MakePublishDirectory\" /nodereuse:false /v:q /p:GenerateFullPaths=true $dosfilepath" | sed -e "s/$regexdosdir/~\//Ig" -e 's/\\/\//g'
 echo "Finished MSBuild."
 
 echo "Starting publish."
