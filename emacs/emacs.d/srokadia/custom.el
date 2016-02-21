@@ -10,10 +10,13 @@
  '(case-replace nil)
  '(custom-safe-themes
    (quote
-    ("a233249cc6f90098e13e555f5f5bf6f8461563a8043c7502fb0474be02affeea" "a2c537c981b4419aa3decac8e565868217fc2995b74e1685c5ff8c6d77b198d6" "6e05b0a83b83b5efd63c74698e1ad6feaddf69a50b15a8b4a83b157aac45127c" default)))
+    ("3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" "a2c537c981b4419aa3decac8e565868217fc2995b74e1685c5ff8c6d77b198d6" "6e05b0a83b83b5efd63c74698e1ad6feaddf69a50b15a8b4a83b157aac45127c" default)))
  '(erc-irccontrols-mode t)
  '(fci-rule-color "#202325")
  '(jabber-alert-presence-hooks nil)
+ '(tab-stop-list
+   (quote
+    (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120)))
  '(vc-annotate-background "#1f2124")
  '(vc-annotate-color-map
    (quote
@@ -35,8 +38,7 @@
      (320 . "#afc4db")
      (340 . "#cfe2f2")
      (360 . "#dc8cc3"))))
- '(vc-annotate-very-old-color "#dc8cc3")
- '(tab-stop-list (quote (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))))
+ '(vc-annotate-very-old-color "#dc8cc3"))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

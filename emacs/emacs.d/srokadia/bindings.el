@@ -42,11 +42,17 @@
 ;; omnisharp config
 (define-key omnisharp-mode-map (kbd "C-; C-b") 'omnisharp-go-to-definition)
 (define-key omnisharp-mode-map (kbd "C-; C-k") 'omnisharp-find-usages)
+(define-key omnisharp-mode-map (kbd "C-; C-r") 'omnisharp-fix-usings)
+(define-key omnisharp-mode-map (kbd "C-; C-t") 'omnisharp-unit-test-single)
+(define-key omnisharp-mode-map (kbd "C-; C-S-t") 'omnisharp-unit-test-fixture)
 (define-key omnisharp-mode-map (kbd "C-; C-,") 'omnisharp-navigate-to-solution-file)
 (define-key omnisharp-mode-map (kbd "C-; C-s") 'omnisharp-navigate-to-current-file-member)
-(define-key omnisharp-mode-map (kbd "C-; C-r") 'omnisharp-fix-usings)
 (define-key omnisharp-mode-map (kbd "C-; C-.") 'omnisharp-show-overloads-at-point)
 (define-key omnisharp-mode-map (kbd "C-; C-SPC") 'omnisharp-auto-complete)
+
+(require 'auto-complete)
+(define-key ac-complete-mode-map (kbd "C-n") 'ac-next)
+(define-key ac-complete-mode-map (kbd "C-p") 'ac-previous)
 
 (require 'multiple-cursors)
 
@@ -56,3 +62,4 @@
 (global-set-key (kbd "C-M-j") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-k") 'mc/mark-all-like-this)
 
+(global-set-key (kbd "M-m") 'compile-override)

@@ -1,0 +1,3 @@
+# group: nodejs
+# --
+import $1 from '${2:$1}';

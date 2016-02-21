@@ -1,5 +1,6 @@
 (setq uid "srokadia")
-(setq elisp-root (concat "~/.emacs.d/" uid))
+(setq emacs-dir-root "~/.emacs.d/")
+(setq elisp-root (concat emacs-dir-root uid))
 
 (setq custom-file (concat elisp-root "/custom.el"))
 (load custom-file 'noerror)
@@ -9,8 +10,8 @@
   (normal-top-level-add-subdirs-to-load-path))
 
 (dolist (library
-         '("package" "generalfunctions" "theme" "global" "bindings"
-           "progmodefunctions" "erc" "powershell" "yaml" "org" "restclient"
+         '("package" "generalfunctions" "theme" "global" "compile" "bindings" "find-file-in-repository"
+           "key-chord" "progmodefunctions" "erc" "powershell" "yaml" "org" "restclient"
            "autocomplete" "yasnippet" "csharp" "haskell" "html" "javascript" "hg" "session"))
   (load (concat elisp-root "/" library)))
 

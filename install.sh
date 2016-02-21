@@ -2,6 +2,9 @@
 
 mkdir ~/scripts
 ln -s $PWD/scripts/msbuild.sh ~/scripts/msbuild.sh
+ln -s $PWD/scripts/fullmsbuild.sh ~/scripts/fullmsbuild.sh
+ln -s $PWD/scripts/rsyncignore ~/scripts/rsyncignore
+ln -s $PWD/scripts/nunit.sh ~/scripts/nunit.sh
 
 mkdir ~/.xmonad/
 ln -s $PWD/home/xmonad/xmonad.hs ~/.xmonad/
@@ -10,6 +13,7 @@ ln -s $PWD/emacs/emacs ~/.emacs
 mkdir -p ~/.emacs.d/srokadia
 ln -s $PWD/emacs/emacs.d/srokadia/autocomplete.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/bindings.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/compile.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/csharp.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/custom.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/erc.el ~/.emacs.d/srokadia/
@@ -35,7 +39,7 @@ ln -s $PWD/emacs/emacs.d/srokadia/yasnippet.el ~/.emacs.d/srokadia/
 
 ln -s $PWD/emacs/emacs.d/elpa ~/.emacs.d/
 ln -s $PWD/emacs/emacs.d/lisp ~/.emacs.d/
-ln -s $PWD/emacs/emacs.d/plugins ~/.emacs.d/
+ln -s $PWD/emacs/emacs.d/snippets ~/.emacs.d/
 
 ln -s $PWD/home/bashrc ~/.bashrc
 ln -s $PWD/home/bash_profile ~/.bash_profile
