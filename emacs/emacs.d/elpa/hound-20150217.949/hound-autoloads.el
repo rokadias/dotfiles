@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "hound" "hound.el" (22080 22984 226264 442000))
+;;;### (autoloads nil "hound" "hound.el" (22080 62255 793383 312000))
 ;;; Generated autoloads from hound.el
 
 (autoload 'hound-link "hound" "\

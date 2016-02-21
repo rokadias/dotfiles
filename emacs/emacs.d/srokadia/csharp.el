@@ -131,7 +131,7 @@
 
 (defun compile-full-msbuild ()
   (interactive)
-  (let ((project-file (find-project-file "\.proj$")))
+  (let ((project-file (find-project-file "\\.proj$")))
     (when project-file
       (message "Found full msbuild project file at %s" project-file)
       (when is-cygwin
