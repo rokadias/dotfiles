@@ -154,7 +154,7 @@
 
 (when (package-installed-p 'omnisharp)
   (require 'omnisharp)
-  (setq omnisharp-server-executable-path "~/OpenSource/OmniSharp/omnisharp-server/OmniSharp/bin/Debug/")
+  (setq omnisharp-server-executable-path "/usr/bin/omnisharp")
   (defun omnisharp-unit-test-worker (mode)
     "Run tests after building the solution. Mode should be one of 'single', 'fixture' or 'all'" 
     (let ((test-command
