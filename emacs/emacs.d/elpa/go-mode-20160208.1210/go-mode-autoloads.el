@@ -94,8 +94,7 @@ Tries to look for a URL at point.
 
 ;;;***
 
-;;;### (autoloads nil nil ("go-mode-pkg.el") (22203 50227 654249
-;;;;;;  473000))
+;;;### (autoloads nil nil ("go-mode-pkg.el") (22082 19643 61215 877000))
 
 ;;;***
 
