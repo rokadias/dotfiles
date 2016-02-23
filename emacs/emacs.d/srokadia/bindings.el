@@ -8,7 +8,7 @@
 (global-set-key [mouse-4] 'down-three)
 (global-set-key [mouse-5] 'up-three)
 
-(global-set-key "\M-m" 'compile)
+(global-set-key (kbd "M-m") 'compile-override)
 
 (global-set-key [(control c) (r)] 'revert-buffer)
 
@@ -61,5 +61,3 @@
 (global-set-key (kbd "C-M-k") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-M-j") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-k") 'mc/mark-all-like-this)
-
-(global-set-key (kbd "M-m") 'compile-override)
