@@ -83,6 +83,6 @@
        (is-w32 'browse-url-default-windows-browser)
        (t 'browse-url-chromium)))
 
-(setq visible-bell t)
+(setq visible-bell (not is-mac))
 (when is-w32
   (set-message-beep 'silent))
