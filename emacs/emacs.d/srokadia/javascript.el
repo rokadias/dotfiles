@@ -8,7 +8,7 @@
 (setq ac-js2-evaluate-calls t)
 
 (setq js-indent-level 2
-      js2-basic-offset 4
+      js2-basic-offset 2
       js2-bounce-indent-flag t
       js2-cleanup-whitespace nil
       js2-enter-indents-newline nil
