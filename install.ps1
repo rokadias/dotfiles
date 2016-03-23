@@ -9,6 +9,7 @@ New-Symlink $HOME\.emacs.d\srokadia\csharp.el $PWD\emacs\emacs.d\srokadia\csharp
 New-Symlink $HOME\.emacs.d\srokadia\custom.el $PWD\emacs\emacs.d\srokadia\custom.el
 New-Symlink $HOME\.emacs.d\srokadia\erc.el $PWD\emacs\emacs.d\srokadia\erc.el
 New-Symlink $HOME\.emacs.d\srokadia\find-files-in-repository.el $PWD\emacs\emacs.d\srokadia\find-files-in-repository.el
+New-Symlink $HOME\.emacs.d\srokadia\flycheck.el $PWD\emacs\emacs.d\srokadia\flycheck.el
 New-Symlink $HOME\.emacs.d\srokadia\generalfunctions.el $PWD\emacs\emacs.d\srokadia\generalfunctions.el
 New-Symlink $HOME\.emacs.d\srokadia\global.el $PWD\emacs\emacs.d\srokadia\global.el
 New-Symlink $HOME\.emacs.d\srokadia\haskell.el $PWD\emacs\emacs.d\srokadia\haskell.el

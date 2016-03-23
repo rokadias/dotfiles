@@ -1,1 +1,1 @@
-export PATH="$PATH:/home/srokadia/scripts"
+export PATH="$PATH:/home/srokadia/scripts:/home/srokadia/.gem/ruby/2.3.0/bin"

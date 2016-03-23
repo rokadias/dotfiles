@@ -90,3 +90,8 @@ If point was already at that position, move point to beginning of line."
       (setq keys (cons (car iterator) keys))
       (setq iterator (cdr (cdr iterator))))
     keys))
+
+(defun back-zap-to-char (char)
+  (interactive (list (read-char "Zap to char: " t)))
+  (zap-to-char -1 char)
+  )
