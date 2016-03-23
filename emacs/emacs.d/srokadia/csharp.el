@@ -6,7 +6,7 @@
 (when (package-installed-p 'flymake)
   (require 'flymake))
 
-(let ((csharp-mode-snippets "~/dev/csharp-mode-snippets/emacs"))
+(let ((csharp-mode-snippets (concat yasnippets-root "csharp-mode")))
   (when (file-exists-p csharp-mode-snippets)
     (add-to-list 'load-path csharp-mode-snippets)
     (require 'csharp-mode-snippets-support)
@@ -227,3 +227,62 @@
 
 (autoload 'omnisharp-mode "omnisharp-mode" "Minor mode for C# intellisense." t)
 (add-hook 'csharp-mode-hook 'omnisharp-mode)
+
+(setq system-namespaces '("System"))
+(setq development-namespaces '("ImsHealth" "Appature"))
+(setq using-regex "using \\([A-Za-z0-9\\.]+\\);")
+(defun get-namespace (using-statement)
+  (replace-regexp-in-string using-regex "\\1" using-statement))
+
+(defun compare-using-statements (statement1 statement2)
+  (cond ((and (string-match-p using-regex statement1)
+              (string-match-p using-regex statement2))
+         (compare-using-namespaces (get-namespace statement1) (get-namespace statement2)))
+    ((string-match-p using-regex statement1) t)
+    ((string-match-p using-regex statement2) nil)
+    (t (string-lessp statement1 statement2))
+    )
+  )
+
+(defun compare-using-namespaces (namespace1 namespace2)
+  (let ((order1 (convert-to-namespace-order namespace1))
+        (order2 (convert-to-namespace-order namespace2)))
+    (cond ((= order1 order2) (string-lessp namespace1 namespace2))
+          (t (< order1 order2)))
+    )
+  )
+
+(defun convert-to-namespace-order (namespace)
+  (cond ((string-list-contains namespace system-namespaces) 1)
+        ((string-list-contains namespace development-namespaces) 2)
+        (t 3)
+        )
+  )
+
+(defun string-list-contains (str list)
+  (if (member-if (lambda (x) (string-prefix-p x str)) list)
+      t
+    nil))
+
+(defun get-using-statements ()
+  (save-excursion
+    (beginning-of-buffer)
+    (while (re-search-forward "using [A-Za-z0-9\\.]+;" (point-max) t))
+    (buffer-substring-no-properties 1 (point))
+    ))
+
+(defun sort-using-statements ()
+  (interactive)
+  (save-excursion
+    (beginning-of-buffer)
+    (while (re-search-forward "using [A-Za-z0-9\\.]+;" (point-max) t))
+    (insert-string (perform-sort-using-statements (delete-and-extract-region 1 (point))))
+    )
+  (save-buffer)
+  )
+
+(defun perform-sort-using-statements (statements)
+  (string-join
+   (sort (split-string statements "\n") 'compare-using-statements)
+   "\n")
+  )
