@@ -8,6 +8,8 @@
 -r **/build/
 -r **/Debug/**
 -r **/Debug/
+-r **/GazTargets/**
+-r **/GazTargets/
 -r **/precompiled
 -r **/precompiled/**
 -r **/Packages
