@@ -7,3 +7,5 @@
 [ -s "/home/srokadia/.kre/kvm/kvm.sh" ] && . "/home/srokadia/.kre/kvm/kvm.sh" # Load kvm
 
 [ -s "/home/srokadia/.dnx/dnvm/dnvm.sh" ] && . "/home/srokadia/.dnx/dnvm/dnvm.sh" # Load dnvm
+
+PATH=$PATH:$HOME/.gem/ruby/2.3.0/bin
