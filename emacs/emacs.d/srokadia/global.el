@@ -22,9 +22,9 @@
  '(auto-save-file-name-transforms (quote ((".*" "~/.emacs.d/autosaves/\\1" t))))
  '(backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/"))))
  '(case-replace nil)
- '(custom-safe-themes (quote ("a2c537c981b4419aa3decac8e565868217fc2995b74e1685c5ff8c6d77b198d6" "6e05b0a83b83b5efd63c74698e1ad6feaddf69a50b15a8b4a83b157aac45127c" default)))
  '(erc-irccontrols-mode t)
- '(jabber-alert-presence-hooks nil))
+ '(jabber-alert-presence-hooks nil)
+ '(session-use-package t nil (session)))
 
 ;; create the autosave dir if necessary, since emacs won't.
 (make-directory "~/.emacs.d/autosaves/" t)

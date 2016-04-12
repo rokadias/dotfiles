@@ -10,6 +10,10 @@ ZSH_THEME="ys"
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
 
@@ -49,7 +53,7 @@ plugins=(git archlinux docker emacs jira mercurial sudo terminitor)
 
 # User configuration
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/srokadia/scripts:/home/srokadia/.gem/ruby/2.3.0/bin"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/srokadia/scripts:/home/srokadia/.gem/ruby/2.3.0/bin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -83,3 +87,5 @@ alias scriptcs='mono ~/OpenSource/scriptcs/scriptcs.exe'
 [ -s "/home/srokadia/.kre/kvm/kvm.sh" ] && . "/home/srokadia/.kre/kvm/kvm.sh" # Load kvm
 
 [ -s "/home/srokadia/.dnx/dnvm/dnvm.sh" ] && . "/home/srokadia/.dnx/dnvm/dnvm.sh" # Load dnvm
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

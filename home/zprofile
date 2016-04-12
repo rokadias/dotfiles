@@ -1,3 +1,3 @@
 . ~/.zshenv
 
-xmodmap ~/.xmodmap
+test -x "$(whereis xmodmap)" && xmodmap ~/.xmodmap
