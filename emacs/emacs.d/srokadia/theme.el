@@ -1,4 +1,4 @@
-(setq theme-preferences '(junio flatland twilight))
+(setq theme-preferences '(gotham junio flatland twilight))
 
 (require 'cl)
 
