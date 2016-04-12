@@ -1,3 +1,6 @@
+;;; delete everything up to a certain char
+(global-set-key [(meta z)] 'back-zap-to-char)
+
 ;;; Comment and uncomment regions
 (global-set-key [?\C-#]      'comment-region)
 (global-set-key [?\C-\M-#] 'uncomment-region)
@@ -41,13 +44,14 @@
 (require 'omnisharp)
 ;; omnisharp config
 (define-key omnisharp-mode-map (kbd "C-; C-b") 'omnisharp-go-to-definition)
-(define-key omnisharp-mode-map (kbd "C-; C-k") 'omnisharp-find-usages)
+(define-key omnisharp-mode-map (kbd "C-; C-k") 'omnisharp-find-usages-with-ido)
 (define-key omnisharp-mode-map (kbd "C-; C-r") 'omnisharp-fix-usings)
 (define-key omnisharp-mode-map (kbd "C-; C-t") 'omnisharp-unit-test-single)
 (define-key omnisharp-mode-map (kbd "C-; C-S-t") 'omnisharp-unit-test-fixture)
 (define-key omnisharp-mode-map (kbd "C-; C-,") 'omnisharp-navigate-to-solution-file)
 (define-key omnisharp-mode-map (kbd "C-; C-s") 'omnisharp-navigate-to-current-file-member)
-(define-key omnisharp-mode-map (kbd "C-; C-.") 'omnisharp-show-overloads-at-point)
+(define-key omnisharp-mode-map (kbd "C-; C-.") 'omnisharp-fix-code-issue-at-point)
+(define-key omnisharp-mode-map (kbd "C-; C-/") 'omnisharp-show-overloads-at-point)
 (define-key omnisharp-mode-map (kbd "C-; C-SPC") 'omnisharp-auto-complete)
 
 (require 'auto-complete)

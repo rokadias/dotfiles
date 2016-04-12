@@ -22,9 +22,9 @@
 -r ui/web/views/find.rng
 -r ui/node_modules/**
 -r ui/node_modules/
--r GazTargets/
+-r **/ui.scripts/node_modules/**
+-r **/ui.scripts/node_modules/
 -r **GlobalAssemblyInfo.cs
--r .GazLastRun
 - .hg/
 - **/*.vs.csproj
 - **/?ppature.sln

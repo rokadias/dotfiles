@@ -2,18 +2,21 @@
 (setq emacs-dir-root "~/.emacs.d/")
 (setq elisp-root (concat emacs-dir-root uid))
 
-(setq custom-file (concat elisp-root "/custom.el"))
-(load custom-file 'noerror)
+(defun load-uid-library (libraries)
+       (dolist (library libraries)
+  (load (concat elisp-root "/" library))))
 
 (let ((default-directory (expand-file-name "~/.emacs.d/lisp/") ))
   (normal-top-level-add-to-load-path '("."))
   (normal-top-level-add-subdirs-to-load-path))
 
-(dolist (library
-         '("package" "generalfunctions" "theme" "global" "compile" "bindings" "find-file-in-repository"
+(setq custom-file (concat elisp-root "/custom.el"))
+(load custom-file 'noerror)
+
+(load-uid-library
+         '("package" "session" "generalfunctions" "theme" "global" "compile" "bindings" "find-file-in-repository"
            "key-chord" "progmodefunctions" "erc" "powershell" "yaml" "org" "restclient"
-           "autocomplete" "yasnippet" "csharp" "haskell" "html" "javascript" "hg" "session"))
-  (load (concat elisp-root "/" library)))
+           "autocomplete" "yasnippet" "csharp" "haskell" "html" "javascript" "hg"))
 
 ;; assume files in the private directory are order-independent, and
 ;; load them all

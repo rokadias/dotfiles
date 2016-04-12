@@ -18,6 +18,7 @@ ln -s $PWD/emacs/emacs.d/srokadia/csharp.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/custom.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/erc.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/find-file-in-repository.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/flycheck.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/generalfunctions.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/global.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/handlebars.el ~/.emacs.d/srokadia/

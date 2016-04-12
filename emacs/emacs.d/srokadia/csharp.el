@@ -9,7 +9,6 @@
 (let ((csharp-mode-snippets (concat yasnippets-root "csharp-mode")))
   (when (file-exists-p csharp-mode-snippets)
     (add-to-list 'load-path csharp-mode-snippets)
-    (require 'csharp-mode-snippets-support)
     (add-to-list 'yas-snippet-dirs csharp-mode-snippets)
     (yas-reload-all)))
 
@@ -90,6 +89,10 @@
 
   ;; electric keys suck
   (define-key csharp-mode-map "{" 'self-insert-command)
+  (define-key csharp-mode-map "(" 'self-insert-command)
+  (define-key csharp-mode-map ")" 'self-insert-command)
+  (define-key csharp-mode-map ";" 'self-insert-command)
+  (define-key csharp-mode-map "," 'self-insert-command)
 
   (c-toggle-auto-newline -1)
 
@@ -112,6 +115,8 @@
   ;; (when (and buffer-file-name
   ;;            (string-match "scratch/.*\\.cs\\'" buffer-file-name))
   ;;   (set-scratch-file-compilation-command))
+  (require 'flycheck)
+  (flycheck-mode)
   (set-csharp-compile-command)
   (fix-compilation-regex)
   )
