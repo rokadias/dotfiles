@@ -10,7 +10,7 @@
   (when (file-exists-p csharp-mode-snippets)
     (add-to-list 'load-path csharp-mode-snippets)
     (add-to-list 'yas-snippet-dirs csharp-mode-snippets)
-    (yas-reload-all)))
+    (yas/load-directory csharp-mode-snippets)))
 
 (defun csharp-replace-double-quotes-with-string-empty (arg)
   (interactive "*P")
