@@ -78,9 +78,20 @@
     ad-do-it))
 (ad-activate 'grep-compute-defaults)
 
+(defun rcy-browse-url-default-macosx-browser (url &optional new-window)
+  (interactive (browse-url-interactive-arg "URL: "))
+  (let ((url
+	 (if (aref (url-generic-parse-url url) 0)
+	     url
+	   (concat "http://" url))))
+    (start-process (concat "open " url) nil "open" url)))
+ 
+(setq browse-url-browser-function )
+
 (setq browse-url-browser-function
       (cond
        (is-w32 'browse-url-default-windows-browser)
+       (is-mac 'rcy-browse-url-default-macosx-browser)
        (t 'browse-url-chromium)))
 
 (setq visible-bell (not is-mac))
