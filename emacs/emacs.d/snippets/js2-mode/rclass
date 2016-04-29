@@ -1,0 +1,19 @@
+# group: reactjs
+# --
+import React from 'react';
+import _ from 'lodash';
+
+var $1Element = React.createClass({
+  getInitialState: function() {
+    return {
+      $2: this.props.$2
+    };
+  },
+  render: function() {
+    return (
+      $0
+    );
+  }
+});
+
+module.exports = $1Element;

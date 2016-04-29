@@ -1,0 +1,40 @@
+# group: aureliajs
+# A react aurelia element class
+# --
+import {handle, Dispatcher} from 'aurelia-flux';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {customElement, inject, bindable, noView} from 'aurelia-framework';
+
+var $1Element = React.createClass({
+  getInitialState: function() {
+    return {
+      $2: this.props.$2
+    };
+  },
+  render: function() {
+    return (
+      $0
+    );
+  }
+});
+
+@noView
+@inject(Element, Dispatcher)
+@customElement("$3")
+export class $1 {
+
+  constructor(element, dispatcher) {
+    this.element = element;
+    this.dispatcher = dispatcher;
+  };
+  render() {
+    this.reactComponent = ReactDOM.render(
+      <$1Element />,
+      this.element
+    );
+  }
+  bind() {
+    this.render();
+  }
+}
