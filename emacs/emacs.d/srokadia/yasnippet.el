@@ -2,6 +2,7 @@
 
   (yas-global-mode 1)
 
-  (setq yas/prompt-functions '(yas/ido-prompt yas/dropdown-prompt yas/completing-prompt yas/x-prompt yas/no-prompt)))
+  (setq yas/prompt-functions '(yas/ido-prompt yas/dropdown-prompt yas/completing-prompt yas/x-prompt yas/no-prompt)
+        yas-indent-line 'none))
 
 (setq yasnippets-root (concat emacs-dir-root "snippets/"))
