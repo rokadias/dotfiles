@@ -21,7 +21,7 @@
  ;; If there is more than one, they won't work right.
  '(auto-save-file-name-transforms (quote ((".*" "~/.emacs.d/autosaves/\\1" t))))
  '(backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/"))))
- '(case-replace nil)
+ '(case-replace t)
  '(erc-irccontrols-mode t)
  '(jabber-alert-presence-hooks nil)
  '(session-use-package t nil (session)))
