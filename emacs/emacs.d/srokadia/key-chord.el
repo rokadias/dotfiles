@@ -15,4 +15,4 @@
   (key-chord-define-global "l;" 'wg-switch-to-workgroup)
   (key-chord-define-global "gh" 'vc-hg-view)
   (key-chord-define-global ";'" 'vc-hg-blame)
-  (setq key-chord-two-keys-delay 0.01))
+  (setq key-chord-two-keys-delay 0.02))
