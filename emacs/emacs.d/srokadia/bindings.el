@@ -65,3 +65,6 @@
 (global-set-key (kbd "C-M-k") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-M-j") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-k") 'mc/mark-all-like-this)
+
+;; Helm mode config
+(global-set-key (kbd "M-x") 'helm-M-x)

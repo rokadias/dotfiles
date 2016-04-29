@@ -5,9 +5,5 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-alias ls='ls --color=auto'
+test -x "$(whereis xmodmap)" && xmodmap ~/.xmodmap
 PS1='[\u@\h \W]\$ '
-
-xmodmap ~/.xmodmap
-
-eval $(keychain --eval --agents ssh -Q --quiet ~/.ssh/nexusssh_rsa)

@@ -6,6 +6,7 @@ mkdir -p $HOME\.emacs.d\srokadia
 New-Symlink $HOME\.emacs.d\srokadia\autocomplete.el $PWD\emacs\emacs.d\srokadia\autocomplete.el
 New-Symlink $HOME\.emacs.d\srokadia\bindings.el $PWD\emacs\emacs.d\srokadia\bindings.el
 New-Symlink $HOME\.emacs.d\srokadia\csharp.el $PWD\emacs\emacs.d\srokadia\csharp.el
+New-Symlink $HOME\.emacs.d\srokadia\css.el $PWD\emacs\emacs.d\srokadia\css.el
 New-Symlink $HOME\.emacs.d\srokadia\custom.el $PWD\emacs\emacs.d\srokadia\custom.el
 New-Symlink $HOME\.emacs.d\srokadia\erc.el $PWD\emacs\emacs.d\srokadia\erc.el
 New-Symlink $HOME\.emacs.d\srokadia\find-files-in-repository.el $PWD\emacs\emacs.d\srokadia\find-files-in-repository.el

@@ -15,6 +15,7 @@ ln -s $PWD/emacs/emacs.d/srokadia/autocomplete.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/bindings.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/compile.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/csharp.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/css.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/custom.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/erc.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/find-file-in-repository.el ~/.emacs.d/srokadia/
