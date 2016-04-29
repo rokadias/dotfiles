@@ -45,6 +45,7 @@ ln -s $PWD/emacs/emacs.d/snippets ~/.emacs.d/
 ln -s $PWD/home/bashrc ~/.bashrc
 ln -s $PWD/home/bash_profile ~/.bash_profile
 ln -s $PWD/home/conkyrc ~/.conkyrc
+ln -s $PWD/home/eslintrc ~/.eslintrc
 ln -s $PWD/home/xinitrc ~/.xinitrc
 ln -s $PWD/home/xmodmap ~/.xmodmap
 ln -s $PWD/home/xprofile ~/.xprofile
