@@ -1,4 +1,16 @@
 (require 'flycheck)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+(setq-default flycheck-disabled-checkers
+  (append flycheck-disabled-checkers
+     '(javascript-jshint)))
+
+(setq-default flycheck-disabled-checkers
+  (append flycheck-disabled-checkers
+     '(json-jsonlist)))
+
+(flycheck-add-mode 'javascript-eslint 'web-mode)
+
 (flycheck-define-checker omnisharp
   "Flycheck checker for omnisharp"
   :command ("curl" 
