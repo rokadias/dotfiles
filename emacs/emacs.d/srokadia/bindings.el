@@ -68,3 +68,6 @@
 
 ;; Helm mode config
 (global-set-key (kbd "M-x") 'helm-M-x)
+
+;; ace-jump-mode
+(global-set-key (kbd "C-M-SPC") 'ace-jump-mode)
