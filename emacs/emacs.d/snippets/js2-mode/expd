@@ -1,0 +1,4 @@
+# group: jasmine
+# An expectation with a defined result.
+# --
+expect($1).toBeDefined();

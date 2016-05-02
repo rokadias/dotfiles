@@ -1,0 +1,12 @@
+# group: jasmine
+# The definition of a spec.
+# --
+import './setup';
+
+describe('The $1 module', () => {
+  var sut;
+
+  beforeEach(() => {
+    sut = new $2($3);
+  });
+});

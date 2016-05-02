@@ -1,0 +1,4 @@
+# group: jasmine
+# An expectation with a truthy result.
+# --
+expect($1).toBeTruthy();
