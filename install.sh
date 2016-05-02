@@ -27,6 +27,7 @@ ln -s $PWD/emacs/emacs.d/srokadia/haskell.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/hg.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/html.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/javascript.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/jsx.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/key-chord.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/org.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/package.el ~/.emacs.d/srokadia/

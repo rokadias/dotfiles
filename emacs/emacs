@@ -16,7 +16,7 @@
 (load-uid-library
          '("package" "session" "generalfunctions" "theme" "global" "compile" "bindings" "find-file-in-repository"
            "key-chord" "progmodefunctions" "erc" "powershell" "yaml" "org" "restclient" "css"
-           "autocomplete" "yasnippet" "csharp" "haskell" "html" "javascript" "hg"))
+           "autocomplete" "yasnippet" "csharp" "haskell" "html" "javascript" "jsx" "hg"))
 
 ;; assume files in the private directory are order-independent, and
 ;; load them all

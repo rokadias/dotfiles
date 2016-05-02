@@ -17,6 +17,7 @@ New-Symlink $HOME\.emacs.d\srokadia\haskell.el $PWD\emacs\emacs.d\srokadia\haske
 New-Symlink $HOME\.emacs.d\srokadia\hg.el $PWD\emacs\emacs.d\srokadia\hg.el
 New-Symlink $HOME\.emacs.d\srokadia\html.el $PWD\emacs\emacs.d\srokadia\html.el
 New-Symlink $HOME\.emacs.d\srokadia\javascript.el $PWD\emacs\emacs.d\srokadia\javascript.el
+New-Symlink $HOME\.emacs.d\srokadia\jsx.el $PWD\emacs\emacs.d\srokadia\jsx.el
 New-Symlink $HOME\.emacs.d\srokadia\key-chord.el $PWD\emacs\emacs.d\srokadia\key-chord.el
 New-Symlink $HOME\.emacs.d\srokadia\org.el $PWD\emacs\emacs.d\srokadia\org.el
 New-Symlink $HOME\.emacs.d\srokadia\package.el $PWD\emacs\emacs.d\srokadia\package.el
