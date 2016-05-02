@@ -1,0 +1,4 @@
+# group: aureliajs
+# An aurelia change to push state change to a  react component.
+# --
+$1.bind="$1" $0

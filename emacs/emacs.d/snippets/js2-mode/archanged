@@ -1,0 +1,8 @@
+# group: aureliajs
+# An aurelia change to push state change to a  react component.
+# --
+$1Changed() {
+  this.reactComponent.setState({
+    $1: this.$1
+  });
+}
