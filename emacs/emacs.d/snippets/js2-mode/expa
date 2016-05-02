@@ -1,0 +1,4 @@
+# group: jasmine
+# An expectation for a set of args.
+# --
+expect($1.calls.argsFor($2)).toEqual(${3:expectedArgs});
