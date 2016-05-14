@@ -1,5 +1,5 @@
 # group: exceptions
 # --
-if ($1 == null) {
-    throw new ArgumentNullException("$1");
-}
+$>if ($1 == null) {
+$>throw new ArgumentNullException("$1");
+$>}
