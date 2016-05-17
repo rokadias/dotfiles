@@ -86,7 +86,7 @@
 	   (concat "http://" url))))
     (start-process (concat "open " url) nil "open" url)))
  
-(setq browse-url-browser-function )
+(setq browse-url-chromium-program "google-chrome-stable")
 
 (setq browse-url-browser-function
       (cond
