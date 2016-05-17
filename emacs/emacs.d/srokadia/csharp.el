@@ -122,7 +122,7 @@
   )
 
 (defun set-csharp-compile-command ()
-  (let ((project-file (find-project-file "^project\\.json$" "\\.vs\\.csproj\\|webappui\\.csproj")))
+  (let ((project-file (find-project-file "^project\\.json$"))
     (when project-file
       (message "Found project file at %s" project-file)
       (when is-cygwin
