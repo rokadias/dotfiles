@@ -1,6 +1,9 @@
 #!/bin/sh
 
 mkdir ~/scripts
+ln -s $PWD/scripts/dbuild.sh ~/scripts/dbuild.sh
+ln -s $PWD/scripts/dtest.sh ~/scripts/dtest.sh
+ln -s $PWD/scripts/dweb.sh ~/scripts/dweb.sh
 ln -s $PWD/scripts/msbuild.sh ~/scripts/msbuild.sh
 ln -s $PWD/scripts/fullmsbuild.sh ~/scripts/fullmsbuild.sh
 ln -s $PWD/scripts/rsyncignore ~/scripts/rsyncignore

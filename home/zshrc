@@ -90,9 +90,9 @@ alias scriptcs='mono ~/OpenSource/scriptcs/scriptcs.exe'
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 alias dbash='docker run --rm -it --volumes-from=dotnet-data -v "$PWD":/myapp -w /myapp microsoft/dotnet /bin/bash'
-alias dnet='docker run --rm --volumes-from=dotnet-preview-data -v "$PWD":/myapp -w /myapp microsoft/dotnet-preview dotnet'
+alias dnet='docker run --rm --volumes-from=dotnet-data -v "$PWD":/myapp -w /myapp microsoft/dotnet dotnet'
 alias dr='dnu restore'
-alias db='dnu build'
+alias db='dbuild.sh'
 alias drb='dnu restore && dnu build'
 alias dw='dnx web'
 alias dt='dnx test'
