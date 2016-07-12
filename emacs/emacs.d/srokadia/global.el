@@ -1,3 +1,6 @@
+(require 'editorconfig)
+(editorconfig-mode 1)
+
 (setq column-number-mode t)
 (pending-delete-mode 1)
 (set-language-environment "English")
@@ -28,6 +31,9 @@
 
 ;; create the autosave dir if necessary, since emacs won't.
 (make-directory "~/.emacs.d/autosaves/" t)
+
+(setq backup-inhibited t)
+(setq auto-save-default nil)
 
 (setq indent-tabs-mode nil)
 (setq-default indent-tabs-mode nil)
