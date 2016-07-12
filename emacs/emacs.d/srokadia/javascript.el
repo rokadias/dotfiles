@@ -56,3 +56,13 @@
 (add-hook 'js2-mode-hook 'on-javascript-loaded)
 (add-hook 'js2-mode-hook 'comment-fill-mode-hook)
 (add-hook 'js2-mode-hook 'ac-js2-mode)
+
+;; Typescript setup
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '((save idle-change new-line mode-enabled)))
+  (eldoc-mode +1))
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)

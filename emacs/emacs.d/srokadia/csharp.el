@@ -122,7 +122,7 @@
   )
 
 (defun set-csharp-compile-command ()
-  (let ((project-file (find-project-file "^project\\.json$"))
+  (let ((project-file (find-project-file "^project\\.json$")))
     (when project-file
       (message "Found project file at %s" project-file)
       (when is-cygwin
@@ -132,7 +132,7 @@
                (concat "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe "
                        "/m /nr:false /v:q /p:GenerateFullPaths=true \"" project-file
                        "\" /p:StyleCop=false /p:BuildProjectReferences=true")
-             (concat "msbuild.sh " project-file))))))
+             (concat "dbuild.sh " project-file))))))
 
 (defun compile-run-test ()
   (interactive)
@@ -141,7 +141,7 @@
       (message "Found full msbuild project file at %s" project-file)
       (when is-cygwin
         (setq project-file (concat "$(cygpath -aw " project-file ")")))
-      (compile (concat "xunit.sh " project-file)))
+      (compile (concat "dtest.sh " project-file)))
     (set-csharp-compile-command)))
 (define-key csharp-mode-map (kbd "M-M") 'compile-run-test)
 
