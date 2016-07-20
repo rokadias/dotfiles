@@ -34,6 +34,7 @@
 
 (setq backup-inhibited t)
 (setq auto-save-default nil)
+(setq create-lockfiles nil)
 
 (setq indent-tabs-mode nil)
 (setq-default indent-tabs-mode nil)
