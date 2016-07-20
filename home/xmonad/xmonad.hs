@@ -28,6 +28,11 @@ myBorderWidth   = 2
 myModMask       = mod4Mask
 altMask         = mod1Mask
 
+
+myExtraWorkspaces = [(xK_0, "0"),(xK_minus, "tmp"),(xK_equal, "swap")]
+
+myWorkspaces = ["emacs","web1","slack","compile","shell","extensions","system","keepass","web2"] ++ (map snd myExtraWorkspaces)
+
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
@@ -37,6 +42,12 @@ myKeys =
     , ((myModMask, xK_b), sendMessage ToggleStruts)
     , ((myModMask .|. shiftMask, xK_q), spawn "xfce4-session-logout")
     , ((altMask, xK_Tab), nextScreen)
+    ] ++ [
+        ((myModMask, key), (windows $ W.greedyView ws))
+        | (key, ws) <- myExtraWorkspaces
+    ] ++ [
+        ((myModMask .|. shiftMask, key), (windows $ W.shift ws))
+        | (key, ws) <- myExtraWorkspaces
     ]
 
 ------------------------------------------------------------------------
@@ -62,7 +73,7 @@ myLayout = tiled ||| Full
      ratio   = 3/4
 
      -- Percent of screen to increment by when resizing panes
-     delta   = 5/100
+     delta   = 3/100
 
 main = xmonad $ ewmh defaultConfig {
    -- simple stuff
@@ -75,6 +86,9 @@ main = xmonad $ ewmh defaultConfig {
      logHook         = ewmhDesktopsLogHook,
      layoutHook      = avoidStruts $ myLayout,
      handleEventHook = ewmhDesktopsEventHook,
-     startupHook     = ewmhDesktopsStartup
+     startupHook     = ewmhDesktopsStartup,
+
+   -- workspaces
+     workspaces      = myWorkspaces
    }
    `additionalKeys` myKeys
