@@ -16,4 +16,8 @@
   (key-chord-define-global "l;" 'wg-switch-to-workgroup)
   (key-chord-define-global "gh" 'vc-hg-view)
   (key-chord-define-global ";'" 'vc-hg-blame)
+  (key-chord-define-global "p[" 'tide-references)
+  (key-chord-define-global "vl" 'flycheck-buffer)
+  (key-chord-define-global "vj" 'flycheck-next-error)
+  (key-chord-define-global "vk" 'flycheck-previous-error)
   (setq key-chord-two-keys-delay 0.02))
