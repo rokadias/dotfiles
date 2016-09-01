@@ -119,6 +119,7 @@
   (flycheck-mode)
   (set-csharp-compile-command)
   (fix-compilation-regex)
+  (add-to-list 'ac-sources 'ac-source-omnisharp)
   )
 
 (defun set-csharp-compile-command ()
@@ -170,7 +171,7 @@
 
 (when (package-installed-p 'omnisharp)
   (require 'omnisharp)
-  (setq omnisharp-server-executable-path "/usr/bin/omnisharp")
+  (setq omnisharp-server-executable-path "/opt/omnisharp-roslyn/OmniSharp.exe")
   (defun omnisharp-unit-test-worker (mode)
     "Run tests after building the solution. Mode should be one of 'single', 'fixture' or 'all'" 
     (let ((test-command
