@@ -7,6 +7,9 @@ import System.Exit
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
+import XMonad.Layout.BoringWindows
+import XMonad.Layout.NoBorders
+
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Util.EZConfig(additionalKeys)
@@ -42,6 +45,10 @@ myKeys =
     , ((myModMask, xK_b), sendMessage ToggleStruts)
     , ((myModMask .|. shiftMask, xK_q), spawn "xfce4-session-logout")
     , ((altMask, xK_Tab), nextScreen)
+    , ((myModMask, xK_j), focusUp)
+    , ((myModMask, xK_k), focusDown)
+    , ((myModMask, xK_m), focusMaster)
+    , ((myModMask, xK_n), clearBoring)
     ] ++ [
         ((myModMask, key), (windows $ W.greedyView ws))
         | (key, ws) <- myExtraWorkspaces
@@ -61,7 +68,7 @@ myKeys =
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = tiled ||| Full
+myLayout = boringAuto (tiled ||| noBorders Full)
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
@@ -75,14 +82,14 @@ myLayout = tiled ||| Full
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
 
-main = xmonad $ ewmh defaultConfig {
+main = xmonad $ ewmh xfceConfig {
    -- simple stuff
      terminal     = myTerminal,
      modMask      = myModMask,
      borderWidth  = myBorderWidth,
 
    -- hooks, layouts
-     manageHook      = manageDocks <+> manageHook defaultConfig,
+     manageHook      = myManageHook <+> manageDocks <+> manageHook xfceConfig,
      logHook         = ewmhDesktopsLogHook,
      layoutHook      = avoidStruts $ myLayout,
      handleEventHook = ewmhDesktopsEventHook,
@@ -92,3 +99,8 @@ main = xmonad $ ewmh defaultConfig {
      workspaces      = myWorkspaces
    }
    `additionalKeys` myKeys
+
+myManageHook = composeAll
+  [
+    className =? "Xfce4-notifyd" --> doIgnore
+  ]
