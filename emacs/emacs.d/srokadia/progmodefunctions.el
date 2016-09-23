@@ -3,7 +3,7 @@
 
 (defun comment-fill-mode-hook ()
     (auto-fill-mode 1)
-    (setq fill-column 100
+    (setq fill-column 90
           comment-auto-fill-only-comments t)
 
     (set (make-local-variable 'fill-nobreak-predicate)

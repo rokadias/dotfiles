@@ -5,8 +5,7 @@
 ;;;###autoload
 (defun omnisharp-start-omnisharp-server (path-to-project)
   "Starts an OmniSharp server server for a given path to a project file or a directory"
-  (interactive "fStart OmniSharp for project folder or solution file: ")
-  (setq BufferName "*OmniServer*")
+  (interactive "GStart OmniSharp for project folder or solution file: ")
   (unless (bound-and-true-p omnisharp-server-executable-path)
     (error "Could not find the OmniSharp executable. Please set the variable omnisharp-server-executable-path to a valid path"))
 
@@ -17,27 +16,23 @@
         (message "using the server at: %s" omnisharp-server-executable-path))
     (error (format "Path does not lead to a valid project folder or solution file path: %s" path-to-project)))
 
-  (when (get-buffer BufferName)
-    (kill-buffer BufferName))
-
   ;; Save all csharp buffers to ensure the server is in sync"
   (save-some-buffers t (lambda () (string-equal (file-name-extension (buffer-file-name)) "cs")))
 
   (setq omnisharp--server-info
         (make-omnisharp--server-info
-         (let ((original-process-connection-type process-connection-type))
-
-           ;; use a pipe for the connection instead of a pty
-           (setq process-connection-type nil)
-
-           (let ((process (start-process
-                           "OmniServer" ; process name
-                           "OmniServer" ; buffer name
-                           omnisharp-server-executable-path
-                           "--stdio" "-s" (expand-file-name path-to-project))))
-             (setq process-connection-type original-process-connection-type)
-             (set-process-filter process 'omnisharp--handle-server-message)
-             process)))))
+         ;; use a pipe for the connection instead of a pty
+         (let ((process-connection-type nil))
+           (-doto (start-process
+		   "OmniServer" ; process name
+		   "OmniServer" ; buffer name
+		   omnisharp-server-executable-path
+		   "--stdio" "-s" (expand-file-name path-to-project))
+             (set-process-filter 'omnisharp--handle-server-message)
+             (set-process-sentinel (lambda (process event)
+                                     (when (memq (process-status process) '(exit signal))
+                                       (message "OmniSharp server terminated")
+                                       (setq omnisharp--server-info nil)))))))))
 
 ;;;###autoload
 (defun omnisharp-check-alive-status ()

@@ -172,18 +172,16 @@
 (when (package-installed-p 'omnisharp)
   (require 'omnisharp)
   (setq omnisharp-server-executable-path "/opt/omnisharp-roslyn/OmniSharp.exe")
-  (defun omnisharp-unit-test-worker (mode)
-    "Run tests after building the solution. Mode should be one of 'single', 'fixture' or 'all'" 
-    (let ((test-command
-           (omnisharp--fix-build-command-if-on-windows
-            (cdr (assoc 'TestCommand
-                        (omnisharp-post-message-curl-as-json
-                         (concat (omnisharp-get-host) "gettestcontext") 
-                         (cons `("Type" . ,mode)
-                               (omnisharp--get-common-params))))))))
-
-      (compile test-command)
-      (set-csharp-compile-command))))
+  (defun omnisharp-run-tests ()
+    (interactive)
+    (omnisharp--send-command-to-server
+     "gettestcontext"
+     (omnisharp--get-request-object)
+     (lambda (response)
+       (let* ((test-directory (cdr (assoc 'Directory response)))
+              (test-command (concat "dotnet test " test-directory " -trait \"Category=Unit\"")))
+         (compile test-command)
+         (set-csharp-compile-command))))))
 
 (defconst csharp-compilation-re-msbuild-error
   (concat
@@ -240,7 +238,7 @@
 (add-hook 'csharp-mode-hook 'omnisharp-mode)
 
 (setq system-namespaces '("System"))
-(setq development-namespaces '("ImsHealth" "Appature"))
+(setq development-namespaces '("Invio" "Gambit"))
 (setq using-regex "using \\([A-Za-z0-9\\.]+\\);")
 (defun get-namespace (using-statement)
   (replace-regexp-in-string using-regex "\\1" using-statement))

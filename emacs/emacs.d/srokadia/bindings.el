@@ -45,13 +45,12 @@
 ;; omnisharp config
 (define-key omnisharp-mode-map (kbd "C-; C-b") 'omnisharp-go-to-definition)
 (define-key omnisharp-mode-map (kbd "C-; C-k") 'omnisharp-find-usages-with-ido)
-(define-key omnisharp-mode-map (kbd "C-; C-r") 'omnisharp-fix-usings)
-(define-key omnisharp-mode-map (kbd "C-; C-t") 'omnisharp-unit-test-single)
-(define-key omnisharp-mode-map (kbd "C-; C-S-t") 'omnisharp-unit-test-fixture)
+(define-key omnisharp-mode-map (kbd "C-; C-r") 'omnisharp-rename)
+(define-key omnisharp-mode-map (kbd "C-; C-t") 'omnisharp-run-tests)
 (define-key omnisharp-mode-map (kbd "C-; C-,") 'omnisharp-navigate-to-solution-file)
 (define-key omnisharp-mode-map (kbd "C-; C-s") 'omnisharp-navigate-to-current-file-member)
-(define-key omnisharp-mode-map (kbd "C-; C-.") 'omnisharp-fix-code-issue-at-point)
-(define-key omnisharp-mode-map (kbd "C-; C-/") 'omnisharp-show-overloads-at-point)
+(define-key omnisharp-mode-map (kbd "C-; C-.") 'omnisharp-current-type-information)
+(define-key omnisharp-mode-map (kbd "C-; C-/") 'omnisharp-current-type-documentation)
 (define-key omnisharp-mode-map (kbd "C-; C-SPC") 'omnisharp-auto-complete)
 
 (require 'auto-complete)

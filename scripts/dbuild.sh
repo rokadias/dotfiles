@@ -12,4 +12,4 @@ then
     dirpath=$PWD
 fi
 
-docker run --rm --volumes-from=dotnet-data -v "$dirpath":/myapp -w /myapp microsoft/dotnet sh -c "find ./src/ -name project.json | xargs dotnet build"
+find $PWD -name project.json | xargs dotnet build

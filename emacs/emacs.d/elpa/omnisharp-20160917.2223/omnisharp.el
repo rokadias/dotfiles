@@ -34,6 +34,7 @@
 
 (require 'omnisharp-server-management)
 (require 'omnisharp-utils)
+(require 'omnisharp-http-utils)
 (require 'omnisharp-server-actions)
 (require 'omnisharp-auto-complete-actions)
 (require 'omnisharp-current-symbol-actions)
@@ -221,7 +222,7 @@ QuickFix class json result."
 (defun omnisharp--go-to-line-and-column (line column)
   (goto-char (point-min))
   (forward-line (1- line))
-  (move-to-column (max 0 column)))
+  (forward-char (max 0 column)))
 
 (defun omnisharp-go-to-file-line-and-column-worker (line
                                                     column
@@ -320,37 +321,36 @@ CALLBACK is the status callback passed by Flycheck."
          (funcall callback 'finished (delq nil errors)))))))
 
 (flycheck-define-generic-checker 'csharp-omnisharp-codecheck
-  "A csharp source syntax checker using the OmniSharp server process
+                                 "A csharp source syntax checker using the OmniSharp server process
    running in the background"
-  :start #'omnisharp--flycheck-start
-  :predicate (lambda () omnisharp-mode))
+                                 :start #'omnisharp--flycheck-start
+                                 :modes '(csharp-mode)
+                                 :predicate (lambda () (and omnisharp-mode omnisharp--server-info)))
 
 (defun omnisharp--flycheck-error-parser (response checker buffer)
   "Takes a QuickFixResponse result. Returns flycheck errors created based on the
 locations in the json."
-  (let* ((errors (omnisharp--vector-to-list
-                 (cdr (assoc 'QuickFixes response)))))
-
-    (when (not (equal (length errors) 0))
-      (mapcar (lambda (it)
-                (flycheck-error-new
-                 :buffer buffer
-                 :checker checker
-                 :filename (cdr (assoc 'FileName it))
-                 :line (cdr (assoc 'Line it))
-                 :column (cdr (assoc 'Column it))
-                 :message (cdr (assoc 'Text it))
-                 :level (if (equal (cdr (assoc 'LogLevel it)) "Warning")
-                            'warning
-                          'error)))
-              errors))))
+  (->> (omnisharp--vector-to-list
+        (cdr (assoc 'QuickFixes response)))
+       (mapcar (lambda (it)
+                 (flycheck-error-new
+                  :buffer buffer
+                  :checker checker
+                  :filename (cdr (assoc 'FileName it))
+                  :line (cdr (assoc 'Line it))
+                  :column (cdr (assoc 'Column it))
+                  :message (cdr (assoc 'Text it))
+                  :level (pcase (cdr (assoc 'LogLevel it))
+                           ("Warning" 'warning)
+                           ("Hidden" 'info)
+                           (_ 'error)))))))
 
 (defun omnisharp--imenu-make-marker (element)
   "Takes a QuickCheck element and returns the position of the
 cursor at that location"
   (let* ((element-line (cdr (assoc 'Line element)))
          (element-column (cdr (assoc 'Column element)))
-         (element-filename (cdr (assoc 'Filename element)))
+         (element-filename (cdr (assoc 'FileName element)))
          (use-buffer (current-buffer)))
     (save-excursion
       (omnisharp-go-to-file-line-and-column-worker
@@ -456,8 +456,8 @@ cursor at that location"
 (defun omnisharp--eldoc-worker ()
   "Gets type information from omnisharp server about the symbol at point"
   (omnisharp--completion-result-get-item 
-   (omnisharp-post-message-curl-as-json
-    (concat (omnisharp-get-host) "typelookup")
+   (omnisharp-post-http-message
+    (concat (omnisharp--get-host) "typelookup")
     (omnisharp--get-request-object))
    'Type))
 
