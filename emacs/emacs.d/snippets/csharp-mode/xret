@@ -1,0 +1,5 @@
+# group: xmlcomments
+# --
+$>/// <returns>
+$>///   $0
+$>/// </returns>
