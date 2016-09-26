@@ -1,0 +1,8 @@
+# group: tests
+# --
+$>[Fact, UnitTest]
+$>public async Task $1_ArgNull${2:_}() {
+$>    await Assert.ThrowsAsync<ArgumentNullException>(
+$>        async () => await $0
+            );
+$>}

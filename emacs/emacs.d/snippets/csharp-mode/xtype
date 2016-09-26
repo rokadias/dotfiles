@@ -1,0 +1,5 @@
+# group: xmlcomments
+# --
+$>/// <typeparam name="${1:T}">
+$>///   $0
+$>/// </typeparam>

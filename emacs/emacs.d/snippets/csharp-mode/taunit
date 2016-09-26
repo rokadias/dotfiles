@@ -1,0 +1,6 @@
+# group: tests
+# --
+$>[Fact, UnitTest]
+$>public async Task $1() {
+$>    $0
+$>}

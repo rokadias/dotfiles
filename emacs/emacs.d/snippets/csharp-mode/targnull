@@ -1,0 +1,8 @@
+# group: tests
+# --
+$>[Fact, UnitTest]
+$>public void $1_ArgNull${2:_}() {
+$>    Assert.Throws<ArgumentNullException>(
+$>        () => $0
+            );
+$>}

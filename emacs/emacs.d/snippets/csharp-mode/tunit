@@ -1,0 +1,6 @@
+# group: tests
+# --
+$>[Fact, UnitTest]
+$>public void $1() {
+$>    $0
+$>}

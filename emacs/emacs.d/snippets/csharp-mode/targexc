@@ -1,0 +1,8 @@
+# group: tests
+# --
+$>[Fact, UnitTest]
+$>public void $1_ArgExc${2:_}() {
+$>    Assert.Throws<ArgumentException>(
+$>        () => $0
+            );
+$>}
