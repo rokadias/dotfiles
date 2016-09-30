@@ -12,4 +12,4 @@ then
     dirpath=$PWD
 fi
 
-find $PWD -name project.json | xargs dotnet build
+dotnet build $1
