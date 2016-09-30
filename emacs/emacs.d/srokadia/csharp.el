@@ -133,7 +133,8 @@
                (concat "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe "
                        "/m /nr:false /v:q /p:GenerateFullPaths=true \"" project-file
                        "\" /p:StyleCop=false /p:BuildProjectReferences=true")
-             (concat "dbuild.sh " project-file))))))
+             (concat "dbuild.sh " project-file)))
+      (set (make-local-variable 'compile-fun) (lambda () (compile compile-command))))))
 
 (defun compile-run-test ()
   (interactive)
@@ -172,6 +173,7 @@
 (when (package-installed-p 'omnisharp)
   (require 'omnisharp)
   (setq omnisharp-server-executable-path "/opt/omnisharp-roslyn/OmniSharp.exe")
+  (setq omnisharp-use-http t)
   (defun omnisharp-run-tests ()
     (interactive)
     (omnisharp--send-command-to-server

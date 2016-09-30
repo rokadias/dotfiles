@@ -39,7 +39,7 @@
         (when project-file
           (progn (message "Found project file at %s" project-file)
                  (set (make-local-variable 'compile-command) "gulp build")
-                 (setq compile-fun (lambda () (compile-pkg project-file-directory))))))
+                 (set (make-local-variable 'compile-fun) (lambda () (compile-pkg project-file-directory))))))
 
 (eval-after-load "js2-mode"
   '(let ((js2-snippets (concat yasnippets-root "js2-mode")))
