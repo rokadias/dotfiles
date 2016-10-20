@@ -21,4 +21,5 @@
   (key-chord-define-global "vj" 'flycheck-next-error)
   (key-chord-define-global "vk" 'flycheck-previous-error)
   (key-chord-define-global "cx" 'ace-jump-mode)
+  (key-chord-define-global "xi" 'eval-print-last-sexp)
   (setq key-chord-two-keys-delay 0.02))
