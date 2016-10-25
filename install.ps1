@@ -13,6 +13,7 @@ New-Symlink $HOME\.emacs.d\srokadia\find-files-in-repository.el $PWD\emacs\emacs
 New-Symlink $HOME\.emacs.d\srokadia\flycheck.el $PWD\emacs\emacs.d\srokadia\flycheck.el
 New-Symlink $HOME\.emacs.d\srokadia\generalfunctions.el $PWD\emacs\emacs.d\srokadia\generalfunctions.el
 New-Symlink $HOME\.emacs.d\srokadia\global.el $PWD\emacs\emacs.d\srokadia\global.el
+New-Symlink $HOME\.emacs.d\srokadia\git.el $PWD\emacs\emacs.d\srokadia\git.el
 New-Symlink $HOME\.emacs.d\srokadia\haskell.el $PWD\emacs\emacs.d\srokadia\haskell.el
 New-Symlink $HOME\.emacs.d\srokadia\hg.el $PWD\emacs\emacs.d\srokadia\hg.el
 New-Symlink $HOME\.emacs.d\srokadia\html.el $PWD\emacs\emacs.d\srokadia\html.el
