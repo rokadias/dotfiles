@@ -1,0 +1,6 @@
+# group: jasmine
+# A behaviour driven test. 
+# --
+  it('$1', () => {
+    $0
+  });

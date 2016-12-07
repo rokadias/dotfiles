@@ -1,0 +1,4 @@
+# group: jasmine
+# An expectation with an equal result.
+# --
+expect($1).toEqual($2);

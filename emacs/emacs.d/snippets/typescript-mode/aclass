@@ -1,0 +1,17 @@
+# group: aureliajs
+# A normal aurelia class
+# --
+import {handle, Dispatcher} from 'aurelia-flux';
+import {inject} from 'aurelia-framework';
+
+@inject(Dispatcher)
+export class $1 {
+
+  constructor(dispatcher) {
+    this.dispatcher = dispatcher;
+  }
+
+  activate() {
+    $0
+  }
+}

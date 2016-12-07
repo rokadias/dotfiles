@@ -1,0 +1,13 @@
+# group: jasmine
+# The definition of a spec.
+# --
+import './setup';
+import { $beforeEach, $it } from "async-await-jasmine";
+
+describe('$1', () => {
+  let sut: $2;
+
+  $beforeEach(async () => {
+    sut = new $2();
+  });
+});

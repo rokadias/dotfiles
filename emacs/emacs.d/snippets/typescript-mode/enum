@@ -1,0 +1,9 @@
+# group: javascript
+# Creating an enum in javascript.
+# --
+export const $1Constants = {
+  $2   : '$3',
+  $0
+};
+
+module.exports = $1Constants;

@@ -1,0 +1,4 @@
+# group: jasmine
+# An expectation with toHaveBeenCalled.
+# --
+expect($1).toHaveBeenCalled();

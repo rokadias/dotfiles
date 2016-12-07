@@ -1,0 +1,4 @@
+# group: jasmine
+# An expectation without a specified result function.
+# --
+expect($1).$2;
