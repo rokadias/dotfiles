@@ -16,25 +16,14 @@
 (setq scroll-step 1)
 (setq scroll-conservatively 1)
 
-;; Put autosave files (ie #foo#) and backup files (ie foo~) in ~/.emacs.d/.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(auto-save-file-name-transforms (quote ((".*" "~/.emacs.d/autosaves/\\1" t))))
- '(backup-directory-alist (quote ((".*" . "~/.emacs.d/backups/"))))
- '(case-replace t)
- '(erc-irccontrols-mode t)
- '(jabber-alert-presence-hooks nil)
- '(session-use-package t nil (session)))
-
 ;; create the autosave dir if necessary, since emacs won't.
 (make-directory "~/.emacs.d/autosaves/" t)
 
 (setq backup-inhibited t)
 (setq auto-save-default nil)
 (setq create-lockfiles nil)
+(setq inhibit-startup-screen t)
+(kill-buffer "*scratch*")
 
 (setq indent-tabs-mode nil)
 (setq-default indent-tabs-mode nil)
