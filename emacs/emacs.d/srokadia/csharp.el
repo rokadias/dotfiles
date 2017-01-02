@@ -174,7 +174,7 @@
   (require 'omnisharp)
   (setq omnisharp-server-executable-path "/opt/omnisharp-roslyn/OmniSharp.exe")
   (setq omnisharp-use-http t)
-  (setq omnisharp-eldoc-support t)
+  (setq omnisharp-eldoc-support nil)
   (defun omnisharp-run-tests ()
     (interactive)
     (omnisharp--send-command-to-server
