@@ -30,5 +30,3 @@
   (with-temp-file target-path
     (insert stuff-to-write-to-file)
     target-path)) ;; return the target path
-
-(setq flycheck-check-syntax-automatically '(save mode-enabled))
