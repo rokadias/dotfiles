@@ -43,6 +43,7 @@ myKeys =
     -- keepass launch
     [((controlMask .|. altMask, xK_a), spawn "keepass -auto-type")
     , ((myModMask, xK_b), sendMessage ToggleStruts)
+    , ((myModMask, xK_d), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((myModMask .|. shiftMask, xK_q), spawn "xfce4-session-logout")
     , ((altMask, xK_Tab), nextScreen)
     , ((myModMask, xK_j), focusUp)
@@ -68,16 +69,20 @@ myKeys =
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = boringAuto (tiled ||| noBorders Full)
+-- default tiling algorithm partitions the screen into two panes
+
+myLayout = boringAuto (tiled ||| (noBorders Full) ||| halved)
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
+
+     halved = Tall nmaster (1/10) (1/2)
 
      -- The default number of windows in the master pane
      nmaster = 1
 
      -- Default proportion of screen occupied by master pane
-     ratio   = 3/4
+     ratio   = 11/16
 
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
@@ -102,5 +107,9 @@ main = xmonad $ ewmh xfceConfig {
 
 myManageHook = composeAll
   [
-    className =? "Xfce4-notifyd" --> doIgnore
+    className =? "Xfce4-notifyd"     --> doIgnore,
+    className =? "Gimp"              --> doFloat,
+    className =? "Xfce4-appfinder"   --> doFloat,
+    className =? "desktop_window"    --> doIgnore,
+    className =? "kdesktop"          --> doIgnore
   ]
