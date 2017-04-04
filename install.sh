@@ -10,6 +10,7 @@ ln -s $PWD/scripts/rsyncignore ~/scripts/rsyncignore
 ln -s $PWD/scripts/nunit.sh ~/scripts/nunit.sh
 ln -s $PWD/scripts/xunit.sh ~/scripts/xunit.sh
 
+ln -s $PWD/home/xmonad/xmonad.hs ~/.xmonad/
 mkdir ~/.xmonad/
 ln -s $PWD/home/xmonad/xmonad.hs ~/.xmonad/
 
@@ -54,6 +55,7 @@ ln -s $PWD/home/bash_profile ~/.bash_profile
 ln -s $PWD/home/conkyrc ~/.conkyrc
 ln -s $PWD/home/eslintrc ~/.eslintrc
 ln -s $PWD/home/xinitrc ~/.xinitrc
+ln -s $PWD/home/xmobarrc ~/.xmobarrc
 ln -s $PWD/home/xmodmap ~/.xmodmap
 ln -s $PWD/home/xprofile ~/.xprofile
 ln -s $PWD/home/zprofile ~/.zprofile

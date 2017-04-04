@@ -516,6 +516,7 @@ them.
 Calls the given CALLBACK with the result. Also caches that result
 as omnisharp--last-buffer-specific-auto-complete-result.
 Returns the request-id for the auto-complete request to the server."
+  (message (json-encode auto-complete-request))
   (omnisharp--send-command-to-server
    "autocomplete"
    auto-complete-request

@@ -95,3 +95,9 @@ If point was already at that position, move point to beginning of line."
   (interactive (list (read-char "Zap to char: " t)))
   (zap-to-char -1 char)
   )
+
+(defun trim-string (string)
+  "Remove white spaces in beginning and ending of STRING.
+White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
+  (replace-regexp-in-string "\\`[ \t\n]*" "" (replace-regexp-in-string "[ \t\n]*\\'" "" string))
+  )

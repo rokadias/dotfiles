@@ -1,5 +1,21 @@
 ;; -*- lexical-binding: t -*-
 
+(defun omnisharp-fix-usings ()
+  "Fix the usings within the current file. Replaces the file contents
+with the formatted result."
+  (interactive)
+  (omnisharp--send-command-to-server-sync
+   "fixusings"
+   (append `((WantsTextChanges . t))
+           (omnisharp--get-request-object))
+   (let ((current-file (buffer-file-name)))
+     (-lambda ((&alist 'Buffer buffer
+                       'AmbiguousResults ambiguous-results
+                       'Changes changes))
+              (omnisharp--update-files-with-text-changes
+               (buffer-file-name)
+               changes)))))
+
 (defun omnisharp-code-format-entire-file ()
   "Format the code in the current file. Replaces the file contents
 with the formatted result."

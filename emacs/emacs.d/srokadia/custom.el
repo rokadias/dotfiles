@@ -13,8 +13,12 @@
     ("6bb466c89b7e3eedc1f19f5a0cfa53be9baf6077f4d4a6f9b5d087f0231de9c8" "590759adc4a5bf7a183df81654cce13b96089e026af67d92b5eec658fb3fe22f" "50d9d021d33feb35a2328ee7dd4cba97b43815f6972c878f0411d2945e6d0d78" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" "a718cd3fde3231c20a8b8a0c342674a39b8916916195448efc2434ffd354e0ed" "a2c537c981b4419aa3decac8e565868217fc2995b74e1685c5ff8c6d77b198d6" "6e05b0a83b83b5efd63c74698e1ad6feaddf69a50b15a8b4a83b157aac45127c" default)))
  '(erc-irccontrols-mode t)
  '(fci-rule-color "#202325")
- '(flycheck-check-syntax-automatically '(save mode-enabled))
+ '(flycheck-check-syntax-automatically (quote (save mode-enabled)))
  '(jabber-alert-presence-hooks nil)
+ '(org-agenda-files (quote ("~/Documents/agenda/work.org")))
+ '(package-selected-packages
+   (quote
+    (uuidgen ztree zoom-frm zenburn-theme yaml-mode xml-rpc ws-trim workgroups2 wiki web-mode web use-package typing-practice typing tide sx sublime-themes smex slime session scss-mode restclient react-snippets powershell-mode powershell pabbrev org-jira omnisharp nvm nodejs-repl node-resolver multiple-cursors mediawiki markdown-preview-mode magit key-chord jsx-mode json-mode js-comint jira ido-vertical-mode hound helm hcl-mode haskell-mode gotham-theme go-mode go-errcheck fsm fsharp-mode frame-restore flymake-go flymake flatland-theme find-file-in-repository expand-region exec-path-from-shell editorconfig-core editorconfig edit-server doremi-frm dockerfile-mode dash-at-point color-theme ack achievements ace-jump-mode ac-js2)))
  '(session-use-package t nil (session))
  '(tab-stop-list
    (quote

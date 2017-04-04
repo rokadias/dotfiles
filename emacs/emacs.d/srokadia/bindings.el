@@ -44,6 +44,7 @@
 (require 'omnisharp)
 ;; omnisharp config
 (define-key omnisharp-mode-map (kbd "C-; C-b") 'omnisharp-go-to-definition)
+(define-key omnisharp-mode-map (kbd "C-; C-f") '(lambda () (interactive) (omnisharp-fix-usings) (sort-using-statements)))
 (define-key omnisharp-mode-map (kbd "C-; C-k") 'omnisharp-find-usages-with-ido)
 (define-key omnisharp-mode-map (kbd "C-; C-r") 'omnisharp-rename)
 (define-key omnisharp-mode-map (kbd "C-; C-t") 'omnisharp-run-tests)
@@ -67,6 +68,10 @@
 
 ;; Helm mode config
 (global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-M-/") 'helm-dabbrev)
 
 ;; ace-jump-mode
 (global-set-key (kbd "C-M-SPC") 'ace-jump-mode)
+
+;; uuidgen
+(global-set-key (kbd "C-x g") '(lambda () (interactive) (insert (trim-string (shell-command-to-string "sequuid")))))

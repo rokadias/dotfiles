@@ -10,9 +10,11 @@ import qualified Data.Map        as M
 import XMonad.Layout.BoringWindows
 import XMonad.Layout.NoBorders
 
+import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.EZConfig (additionalKeys)
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -87,7 +89,33 @@ myLayout = boringAuto (tiled ||| (noBorders Full) ||| halved)
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
 
-main = xmonad $ ewmh xfceConfig {
+myManageHook = composeAll
+  [
+    className =? "Xfce4-notifyd"     --> doIgnore,
+    className =? "Gimp"              --> doFloat,
+    className =? "Xfce4-appfinder"   --> doFloat,
+    className =? "desktop_window"    --> doIgnore,
+    className =? "kdesktop"          --> doIgnore
+  ]
+
+-- Helpers --
+-- avoidMaster:  Avoid the master window, but otherwise manage new windows normally
+avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
+avoidMaster = W.modify' $ \c -> case c of
+    W.Stack t [] (r:rs) -> W.Stack t [r] rs
+    otherwise           -> c
+
+-- ManageHook --
+pbManageHook :: ManageHook
+pbManageHook = composeAll $ concat
+    [ [ manageDocks ]
+    , [ manageHook defaultConfig ]
+    , [ isDialog --> doCenterFloat ]
+    , [ isFullscreen --> doFullFloat ]
+    , [ fmap not isDialog --> doF avoidMaster ]
+    ]
+
+myConfig = ewmh xfceConfig {
    -- simple stuff
      terminal     = myTerminal,
      modMask      = myModMask,
@@ -105,11 +133,13 @@ main = xmonad $ ewmh xfceConfig {
    }
    `additionalKeys` myKeys
 
-myManageHook = composeAll
-  [
-    className =? "Xfce4-notifyd"     --> doIgnore,
-    className =? "Gimp"              --> doFloat,
-    className =? "Xfce4-appfinder"   --> doFloat,
-    className =? "desktop_window"    --> doIgnore,
-    className =? "kdesktop"          --> doIgnore
-  ]
+main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
+
+-- Command to launch the bar.
+myBar = "xfce4-panel -r"
+
+-- Custom PP, configure it as you like. It determines what is being written to the bar.
+myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">" }
+
+-- Key binding to toggle the gap for the bar.
+toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)

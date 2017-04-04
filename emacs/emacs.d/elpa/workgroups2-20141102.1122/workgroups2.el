@@ -3175,6 +3175,7 @@ in either case."
               (wg-buf-uid it)
             (let ((buf (wg-buffer-to-buf buffer)))
               (push buf (wg-buf-list))
+              (if (> (length (wg-buf-list)) 100) (pop (wg-buf-list)))
               (wg-buf-uid buf)))))))
 
 (defun wg-buffer-uid-or-add (buffer)
