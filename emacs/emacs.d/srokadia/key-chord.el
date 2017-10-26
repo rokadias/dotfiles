@@ -7,7 +7,7 @@
   (key-chord-define-global "df" 'find-file-in-repository)
   (key-chord-define-global "sd" 'find-file-in-repository-other-window)
   (key-chord-define-global "qw" 'ido-switch-buffer)
-  (key-chord-define-global ",." 'ido-switch-buffer-other-window)
+  (key-chord-define-global ",." '(lambda () (interactive) (ido-switch-buffer-other-window) (other-window -1)))
   (key-chord-define-global "m," 'other-frame)
   (key-chord-define-global "x0" 'delete-window)
   (key-chord-define-global "cv" 'rgrep)

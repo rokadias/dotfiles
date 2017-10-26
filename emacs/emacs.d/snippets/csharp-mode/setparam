@@ -1,0 +1,5 @@
+# group: methods
+# --
+$>public $1 Set$2($3 ${2:$(downcase-first-char yas-text)}) {
+$>return this.SetPropertyValueImpl(nameof($2), ${2:$(downcase-first-char yas-text)});
+$>}

@@ -123,7 +123,7 @@
   )
 
 (defun set-csharp-compile-command ()
-  (let ((project-file (find-project-file "^project\\.json$")))
+  (let ((project-file (find-project-file "\\.csproj$")))
     (when project-file
       (message "Found project file at %s" project-file)
       (when is-cygwin
@@ -138,7 +138,7 @@
 
 (defun compile-run-test ()
   (interactive)
-  (let ((project-file (find-project-file "^project\\.json$")))
+  (let ((project-file (find-project-file "\\.sln$")))
     (when project-file
       (message "Found full msbuild project file at %s" project-file)
       (when is-cygwin
@@ -149,7 +149,7 @@
 
 (defun compile-full-msbuild ()
   (interactive)
-  (let ((project-file (find-project-file "\\.proj$")))
+  (let ((project-file (find-project-file "\\.sln$")))
     (when project-file
       (message "Found full msbuild project file at %s" project-file)
       (when is-cygwin
@@ -172,9 +172,9 @@
 
 (when (package-installed-p 'omnisharp)
   (require 'omnisharp)
-  (setq omnisharp-server-executable-path "/opt/omnisharp-roslyn/OmniSharp.exe")
+  (setq omnisharp-server-executable-path "~/.omnisharp/stdio/run")
   (setq omnisharp-use-http t)
-  (setq omnisharp-eldoc-support nil)
+  (setq omnisharp-eldoc-support t)
   (defun omnisharp-run-tests ()
     (interactive)
     (omnisharp--send-command-to-server
@@ -182,9 +182,26 @@
      (omnisharp--get-request-object)
      (lambda (response)
        (let* ((test-directory (cdr (assoc 'Directory response)))
-              (test-command (concat "dotnet test " test-directory " -trait \"Category=Unit\"")))
+              (test-csproj (concat test-directory "/" (file-name-nondirectory test-directory) ".csproj"))
+              (test-command (concat "dotnet test " test-csproj " --filter \"Category=Unit\"")))
+         (print response)
          (compile test-command)
-         (set-csharp-compile-command))))))
+         (set-csharp-compile-command)))))
+  (defun switch-omnisharp-solution ()
+    (interactive)
+    (when (get-process "OmniServer")
+      (omnisharp-stop-server)
+      (while (get-process "OmniServer") (sleep-for 0.2)))
+    (omnisharp--do-server-start (find-project-file "\\.sln$"))
+
+    (while (not (get-process "OmniServer"))
+      (sleep-for 0.2))
+    (set-process-query-on-exit-flag (get-process "OmniServer") nil)
+
+    (message "Waiting for omnisharp server...")
+    (sleep-for 10)
+    (while (not (omnisharp--check-ready-status))
+      (sleep-for 1))))
 
 (defconst csharp-compilation-re-msbuild-error
   (concat
@@ -302,4 +319,17 @@
   (string-join
    (sort (split-string statements "\n") 'compare-using-statements)
    "\n")
+  )
+
+(defun fix-namespace-curly-braces ()
+  (interactive)
+  (save-excursion
+    (beginning-of-buffer)
+    (when (re-search-forward "namespace [A-Za-z0-9\\.]+\n" (point-max) t)
+      (backward-char 1)
+      (delete-char 1)
+      (insert-string " ")
+      (save-buffer)
+      )
+    )
   )

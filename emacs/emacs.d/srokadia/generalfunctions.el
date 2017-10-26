@@ -101,3 +101,10 @@ If point was already at that position, move point to beginning of line."
 White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (replace-regexp-in-string "\\`[ \t\n]*" "" (replace-regexp-in-string "[ \t\n]*\\'" "" string))
   )
+
+(defun downcase-first-char (&optional string)
+  "Capitalize only the first character of the input STRING."
+  (when (and string (> (length string) 0))
+    (let ((first-char (substring string 0 1))
+          (rest-str   (substring string 1)))
+      (concat (downcase first-char) rest-str))))

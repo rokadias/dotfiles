@@ -44,7 +44,7 @@
 (require 'omnisharp)
 ;; omnisharp config
 (define-key omnisharp-mode-map (kbd "C-; C-b") 'omnisharp-go-to-definition)
-(define-key omnisharp-mode-map (kbd "C-; C-f") '(lambda () (interactive) (omnisharp-fix-usings) (sort-using-statements)))
+(define-key omnisharp-mode-map (kbd "C-; C-f") '(lambda () (interactive) (omnisharp-fix-usings) (sort-using-statements) (fix-namespace-curly-braces)))
 (define-key omnisharp-mode-map (kbd "C-; C-k") 'omnisharp-find-usages-with-ido)
 (define-key omnisharp-mode-map (kbd "C-; C-r") 'omnisharp-rename)
 (define-key omnisharp-mode-map (kbd "C-; C-t") 'omnisharp-run-tests)
