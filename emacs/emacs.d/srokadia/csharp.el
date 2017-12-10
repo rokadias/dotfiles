@@ -1,6 +1,7 @@
 ;; c# mode
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
 (require 'csharp-mode)
+(setq auto-mode-alist (append '(("\\.csx$" . csharp-mode)) auto-mode-alist))
 
 ;; hack, c# mode causes problems if this isn't loaded
 (when (package-installed-p 'flymake)
@@ -138,7 +139,7 @@
 
 (defun compile-run-test ()
   (interactive)
-  (let ((project-file (find-project-file "\\.sln$")))
+  (let ((project-file (find-project-file "\\.csproj$")))
     (when project-file
       (message "Found full msbuild project file at %s" project-file)
       (when is-cygwin
