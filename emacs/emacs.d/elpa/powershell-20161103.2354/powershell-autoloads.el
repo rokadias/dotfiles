@@ -1,10 +1,10 @@
 ;;; powershell-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "powershell" "powershell.el" (23026 12990 0
-;;;;;;  0))
+;;;### (autoloads nil "powershell" "powershell.el" (22756 5432 977966
+;;;;;;  882000))
 ;;; Generated autoloads from powershell.el
 
 (add-to-list 'auto-mode-alist '("\\.ps[dm]?1\\'" . powershell-mode))

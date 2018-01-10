@@ -1,10 +1,10 @@
 ;;; ztree-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "ztree-diff" "ztree-diff.el" (23026 12957 0
-;;;;;;  0))
+;;;### (autoloads nil "ztree-diff" "ztree-diff.el" (22756 5382 599030
+;;;;;;  679000))
 ;;; Generated autoloads from ztree-diff.el
 
 (autoload 'ztreediff-mode "ztree-diff" "\
@@ -21,7 +21,8 @@ Argument DIR2 right directory.
 
 ;;;***
 
-;;;### (autoloads nil "ztree-dir" "ztree-dir.el" (23026 12957 0 0))
+;;;### (autoloads nil "ztree-dir" "ztree-dir.el" (22756 5382 615696
+;;;;;;  994000))
 ;;; Generated autoloads from ztree-dir.el
 
 (autoload 'ztree-dir "ztree-dir" "\
@@ -31,8 +32,8 @@ Create an interactive buffer with the directory tree of the PATH given.
 
 ;;;***
 
-;;;### (autoloads nil "ztree-view" "ztree-view.el" (23026 12957 0
-;;;;;;  0))
+;;;### (autoloads nil "ztree-view" "ztree-view.el" (22756 5382 629030
+;;;;;;  45000))
 ;;; Generated autoloads from ztree-view.el
 
 (autoload 'ztree-mode "ztree-view" "\
@@ -43,7 +44,7 @@ A major mode for displaying the directory tree in text mode.
 ;;;***
 
 ;;;### (autoloads nil nil ("ztree-diff-model.el" "ztree-pkg.el" "ztree-util.el"
-;;;;;;  "ztree.el") (23026 12957 279861 0))
+;;;;;;  "ztree.el") (22756 5382 639029 835000))
 
 ;;;***
 
