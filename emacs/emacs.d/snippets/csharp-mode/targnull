@@ -1,8 +1,19 @@
 # group: tests
 # --
-$>[Fact, UnitTest]
+$>[Fact]
 $>public void $1_ArgNull${2:_}() {
-$>    Assert.Throws<ArgumentNullException>(
-$>        () => $0
+$>
+$>    // Arrange
+$>
+$>    $0
+$>
+$>    // Act
+$>
+$>    var exception = Record.Exception(
+$>        () =>
             );
+$>
+$>    // Assert
+$>
+$>    Assert.IsType<ArgumentNullException>(exception);
 $>}

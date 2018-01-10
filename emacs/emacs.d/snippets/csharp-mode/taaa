@@ -1,0 +1,16 @@
+# group: tests
+# --
+$>[Fact]
+$>public void $1() {
+$>
+$>    // Arrange
+$>
+$>    $0
+$>
+$>    // Act
+$>
+$>    
+$>
+$>    // Assert
+$>
+$>}

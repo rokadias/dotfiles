@@ -1,8 +1,19 @@
 # group: tests
 # --
-$>[Fact, UnitTest]
+$>[Fact]
 $>public async Task $1_ArgNull${2:_}() {
-$>    await Assert.ThrowsAsync<ArgumentNullException>(
-$>        async () => await $0
+$>
+$>    // Arrange
+$>
+$>    $0
+$>
+$>    // Act
+$>
+$>    var exception = await Record.ExceptionAsync(
+$>        async () => await
             );
+$>
+$>    // Assert
+$>
+$>    Assert.IsType<ArgumentNullException>(exception);
 $>}
