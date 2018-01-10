@@ -75,3 +75,9 @@
 
 ;; uuidgen
 (global-set-key (kbd "C-x g") '(lambda () (interactive) (insert (trim-string (shell-command-to-string "sequuid")))))
+
+
+;; tide
+(require 'tide)
+(define-key tide-mode-map (kbd "C-; C-k") 'tide-references)
+(define-key tide-mode-map (kbd "C-; C-r") 'tide-rename-symbol)

@@ -5,7 +5,11 @@
   (interactive)
   (funcall compile-fun))
 
-(setq compile-fun (lambda () (compile compile-command)))
+(setq compile-fun
+      (lambda ()
+        (when project-directory
+          (pushnew project-directory compilation-search-path))
+        (compile compile-command)))
 
 (defun compile-pkg (&optional directory command)
   "Compile a package, moving up to the parent directory

@@ -27,19 +27,12 @@
     (local-set-key "\C-c\C-r" 'js-send-region)
     (local-set-key "\C-cl" 'js-load-file-and-go))
   (setq show-trailing-whitespace t)
-  (let ((project-file (find-project-file "\.proj$")))
+  (let ((project-file (find-project-file "package.json")))
     (when project-file
       (progn (message "Found project file at %s" project-file)
              (when is-cygwin
                (setq project-file (concat "$(cygpath -aw " project-file ")")))
-             (set (make-local-variable 'compile-command)
-                  (concat "C:/Windows/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe /p:GenerateFullPaths=true \"" project-file "\"")))))
-  (let* ((project-file (find-project-file "gulpfile\.js"))
-         (project-file-directory (expand-file-name ".." project-file)))
-        (when project-file
-          (progn (message "Found project file at %s" project-file)
-                 (set (make-local-variable 'compile-command) "gulp build")
-                 (set (make-local-variable 'compile-fun) (lambda () (compile-pkg project-file-directory))))))
+             (set (make-local-variable 'compile-command) "npm run build" )))))
 
 (eval-after-load "js2-mode"
   '(let ((js2-snippets (concat yasnippets-root "js2-mode")))
@@ -50,8 +43,8 @@
 
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
-         (append '(("at\\s-*\\([^[:space:]]+\\)\\s-*line\\s-*\\([0-9]+\\)\\s-*:\\s-*\\([0-9]*\\)" 1 2 3))
-                 compilation-error-regexp-alist))))
+         (append '(("ERROR in \\([^\n]+\\)\n\\s-*\\[\\([0-9]+\\),\\s-*\\([0-9]+\\)\\].*" 1 2 3))
+                 compilation-error-regexp-alist)))
 
 (add-hook 'js2-mode-hook 'on-javascript-loaded)
 (add-hook 'js2-mode-hook 'comment-fill-mode-hook)
@@ -62,7 +55,16 @@
   (interactive)
   (tide-setup)
   (flycheck-mode +1)
-  (eldoc-mode +1))
+  (eldoc-mode +1)
+  (company-mode +1)
+  (let ((project-file (find-project-file "package.json")))
+    (when project-file
+      (set (make-local-variable 'project-file) project-file)
+      (set (make-local-variable 'project-directory) (file-name-directory project-file))
+      (progn (message "Found project file at %s" project-file)
+             (when is-cygwin
+               (setq project-file (concat "$(cygpath -aw " project-file ")")))
+             (set (make-local-variable 'compile-command) "npm run build" )))))
 
 (setq tide-tsserver-process-environment '("TSS_LOG=-level verbose -file /tmp/tss.log"))
 
