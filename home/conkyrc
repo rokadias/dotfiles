@@ -74,8 +74,11 @@ Up $alignr ${upspeed eno1} kb/s
 Downloaded: $alignr  ${totaldown eno1}
 Uploaded: $alignr  ${totalup eno1}
 
+${execpi 15 cat ~/.conkytimer}
+
+${if_running audacious}
 ${font Arial:bold:size=10}${color Tan2}MUSIC ${color DarkSlateGray}${hr 2}
-${color DimGray}$font${if_running audacious}
+${color DimGray}$font
 ${audacious_title 400}
 Bitrate $audacious_bitrate kbits/s
 $audacious_status $audacious_position/$audacious_length
