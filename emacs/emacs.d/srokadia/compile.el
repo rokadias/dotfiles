@@ -3,7 +3,27 @@
 
 (defun compile-override ()
   (interactive)
-  (funcall compile-fun))
+  (funcall compile-fun)
+  (resize-compile-window)
+  )
+
+(defun remove-compile-window ()
+  (interactive)
+  (let* ((cur (selected-window))
+         (cw (get-buffer-window "*compilation*")))
+    (if cw (delete-window cw))
+    )
+  )
+
+(defun resize-compile-window ()
+  (let* ((cur (selected-window))
+         (cw (get-buffer-window "*compilation*"))
+         (h (window-height cw)))
+    (select-window cw)
+    (shrink-window (- h 15))
+    (select-window cur)
+    )
+  )
 
 (setq compile-fun
       (lambda ()
@@ -25,3 +45,15 @@
     (message command)
     (compile command)
     (kill-buffer dir-buffer)))
+
+(defun compile-override-hook ()
+  (progn
+    (if (not (get-buffer-window "*compilation*"))
+        (progn
+          (split-window-vertically)
+          )
+      )
+    )
+  )
+
+(add-hook 'compilation-mode-hook 'compile-override-hook)

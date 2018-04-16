@@ -12,6 +12,7 @@
 (global-set-key [mouse-5] 'up-three)
 
 (global-set-key (kbd "M-m") 'compile-override)
+(global-set-key (kbd "C-x 7") 'remove-compile-window)
 
 (global-set-key [(control c) (r)] 'revert-buffer)
 
@@ -75,7 +76,6 @@
 
 ;; uuidgen
 (global-set-key (kbd "C-x g") '(lambda () (interactive) (insert (trim-string (shell-command-to-string "sequuid")))))
-
 
 ;; tide
 (require 'tide)

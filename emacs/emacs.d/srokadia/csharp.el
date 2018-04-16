@@ -184,9 +184,10 @@
      (lambda (response)
        (let* ((test-directory (cdr (assoc 'Directory response)))
               (test-csproj (concat test-directory "/" (file-name-nondirectory test-directory) ".csproj"))
-              (test-command (concat "dotnet test " test-csproj " --filter \"Category=Unit\"")))
+              (test-command (get-buffer-test-command test-csproj)))
          (print response)
          (compile test-command)
+         (resize-compile-window)
          (set-csharp-compile-command)))))
   (defun switch-omnisharp-solution ()
     (interactive)
@@ -203,6 +204,21 @@
     (sleep-for 10)
     (while (not (omnisharp--check-ready-status))
       (sleep-for 1))))
+
+(defun get-buffer-test-command (test-csproj)
+  (let ((namespace (get-buffer-namespace-name))
+        (className (get-buffer-class-name)))
+    (concat
+     "dotnet test "
+     test-csproj
+     " "
+     (if (and namespace className)
+         (concat "--filter \"FullyQualifiedName~" namespace "." className "\"")
+       "--filter \"Category=Unit\""
+       )
+     )
+    )
+  )
 
 (defconst csharp-compilation-re-msbuild-error
   (concat
@@ -298,6 +314,14 @@
   (if (member-if (lambda (x) (string-prefix-p x str)) list)
       t
     nil))
+
+(defun get-buffer-namespace-name ()
+  (get-singular-matched-regex "namespace \\([^ ]*\\) ")
+  )
+
+(defun get-buffer-class-name ()
+  (get-singular-matched-regex "class \\([^ ]*\\) ")
+  )
 
 (defun get-using-statements ()
   (save-excursion

@@ -31,3 +31,18 @@
                        (lambda (file) nil)))
         (current-dir-contents (directory-files current-dir t regexp t)))
     (cl-remove-if filter-on current-dir-contents)))
+
+(defun get-singular-matched-regex (regEx)
+  (save-match-data
+    (let* ((bufferString (buffer-string))
+           (startPos (string-match regEx (buffer-string) 0)))
+      (if startPos
+          (replace-regexp-in-string
+           regEx
+           "\\1"
+           (substring-no-properties bufferString startPos (match-end 0))
+           )
+        )
+      )
+    )
+  )
