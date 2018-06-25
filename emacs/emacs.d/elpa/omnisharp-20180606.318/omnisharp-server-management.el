@@ -1,16 +1,106 @@
+;; -*- lexical-binding: t; -*-
+
+;; This file is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;;
+;; omnisharp--server-info an assoc list is used to track all the metadata
+;; about currently running server.
+;;
+;; NOTE 1: this will go away with multi-server functionality
+;; NOTE 2: you shouldn't use this in user code, this is implementation detail
+;;
+;; keys:
+;;  :process           - process of the server
+;;  :request-id        - used for and incremented on every outgoing request
+;;  :response-handlers - alist of (request-id . response-handler)
+;;  :started?          - t if server reported it has started OK and is ready
+;;  :project-path      - path to server project .sln, .csproj or directory
+;;  :project-root      - project root directory (based on project-path)
 (defvar omnisharp--server-info nil)
+
 (defvar omnisharp--last-project-path nil)
 (defvar omnisharp--restart-server-on-stop nil)
 (defvar omnisharp-use-http nil "Set to t to use http instead of stdio.")
 
-(defun make-omnisharp--server-info (process)
-  `((:process . ,process)
-    ;; This is incremented for each request. Do not modify it in other
-    ;; places.
-    (:request-id . 1)
-    ;; alist of (request-id . response-handler)
-    (:response-handlers . nil)
-    (:started? . nil)))
+(defun make-omnisharp--server-info (process project-path)
+  (let ((project-root (if (f-dir-p project-path) project-path
+                        (f-dirname project-path))))
+    ;; see notes on (defvar omnisharp--server-info)
+    `((:process . ,process)
+      (:request-id . 1)
+      (:response-handlers . nil)
+      (:started? . nil)
+      (:project-path . ,project-path)
+      (:project-root . ,project-root))))
+
+(defun omnisharp--resolve-omnisharp-server-executable-path ()
+    "Attempts to resolve a path to local executable for the omnisharp-roslyn server.
+Will return `omnisharp-server-executable-path` override if set, otherwise will attempt
+to use server installed via `omnisharp-install-server`.
+
+ Failing all that an error message will be shown and nil returned."
+    (if omnisharp-server-executable-path
+        omnisharp-server-executable-path
+      (let ((server-installation-path (omnisharp--server-installation-path)))
+        (if server-installation-path
+            server-installation-path
+          (progn
+            (message "omnisharp: No omnisharp server could be found.")
+            (message (concat "omnisharp: Please use M-x 'omnisharp-install-server' or download server manually"
+                             " as detailed in https://github.com/OmniSharp/omnisharp-emacs/blob/master/doc/server-installation.md"))
+            nil)))))
+
+(defun omnisharp--do-server-start (path-to-project)
+  (let ((server-executable-path (omnisharp--resolve-omnisharp-server-executable-path)))
+    (message (format "omnisharp: Starting OmniSharpServer using project folder/solution file: %s %s"
+                     path-to-project
+                     "(check *omnisharp-log* buffer for omnisharp server log)"))
+
+    (omnisharp--log-reset)
+    (omnisharp--log (format "Starting OmniSharpServer using project folder/solution file: %s"
+                     path-to-project))
+    (omnisharp--log (format "Using server binary on %s" server-executable-path))
+
+    ;; Save all csharp buffers to ensure the server is in sync"
+    (save-some-buffers t (lambda () (string-equal (file-name-extension (buffer-file-name)) "cs")))
+
+    (setq omnisharp--last-project-path path-to-project)
+
+    ;; this can be set by omnisharp-reload-solution to t
+    (setq omnisharp--restart-server-on-stop nil)
+
+    (setq omnisharp--server-info
+          (make-omnisharp--server-info
+           ;; use a pipe for the connection instead of a pty
+           (let* ((process-connection-type nil)
+                  (omnisharp-process (start-process
+                            "OmniServer" ; process name
+                            "OmniServer" ; buffer name
+                            server-executable-path
+                            "--encoding" "utf-8"
+                            "--stdio" "-s" (omnisharp--path-to-server (expand-file-name path-to-project)))))
+             (buffer-disable-undo (process-buffer omnisharp-process))
+             (set-process-filter omnisharp-process 'omnisharp--handle-server-message)
+             (set-process-sentinel omnisharp-process
+                                   (lambda (process event)
+                                     (when (memq (process-status process) '(exit signal))
+                                       (message "omnisharp: OmniSharp server terminated")
+                                       (setq omnisharp--server-info nil)
+                                       (if omnisharp--restart-server-on-stop
+                                           (omnisharp--do-server-start omnisharp--last-project-path)))))
+             omnisharp-process)
+           path-to-project))))
 
 (defun omnisharp--clear-response-handlers ()
   "For development time cleaning up impossible states of response
@@ -47,6 +137,9 @@ sending."
   (if (equal nil omnisharp--server-info)
       (message (concat "omnisharp: OmniSharp server not running. "
                        "Start it with `omnisharp-start-omnisharp-server' first"))
+    (if (not (s-starts-with? "/" api-name))
+        (setq api-name (concat "/" api-name)))
+
     (-let* ((server-info omnisharp--server-info)
             ((&alist :process process
                      :request-id request-id) server-info)
@@ -116,13 +209,9 @@ process buffer, and handle them as server events"
   (-let (((&alist 'LogLevel log-level
                   'Name name
                   'Message message) (cdr (assoc 'Body packet))))
-    (when (and (equal log-level "INFORMATION")
-               (equal name "OmniSharp.Startup"))
-      (message (concat "omnisharp: " name ", " message)))
-    (when (equal log-level "ERROR")
-      (message (format "<-- OmniSharp server error: %s"
-                       (-first-item (s-lines message)))))
-    (omnisharp--log (format "%s: %s" log-level message))))
+    (omnisharp--log (format "%s: %s, %s" log-level name message))
+    (if (string-equal name "OmniSharp.Startup")
+        (message (format "omnisharp: %s, %s" name message)))))
 
 (defun omnisharp--event-packet? (packet)
   (and (equal "event" (cdr (assoc 'Type packet)))))
@@ -170,7 +259,7 @@ its type."
 (defun omnisharp--remove-response-handler (server-info request-id)
   (setcdr (assoc :response-handlers server-info)
           (--remove (= (car it) request-id)
-                    (-non-nil response-handlers))))
+                    (-non-nil (cdr (assoc :response-handlers server-info))))))
 
 (defun omnisharp--handle-server-response-packet (packet server-info)
   "Calls the appropriate response callback for the received packet"
@@ -257,13 +346,46 @@ have not been returned before."
           (beginning-of-line)
           (let ((text (s-lines (buffer-substring-no-properties
                                 (point)
-                                (process-mark process)))))
+                                (process-mark process))))
+                (trim-bom (lambda (s) (string-remove-prefix "\ufeff" (string-remove-prefix "\ufeff" s)))))
             ;; don't store messages in the process buffer unless
             ;; debugging, as they can slow emacs down when they pile
             ;; up
             (when (not omnisharp-debug) (erase-buffer))
-            (--filter (not (s-blank? it)) text)))))))
+            (-map trim-bom (--filter (not (s-blank? it)) text))))))))
 
-;;; todo stop-process
+(defun omnisharp--attempt-to-start-server-for-buffer ()
+  "Checks if the server for the project of the buffer is running
+and attempts to start it if it is not."
+
+  (unless (or (omnisharp--buffer-contains-metadata)
+              (not (buffer-file-name)))
+    (let* ((filename (buffer-file-name))
+           (server-project-root (if omnisharp--server-info (cdr (assoc :project-root omnisharp--server-info)) nil))
+           (filename-in-scope (and server-project-root
+                                   (f-same-p (f-common-parent (list filename server-project-root))
+                                             server-project-root)))
+           (project-path-candidates (omnisharp--resolve-sln-candidates))
+           (project-path-candidates-sln (-filter (lambda (filename) (string= (f-ext filename) "sln"))
+                                                 project-path-candidates))
+           (project-path (cond ((= (length project-path-candidates) 1) (car project-path-candidates))
+                               ((= (length project-path-candidates-sln) 1) (car project-path-candidates-sln)))))
+      (cond ((and (not server-project-root) project-path)
+             (omnisharp--do-server-start project-path))
+
+            ((and (not server-project-root) (not (= (length project-path-candidates) 1)))
+             (message (concat "omnisharp: no unambigious project path could be found"
+                              " to start OmniSharp server for this buffer automatically"))
+             (unless (= (length project-path-candidates) 0)
+               (message (concat "omnisharp: project path candidates are: "
+                                (s-join ", " project-path-candidates)))
+               (message "omnisharp: start the server manually with M-x omnisharp-start-omnisharp-server")))
+
+            ((and server-project-root (not filename-in-scope))
+             (message (format (concat "omnisharp: buffer will not be managed by omnisharp: "
+                                      "%s is outside the root directory of the project loaded on the "
+                                      "current OmniSharp server: %s")
+                              filename
+                              server-project-root)))))))
 
 (provide 'omnisharp-server-management)

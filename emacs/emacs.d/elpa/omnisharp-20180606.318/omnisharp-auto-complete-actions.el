@@ -1,5 +1,18 @@
 ;; -*- lexical-binding: t -*-
 
+;; This file is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 (require 'popup)
 (require 'dash)
 
@@ -18,43 +31,10 @@ results of an auto-complete call.")
   "The header for the temporary buffer that is used to display the
 results of an auto-complete call.")
 
-(defcustom omnisharp-auto-complete-popup-help-delay nil
-  "The timeout after which the auto-complete popup will show its help
-  popup. Disabled by default because the help is often scrambled and
-  looks bad."
-  :group 'omnisharp
-  :type '(choice (const :tag "disabled" nil)
-                 integer))
-
-(defcustom omnisharp-auto-complete-popup-persist-help t
-  "Whether to keep the help window (accessed by pressing f1 while the
-popup window is active) open after any other key is
-pressed. Defaults to true."
-  :group 'omnisharp
-  :type '(choice (const :tag "Yes" t)
-                 (const :tag "No" nil)))
-
 (defvar-local
   omnisharp--last-buffer-specific-auto-complete-result
   nil
   "Contains the last result of an autocomplete query.")
-
-(defcustom omnisharp-auto-complete-want-documentation t
-  "Whether to include auto-complete documentation for each and every
-response. This may be set to nil to get a speed boost for
-completions."
-  :group 'omnisharp
-  :type '(choice (const :tag "Yes" t)
-                 (const :tag "No" nil)))
-
-(defcustom omnisharp-auto-complete-want-importable-types nil
-  "Whether to search for autocompletions in all available
-namespaces. If a match is found for a new namespace, the namespace is
-automatically imported. This variable may be set to nil to get a speed
-boost for completions."
-  :group 'omnisharp
-  :type '(choice (const :tag "Yes" t)
-     (const :tag "No" nil)))
 
 (defvar omnisharp-auto-complete-popup-keymap
   (let ((keymap (make-sparse-keymap)))
@@ -95,76 +75,6 @@ information.")
 (defvar omnisharp-company-type-separator " : "
   "The string used to visually separate functions/variables from
   their types")
-
-(defcustom omnisharp-company-do-template-completion t
-  "Set to t if you want in-line parameter completion, nil
-  otherwise."
-  :group 'omnisharp
-  :type '(choice (const :tag "Yes" t)
-                 (const :tag "No" nil)))
-
-(defcustom omnisharp-company-template-use-yasnippet t 
-  "Set to t if you want completion to happen via yasnippet
-  otherwise fall back on company's templating. Requires yasnippet
-  to be installed"
-  
-  :group 'omnisharp
-  :type '(choice (const :tag "Yes" t)
-                 (const :tag "No" nil)))
-
-(defcustom omnisharp-company-ignore-case t
-  "If t, case is ignored in completion matches."
-  :group 'omnisharp
-  :type '(choice (const :tag "Yes" t)
-                 (const :tag "No" nil)))
-
-(defcustom omnisharp-company-strip-trailing-brackets nil
-  "If t, strips trailing <> and () from completions."
-  :group 'omnisharp
-  :type '(choice (const :tag "Yes" t)
-                 (const :tag "No" nil)))
-
-(defcustom omnisharp-company-begin-after-member-access t
-  "If t, begin completion when pressing '.' after a class, object
-  or namespace"
-  :group 'omnisharp
-  :type '(choice (const :tag "Yes" t)
-                 (const :tag "No" nil)))
-
-(defcustom omnisharp-company-sort-results t
-  "If t, autocompletion results are sorted alphabetically"
-  :group 'omnisharp
-  :type '(choice (const :tag "Yes" t)
-                 (const :tag "No" nil)))
-
-(defcustom omnisharp-imenu-support nil
-  "If t, activate imenu integration. Defaults to nil."
-  :group 'omnisharp
-  :type '(choice (const :tag "Yes" t)
-                 (const :tag "No" nil)))
-
-(defcustom omnisharp-eldoc-support t
-  "If t, activate eldoc integration - eldoc-mode must also be enabled for
-  this to work. Defaults to t."
-  :group 'omnisharp
-  :type '(choice (const :tag "Yes" t)
-                 (const :tag "No" nil)))
-
-(defcustom omnisharp-company-match-type 'company-match-simple
-  "Simple defaults to company's normal prefix matching (fast).
-   Server allows the omnisharp-server to do the matching (slow but does fuzzy matching).
-   Flex is experimental, and uses the flx library to match (fastish, good fuzzy matching)."
-  :group 'omnisharp
-  :type '(choice (const :tag "Simple" 'company-match-simple)
-                 (const :tag "Server" 'company-match-server)
-                 (const :tag "Flex" 'company-match-flx)))
-
-(defcustom omnisharp-company-match-sort-by-flx-score nil
-  "If omnisharp-company-match-type is 'company-match-flx', 
-   set this to 't' to order search results by the flx match score"
-  :group 'omnisharp
-  :type '(choice (const :tag "Yes" t)
-                 (const :tag "No" nil)))
 
 (defun omnisharp-auto-complete (&optional invert-importable-types-setting)
   "If called with a prefix argument, will complete types that are not
@@ -216,7 +126,9 @@ and complete members."
              . ,(omnisharp--t-or-json-false
                  omnisharp-auto-complete-want-importable-types))
 
-            (WordToComplete . ,(thing-at-point 'symbol)))
+            (WordToComplete . ,(thing-at-point 'symbol))
+
+            (WantKind . t))
 
           (omnisharp--get-request-object)))
 
@@ -230,7 +142,25 @@ and complete members."
 ;; The library only seems to accept completions that have the same
 ;; leading characters as results. Oh well.
 (defvar ac-source-omnisharp
-  '((candidates . omnisharp--get-auto-complete-result-in-popup-format)))
+  '((candidates . omnisharp--get-auto-complete-result-in-popup-format)
+    (action . omnisharp--ac-expand)))
+
+(defun omnisharp--ac-expand()
+  (interactive)
+  (let* ((begin-point
+          (car ac-last-completion))
+         (completion-text
+          (cdr ac-last-completion))
+         (completion-value
+          (get-text-property 0 'value completion-text))
+         (completion-snippet
+          (get-text-property 0 'Snippet completion-value)))
+    (if (and
+         completion-snippet
+         omnisharp-auto-complete-template-use-yasnippet
+         (boundp 'yas-minor-mode)
+         yas-minor-mode)
+        (yas-expand-snippet completion-snippet begin-point))))
 
 (defun ac-complete-omnisharp nil
   (interactive)
@@ -260,111 +190,6 @@ triggers a completion immediately"
           symbol)
       'stop)))
 
-(defun omnisharp-company-flx-score-filter-list (query candidates cache)
-  (let ((matches nil))
-    (dolist (candidate candidates)
-      (let* ((completion-text (omnisharp--get-company-candidate-data
-                               candidate
-                               'CompletionText))
-             (flx-val (flx-score completion-text query cache)))
-        (when (not (null flx-val))
-          (setq matches (cons (cons candidate flx-val) matches)))))
-
-    (if omnisharp-company-match-sort-by-flx-score
-        (setq matches (sort matches (lambda (el1 el2) (> (nth 1 el1) (nth 1 el2)))))
-      (setq matches (reverse matches)))
-    
-    (mapcar 'car matches)))
-
-(defvar omnisharp-company-current-flx-match-list nil)
-(defvar omnisharp-company-current-flx-arg-being-matched nil)
-(defvar omnisharp-company-checked-for-flex nil)
-(defvar omnisharp-company-flx-cache nil)
-
-;;;###autoload
-(defun company-omnisharp (command &optional arg &rest ignored)
-  (interactive '(interactive))
-  "`company-mode' completion back-end using OmniSharp."
-
-  ;; If flx isn't installed, turn off flex matching
-  (when (and (not omnisharp-company-checked-for-flex)
-             (eq omnisharp-company-match-type 'company-match-flx))
-    (setq omnisharp-company-checked-for-flex t)
-    (when (not (require 'flx))
-      (setq omnisharp-company-match-type 'company-match-simple)))
-
-  (cl-case command
-    (interactive (company-begin-backend 'company-omnisharp))
-    (prefix (when (and (bound-and-true-p omnisharp-mode)
-                       (not (company-in-string-or-comment)))
-              (omnisharp-company--prefix)))
-
-    (candidates (if (eq omnisharp-company-match-type 'company-match-flx)
-                    ;;flx matching
-                    (progn
-                        ;; If the completion arg is empty, just return what the server sends
-                        (if (string= arg "")
-                            (omnisharp--get-company-candidates arg)
-                          ;; If this is a new arg, cache the results
-                          (when (or (null omnisharp-company-current-flx-arg-being-matched)
-                                    (not (string-match-p omnisharp-company-current-flx-arg-being-matched arg)))
-                            (setq omnisharp-company-current-flx-match-list (omnisharp--get-company-candidates arg))
-                            (setq omnisharp-company-current-flx-arg-being-matched arg))
-
-                          ;; Let flex filter the results
-                          (omnisharp-company-flx-score-filter-list arg
-                                                                   omnisharp-company-current-flx-match-list
-                                                                   omnisharp-company-flx-cache)))
-                    (omnisharp--get-company-candidates arg)))
-
-
-    ;; because "" doesn't return everything, and we don't cache if we're handling the filtering
-    (no-cache (or (equal arg "")
-                  (not (eq omnisharp-company-match-type 'company-match-simple))))
-
-    (match (if (eq omnisharp-company-match-type 'company-match-simple)
-               nil
-             0))
-
-    (annotation (omnisharp--company-annotation arg))
-
-    (meta (omnisharp--get-company-candidate-data arg 'DisplayText))
-
-    (require-match 'never)
-
-    (doc-buffer (let ((doc-buffer (company-doc-buffer
-                                   (omnisharp--get-company-candidate-data
-                                    arg 'Description))))
-                  (with-current-buffer doc-buffer
-                    (visual-line-mode))
-                  doc-buffer))
-
-    (ignore-case omnisharp-company-ignore-case)
-
-    (sorted (if (eq omnisharp-company-match-type 'company-match-simple)
-                (not omnisharp-company-sort-results)
-              t))
-
-    ;; Check to see if we need to do any templating
-    (post-completion (setq omnisharp-company-current-flx-arg-being-matched nil)
-                     (let* ((json-result (get-text-property 0 'omnisharp-item arg))
-                            (allow-templating (get-text-property 0 'omnisharp-allow-templating arg)))
-
-                       (omnisharp--tag-text-with-completion-info arg json-result)
-                       (when allow-templating
-                         ;; Do yasnippet completion
-                         (if (and omnisharp-company-template-use-yasnippet (boundp 'yas-minor-mode) yas-minor-mode)
-                             (-when-let (method-snippet (omnisharp--completion-result-item-get-method-snippet
-							 json-result))
-			       (omnisharp--snippet-templatify arg method-snippet json-result))
-                           ;; Fallback on company completion but make sure company-template is loaded.
-                           ;; Do it here because company-mode is optional
-                           (require 'company-template)
-                           (let ((method-base (omnisharp--get-method-base json-result)))
-                             (when (and method-base
-                                        (string-match-p "([^)]" method-base))
-                               (company-template-c-like-templatify method-base)))))))))
-                       
 (defun omnisharp--tag-text-with-completion-info (call json-result)
   "Adds data to the completed text which we then use in ElDoc"
   (add-text-properties (- (point) (length call)) (- (point) 1)
@@ -372,7 +197,7 @@ triggers a completion immediately"
 
 
 (defun omnisharp--yasnippet-tag-text-with-completion-info ()
-  "This is called after yasnippet has finished expanding a template. 
+  "This is called after yasnippet has finished expanding a template.
    It adds data to the completed text, which we later use in ElDoc"
   (when omnisharp-snippet-json-result
     (add-text-properties yas-snippet-beg yas-snippet-end
@@ -390,7 +215,7 @@ triggers a completion immediately"
   (when (not omnisharp-snippet-json-result)
     (setq omnisharp-snippet-json-result json-result)
     (add-hook 'yas-after-exit-snippet-hook 'omnisharp--yasnippet-tag-text-with-completion-info))
-  
+
   (delete-region (- (point) (length call)) (point))
   (yas-expand-snippet snippet))
 
@@ -440,7 +265,7 @@ SomeMethod(int parameter)' and the original value ITEM."
            (setq output (car (split-string completion "(\\|<"))))
           (method-base
            (setq output method-base)))
-    
+
     ;; When we aren't templating, show the full description of the
     ;; method, rather than just the return type
     (when (not allow-templating)
@@ -464,17 +289,22 @@ company-mode-friendly"
   (let* ((json-false :json-false)
          ;; json-false helps distinguish between null and false in
          ;; json. This is an emacs limitation.
-         (completion-ignore-case omnisharp-company-ignore-case)
-         (params
-          (omnisharp--create-auto-complete-request)))
+         (params (omnisharp--create-auto-complete-request))
+         (handler (lambda (result)
+                    (let* ((completion-list (mapcar #'omnisharp--make-company-completion
+                                                    omnisharp--last-buffer-specific-auto-complete-result)))
+                      (if (eq omnisharp-company-match-type 'company-match-simple)
+                          (all-completions pre completion-list)
+                        completion-list)))))
 
     ;; store auto-complete results
-    (omnisharp--wait-until-request-completed (omnisharp-auto-complete-worker params))
-    (let* ((completion-list (mapcar #'omnisharp--make-company-completion
-                                    omnisharp--last-buffer-specific-auto-complete-result)))
-      (if (eq omnisharp-company-match-type 'company-match-simple)
-          (all-completions pre completion-list)
-        completion-list))))
+    ;; (omnisharp--wait-until-request-completed (omnisharp-auto-complete-worker params))
+    (cons :async (lambda (cb)
+                   (omnisharp-auto-complete-worker
+                    params
+                    (lambda (result)
+                      (let ((completion-ignore-case omnisharp-company-ignore-case))
+                       (funcall cb (funcall handler result)))))))))
 
 (defun omnisharp--company-annotation (candidate)
   (get-text-property 0 'omnisharp-ann candidate))
@@ -609,7 +439,7 @@ current buffer."
             (save-excursion
               (search-backward (omnisharp--current-word-or-empty-string)))))
 
-      (if (and completion-snippet omnisharp-company-template-use-yasnippet (fboundp 'yas-expand-snippet))
+      (if (and completion-snippet omnisharp-company-template-use-yasnippet (boundp 'yas-minor-mode) yas-minor-mode)
           (yas-expand-snippet
            completion-snippet
            current-symbol-start-point
@@ -639,10 +469,10 @@ is a more sophisticated matching framework than what popup.el offers."
            ;; This is only the display text. The text to be inserted
            ;; in the buffer will be fetched with this
            ;;
-           ;; TODO does ido-completing-read allow a custom format that
+           ;; TODO does completing-read allow a custom format that
            ;; could store these, as with popup-make-item ?
            (user-chosen-display-text
-            (omnisharp--ido-completing-read
+            (omnisharp--completing-read
              "Complete: "
              display-texts))
 
@@ -672,15 +502,45 @@ is a more sophisticated matching framework than what popup.el offers."
       (when required-namespace-import
         (omnisharp--insert-namespace-import required-namespace-import)))))
 
+(defun omnisharp--convert-auto-complete-kind-to-popup-symbol-value (kind)
+  (pcase kind
+    ;; auto-complete's recommended rules
+    ;;; Symbol
+    ("Keyword" "s")
+    ;;; Function, Method
+    ("Method" "f")
+    ("Function" "f")
+    ("Constructor" "f")
+    ;;; Variable
+    ("Field" "v")
+    ("Variable" "v")
+    ("Property" "v")
+    ;;; Constant
+    ;;; Abbreviation
+    ("Value" "a")
+    ;; original rules
+    ("Text" "")
+    ("Class" "t")
+    ("Interface" "i")
+    ("Enum" "e")
+    ("Module" "m")
+    ("Unit" "u")
+    ("Snippet" "")
+    ("Color" "")
+    ("File" "f")
+    ("Reference" "r")))
+
 (defun omnisharp--convert-auto-complete-result-to-popup-format (json-result-alist)
   (mapcar
    (-lambda ((&alist 'DisplayText display-text
                      'CompletionText completion-text
                      'Description description
                      'Snippet snippet
-                     'RequiredNamespaceImport require-ns-import))
+                     'RequiredNamespaceImport require-ns-import
+                     'Kind kind))
             (popup-make-item display-text
                              :value (propertize completion-text 'Snippet snippet 'RequiredNamespaceImport require-ns-import)
+                             :symbol (omnisharp--convert-auto-complete-kind-to-popup-symbol-value kind)
                              :document description))
    json-result-alist))
 

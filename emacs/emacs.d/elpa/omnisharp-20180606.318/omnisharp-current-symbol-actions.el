@@ -1,5 +1,18 @@
 ;; -*- lexical-binding: t -*-
 
+;; This file is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 (defun omnisharp-current-type-information (&optional add-to-kill-ring)
   "Display information of the current type under point. With prefix
 argument, add the displayed result to the kill ring. This can be used
@@ -22,11 +35,11 @@ from the server side, i.e. 'Type or 'Documentation that will be
 displayed to the user."
   (omnisharp--send-command-to-server
    "typelookup"
-   (omnisharp--get-request-object)
+   (omnisharp--get-typelookup-request-object)
    (lambda (response)
      (let ((stuff-to-display (cdr (assoc type-property-name
                                          response))))
-       (message stuff-to-display)
+       (omnisharp--message-at-point stuff-to-display)
        (when add-to-kill-ring
          (kill-new stuff-to-display))))))
 
@@ -39,7 +52,7 @@ ring."
 (defun omnisharp-find-usages ()
   "Find usages for the symbol under point"
   (interactive)
-  (message "Finding usages...")
+  (omnisharp--message "Finding usages...")
   (omnisharp--send-command-to-server
    "findusages"
    (omnisharp--get-request-object)
@@ -48,7 +61,7 @@ ring."
 
 (defun omnisharp--find-usages-show-response (quickfixes)
   (if (equal 0 (length quickfixes))
-      (message "No usages found.")
+      (omnisharp--message-at-point "No usages found.")
     (omnisharp--write-quickfixes-to-compilation-buffer
      quickfixes
      omnisharp--find-usages-buffer-name
@@ -67,7 +80,7 @@ ring."
                                                            &optional other-window)
   (-let (((&alist 'QuickFixes quickfixes) quickfix-response))
     (cond ((equal 0 (length quickfixes))
-           (message "No implementations found."))
+           (omnisharp--message "No implementations found."))
           ((equal 1 (length quickfixes))
            (omnisharp-go-to-file-line-and-column (-first-item (omnisharp--vector-to-list quickfixes))
                                                  other-window))
@@ -88,12 +101,12 @@ ring."
 point, or classes derived from the class under point. Allow the user
 to select one (or more) to jump to."
   (interactive)
-  (message "Finding implementations...")
+  (omnisharp--message "Finding implementations...")
   (omnisharp-find-implementations-worker
    (omnisharp--get-request-object)
    (lambda (quickfixes)
      (cond ((equal 0 (length quickfixes))
-            (message "No implementations found."))
+            (omnisharp--message "No implementations found."))
 
            ;; Go directly to the implementation if there only is one
            ((equal 1 (length quickfixes))
@@ -136,7 +149,7 @@ name to rename to, defaulting to the current name of the symbol."
 (defun omnisharp--rename-worker (rename-response
                                  location-before-rename)
   (-if-let (error-message (cdr (assoc 'ErrorMessage rename-response)))
-      (message error-message)
+      (omnisharp--message error-message)
     (-let (((&alist 'Changes modified-file-responses) rename-response))
       ;; The server will possibly update some files that are currently open.
       ;; Save all buffers to avoid conflicts / losing changes
@@ -148,7 +161,7 @@ name to rename to, defaulting to the current name of the symbol."
       ;; the user does not feel disoriented
       (omnisharp-go-to-file-line-and-column location-before-rename)
 
-      (message "Rename complete in files: \n%s"
+      (omnisharp--message "Rename complete in files: \n%s"
                (-interpose "\n" (--map (omnisharp--get-filename it)
                                        modified-file-responses))))))
 

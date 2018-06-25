@@ -173,8 +173,8 @@
 
 (when (package-installed-p 'omnisharp)
   (require 'omnisharp)
-  (setq omnisharp-server-executable-path "~/.omnisharp/stdio/run")
-  (setq omnisharp-use-http t)
+  (setq omnisharp-server-executable-path nil)
+  (setq omnisharp-use-http nil)
   (setq omnisharp-eldoc-support t)
   (defun omnisharp-run-tests ()
     (interactive)
@@ -275,7 +275,7 @@
 (add-hook 'csharp-mode-hook 'omnisharp-mode)
 
 (setq system-namespaces '("System"))
-(setq development-namespaces '("Invio" "Gambit"))
+(setq development-namespaces '("Invio" "Gambit" "Rogue"))
 (setq using-regex "using \\([A-Za-z0-9\\.]+\\);")
 (defun get-namespace (using-statement)
   (replace-regexp-in-string using-regex "\\1" using-statement))

@@ -1,11 +1,25 @@
-;; -*- mode: Emacs-Lisp; lexical-binding: t; -*-
-;;; omnisharp.el --- Omnicompletion (intellisense) and more for C#
-;; Copyright (C) 2013 Mika Vilpas (GPLv3)
-;; Author: Mika Vilpas
-;; Version: 3.4
+;;; omnisharp.el --- Omnicompletion (intellisense) and more for C# -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2013-2018 Mika Vilpas and others (GPLv3)
+;; Author: Mika Vilpas and others
+;; Version: 4.2
+;; License: GNU General Public License version 3, or (at your option) any later version
 ;; Url: https://github.com/Omnisharp/omnisharp-emacs
-;; Package-Requires: ((json "1.2") (flycheck "30") (dash "2.12.1") (auto-complete "1.4") (popup "0.5.1") (csharp-mode "0.8.7") (cl-lib "0.5") (s "1.10.0") (shut-up "0.3.2"))
-;; Keywords: csharp c# IDE auto-complete intellisense
+;; Package-Requires: ((emacs "24.4") (flycheck "30") (dash "2.12.0") (auto-complete "1.4") (popup "0.5.1") (csharp-mode "0.8.7") (cl-lib "0.5") (s "1.10.0") (shut-up "0.3.2") (f "0.19.0"))
+;; Keywords: languages csharp c# IDE auto-complete intellisense
+
+;; This file is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 ;; omnisharp-emacs is a port of the awesome OmniSharp server to the
@@ -14,8 +28,12 @@
 ;; that works in the background.
 ;;
 ;; See the project home page for more information.
-(require 'json)
+
+
+(require 'cl)
 (require 'cl-lib)
+(require 'csharp-mode)
+(require 'json)
 (require 'files)
 (require 'ido)
 (require 'thingatpt)
@@ -27,7 +45,9 @@
 (require 'flycheck)
 (require 's)
 (require 'shut-up)
+(require 'f)
 
+(require 'omnisharp-settings)
 (require 'omnisharp-server-management)
 (require 'omnisharp-utils)
 (require 'omnisharp-http-utils)
@@ -35,10 +55,10 @@
 (require 'omnisharp-auto-complete-actions)
 (require 'omnisharp-current-symbol-actions)
 (require 'omnisharp-navigation-actions)
-(require 'omnisharp-settings)
 (require 'omnisharp-helm-integration)
 (require 'omnisharp-solution-actions)
 (require 'omnisharp-format-actions)
+(require 'omnisharp-server-installation)
 
 ;;; Code:
 ;;;###autoload
@@ -50,6 +70,7 @@ server backend."
   :keymap omnisharp-mode-map
   (omnisharp--init-imenu-support)
   (omnisharp--init-eldoc-support)
+  (omnisharp--attempt-to-start-server-for-buffer)
 
   ;; These are selected automatically when flycheck is enabled
   (add-to-list 'flycheck-checkers 'csharp-omnisharp-codecheck))
@@ -68,6 +89,118 @@ server backend."
       (make-local-variable 'eldoc-documentation-function)
       (setq eldoc-documentation-function 'omnisharp-eldoc-function))))
 
+;;
+;; below are all the interactive functions that are to be available via autoload
+;;
+;; (autoloaded f-ns should go in omnisharp.el in order to make
+;; internal file dependencies easier to manage when autoloading)
+;;
+
+;;;###autoload
+(defun omnisharp-start-omnisharp-server (&optional no-autodetect)
+  "Starts an OmniSharp server for a given path to a project or solution file"
+  (interactive "P")
+  (omnisharp--start-omnisharp-server no-autodetect))
+
+;;;###autoload
+(defun omnisharp-stop-server ()
+  "Stops Omnisharp server if running."
+  (interactive)
+  (omnisharp--stop-server))
+
+;;;###autoload
+(defun omnisharp-reload-solution ()
+  "Restarts omnisharp server on solution last loaded"
+  (interactive)
+  (omnisharp--reload-solution))
+
+;;;###autoload
+(defun omnisharp-check-alive-status ()
+  "Shows a message to the user describing whether the
+OmniSharpServer process specified in the current configuration is
+alive.
+\"Alive\" means it is running and not stuck. It also means the connection
+to the server is functional - I.e. The user has the correct host and
+port specified."
+  (interactive)
+  (omnisharp--check-alive-status))
+
+;;;###autoload
+(defun omnisharp-check-ready-status ()
+  "Shows a message to the user describing whether the
+OmniSharpServer process specified in the current configuration has
+finished loading the solution."
+  (interactive)
+  (omnisharp--check-ready-status))
+
+;;;###autoload
+(defun omnisharp-install-server (reinstall)
+  "Installs OmniSharp server locally into ~/.emacs/cache/omnisharp/server/$(version)"
+  (interactive "P")
+  (omnisharp--install-server reinstall))
+
+;;;###autoload
+(defun company-omnisharp (command &optional arg &rest ignored)
+  (interactive '(interactive))
+  "`company-mode' completion back-end using OmniSharp."
+
+  (cl-case command
+    (interactive (company-begin-backend 'company-omnisharp))
+    (prefix (when (and (bound-and-true-p omnisharp-mode)
+                       (not (company-in-string-or-comment)))
+              (omnisharp-company--prefix)))
+
+    (candidates (omnisharp--get-company-candidates arg))
+
+    ;; because "" doesn't return everything, and we don't cache if we're handling the filtering
+    (no-cache (or (equal arg "")
+                  (not (eq omnisharp-company-match-type 'company-match-simple))))
+
+    (match (if (eq omnisharp-company-match-type 'company-match-simple)
+               nil
+             0))
+
+    (annotation (omnisharp--company-annotation arg))
+
+    (meta (omnisharp--get-company-candidate-data arg 'DisplayText))
+
+    (require-match 'never)
+
+    (doc-buffer (let ((doc-buffer (company-doc-buffer
+                                   (omnisharp--get-company-candidate-data
+                                    arg 'Description))))
+                  (with-current-buffer doc-buffer
+                    (visual-line-mode))
+                  doc-buffer))
+
+    (ignore-case omnisharp-company-ignore-case)
+
+    (sorted (if (eq omnisharp-company-match-type 'company-match-simple)
+                (not omnisharp-company-sort-results)
+              t))
+
+    ;; Check to see if we need to do any templating
+    (post-completion (let* ((json-result (get-text-property 0 'omnisharp-item arg))
+                            (allow-templating (get-text-property 0 'omnisharp-allow-templating arg)))
+
+                       (omnisharp--tag-text-with-completion-info arg json-result)
+                       (when allow-templating
+                         ;; Do yasnippet completion
+                         (if (and omnisharp-company-template-use-yasnippet (boundp 'yas-minor-mode) yas-minor-mode)
+                             (-when-let (method-snippet (omnisharp--completion-result-item-get-method-snippet
+							 json-result))
+			       (omnisharp--snippet-templatify arg method-snippet json-result))
+                           ;; Fallback on company completion but make sure company-template is loaded.
+                           ;; Do it here because company-mode is optional
+                           (require 'company-template)
+                           (let ((method-base (omnisharp--get-method-base json-result)))
+                             (when (and method-base
+                                        (string-match-p "([^)]" method-base))
+                               (company-template-c-like-templatify method-base)))))))))
+
+;;
+;; easymenu
+;;
 (easy-menu-define omnisharp-mode-menu omnisharp-mode-map
   "Menu for omnisharp-mode"
   '("OmniSharp"
@@ -178,15 +311,28 @@ some cases. Work around this."
   "Construct a Request object based on the current buffer contents."
   (let* ((line-number (number-to-string (line-number-at-pos)))
          (column-number (number-to-string (omnisharp--current-column)))
-         (buffer-contents (omnisharp--get-current-buffer-contents))
+         (buffer-contents (if (boundp 'omnisharp--metadata-source)
+                              nil
+                            (omnisharp--get-current-buffer-contents)))
          (filename-tmp (or buffer-file-name ""))
          (params `((Line     . ,line-number)
                    (Column   . ,column-number)
                    (Buffer   . ,buffer-contents))))
-    (if (/= 0 (length filename-tmp))
-        (cons (omnisharp--to-filename filename-tmp)
-              params)
-      params)))
+    (cond
+     ((boundp 'omnisharp--metadata-source)
+      (cons `(FileName . ,omnisharp--metadata-source)
+            params))
+     ((/= 0 (length filename-tmp))
+      (cons (omnisharp--to-filename filename-tmp)
+            params))
+     (t
+      params))))
+
+(defun omnisharp--get-typelookup-request-object ()
+  "Construct a Request object for typelookup endpoint based on the current buffer contents."
+  (append
+   '((IncludeDocumentation . t))
+   (omnisharp--get-request-object)))
 
 (defun omnisharp--get-request-object-for-emacs-side-use ()
   "Gets a Request class that can be only handled safely inside
@@ -205,15 +351,20 @@ not work on all platforms."
       params)))
 
 (defun omnisharp-go-to-file-line-and-column (json-result
-                                             &optional other-window)
+                                             &optional other-window
+                                             buffer)
   "Open file :FileName at :Line and :Column. If filename is not given,
 defaults to the current file. This function works for a
-QuickFix class json result."
+QuickFix class json result.
+
+Switches to BUFFER instead of :FileName when buffer is set."
   (omnisharp-go-to-file-line-and-column-worker
    (cdr (assoc 'Line json-result))
    (- (cdr (assoc 'Column json-result)) 1)
    (omnisharp--get-filename json-result)
-   other-window))
+   other-window
+   nil
+   buffer))
 
 (defun omnisharp--go-to-line-and-column (line column)
   (goto-char (point-min))
@@ -224,18 +375,20 @@ QuickFix class json result."
                                                     column
                                                     &optional filename
                                                     other-window
-                                                    dont-save-old-pos)
-  "Open file filename at line and column. If filename is not given,
-defaults to the current file. Saves the current location into the tag
-ring so that the user may return with (pop-tag-mark).
+                                                    dont-save-old-pos
+                                                    buffer)
+  "Open filename at line and column. Switches to BUFFER if provided,
+otherwise defaults to the current file if filename is not given.
+Saves the current location into the tag ring so that the user may
+return with (pop-tag-mark).
 
 If DONT-SAVE-OLD-POS is specified, will not save current position to
 find-tag-marker-ring. This is so this function may be used without
 messing with the ring."
 
   (let ((position-before-jumping (point-marker)))
-    (when filename
-      (omnisharp--find-file-possibly-in-other-window filename
+    (when (or buffer filename)
+      (omnisharp--find-file-possibly-in-other-window (or buffer filename)
                                                      other-window))
 
     ;; calling goto-line directly results in a compiler warning.
@@ -265,18 +418,23 @@ record that position. Otherwise record the current position."
   (ring-insert find-tag-marker-ring marker))
 
 (defun omnisharp--find-file-possibly-in-other-window
-  (filename &optional other-window)
-  "Open a buffer editing FILENAME. If no buffer for that filename
+  (file &optional other-window)
+  "Open a buffer editing FILE. If no buffer for that filename
 exists, a new one is created.
 If the optional argument OTHER-WINDOW is non-nil, uses another
-window."
+window.
+
+FILE can be a buffer in which case that buffer is selected."
 
   (cond
-   ((omnisharp--buffer-exists-for-file-name filename)
+   ((or (bufferp file)
+        (omnisharp--buffer-exists-for-file-name file))
     (let ((target-buffer-to-switch-to
-           (--first (string= (buffer-file-name it)
-                             filename)
-                    (buffer-list))))
+           (if (bufferp file)
+               file
+             (--first (string= (buffer-file-name it)
+                               file)
+                      (buffer-list)))))
       (if other-window
           (pop-to-buffer target-buffer-to-switch-to)
         (pop-to-buffer-same-window target-buffer-to-switch-to))))
@@ -285,7 +443,7 @@ window."
     (funcall (if other-window
                  'find-file-other-window
                'find-file)
-             filename))))
+             file))))
 
 (defun omnisharp--vector-to-list (vector)
   (append vector nil))
@@ -305,7 +463,7 @@ the user selects a completion and the completion is inserted."
 
 (defun omnisharp--flycheck-start (checker callback)
   "Start an OmniSharp syntax check with CHECKER.
-CALLBACK is the status callback passed by Flycheck." 
+CALLBACK is the status callback passed by Flycheck."
   ;; Put the current buffer into the closure environment so that we have access
   ;; to it later.
   (let ((buffer (current-buffer)))
@@ -321,7 +479,9 @@ CALLBACK is the status callback passed by Flycheck."
    running in the background"
                                  :start #'omnisharp--flycheck-start
                                  :modes '(csharp-mode)
-                                 :predicate (lambda () (and omnisharp-mode omnisharp--server-info)))
+                                 :predicate (lambda () (and omnisharp-mode
+                                                            omnisharp--server-info
+                                                            (not (boundp 'omnisharp--metadata-source)))))
 
 (defun omnisharp--flycheck-error-parser (response checker buffer)
   "Takes a QuickFixResponse result. Returns flycheck errors created based on the
@@ -346,8 +506,7 @@ locations in the json."
 cursor at that location"
   (let* ((element-line (cdr (assoc 'Line element)))
          (element-column (cdr (assoc 'Column element)))
-         (element-filename (omnisharp--get-filename element))
-         (use-buffer (current-buffer)))
+         (element-filename (omnisharp--get-filename element)))
     (save-excursion
       (omnisharp-go-to-file-line-and-column-worker
        element-line
@@ -375,39 +534,6 @@ cursor at that location"
         result)
     (error nil)))
 
-(defun omnisharp-format-find-output-to-ido (item)
-  (let (filename (omnisharp--get-filename item))
-    (cons
-     (cons
-      (car (car item))
-      (concat (car (last (split-string filename "/"))) ": " (s-trim (cdr (car item)))))
-     (cdr item))))
-
-(defun omnisharp-format-symbol (item)
-  (cons
-   (cons
-    (car (car item))
-    (mapconcat
-     'identity
-     (reverse (delete "in" (split-string (cdr (car item)) "[\t\n ()]" t))) "."))
-   (cdr item)))
-
-(defun omnisharp--get-eldoc-fontification-buffer ()
-  (let ((buffer (get-buffer omnisharp--eldoc-fontification-buffer-name)))
-    (if (buffer-live-p buffer)
-        buffer
-      (with-current-buffer (generate-new-buffer omnisharp--eldoc-fontification-buffer-name)
-        (ignore-errors
-          (let ((csharp-mode-hook nil))
-            (csharp-mode)))
-        (current-buffer)))))
-
-(defun omnisharp--eldoc-fontify-string (str)
-  (with-current-buffer (omnisharp--get-eldoc-fontification-buffer)
-    (delete-region (point-min) (point-max))
-    (font-lock-fontify-region (point) (progn (insert str ";") (point)))
-    (buffer-substring (point-min) (1- (point-max)))))
-
 (defun omnisharp--jump-to-enclosing-func ()
   "Jumps to the closing brace of the current function definition"
   (interactive)
@@ -428,7 +554,7 @@ cursor at that location"
                  (condition-case nil
                      (forward-sexp)
                    (error nil))
-                 
+
                  (when (> (point) start-point)
                    (setq found-point test-point)
                    (setq found-start t))
@@ -436,6 +562,22 @@ cursor at that location"
 
                 (t (setq found-start t))))))
     (goto-char found-point)))
+
+(defun omnisharp--get-eldoc-fontification-buffer ()
+  (let ((buffer (get-buffer omnisharp--eldoc-fontification-buffer-name)))
+    (if (buffer-live-p buffer)
+        buffer
+      (with-current-buffer (generate-new-buffer omnisharp--eldoc-fontification-buffer-name)
+        (ignore-errors
+          (let ((csharp-mode-hook nil))
+            (csharp-mode)))
+        (current-buffer)))))
+
+(defun omnisharp--eldoc-fontify-string (str)
+  (with-current-buffer (omnisharp--get-eldoc-fontification-buffer)
+    (delete-region (point-min) (point-max))
+    (font-lock-fontify-region (point) (progn (insert str ";") (point)))
+    (buffer-substring (point-min) (1- (point-max)))))
 
 (defun omnisharp-eldoc-function ()
   "Returns a doc string appropriate for the current context.
@@ -448,14 +590,21 @@ cursor at that location"
               (condition-case nil
                   (omnisharp--send-command-to-server
                    "typelookup"
-                   (omnisharp--get-request-object)
+                   (omnisharp--get-typelookup-request-object)
                    (lambda (response)
-                     (let ((current-type-information
-                            (omnisharp--completion-result-get-item
-                             response
-                             'Type)))
-                       (if (and current-type-information (not (string= "" current-type-information)))
-                           (eldoc-message (omnisharp--eldoc-fontify-string current-type-information))))))
+                     (let* ((current-type-information
+                             (omnisharp--completion-result-get-item response 'Type))
+                            (current-type-documentation
+                             (string-trim-right
+                              (or (omnisharp--completion-result-get-item response 'Documentation)
+                                  "")))
+                            (have-type (and current-type-information (not (string= "" current-type-information))))
+                            (have-doc (and current-type-documentation (not (string= "" current-type-documentation))))
+                            (message-to-show (concat (if current-type-information (omnisharp--eldoc-fontify-string current-type-information))
+                                                     (if (and have-type have-doc) "\n\n")
+                                                     current-type-documentation)))
+                       (if (or have-type have-doc)
+                           (eldoc-message message-to-show)))))
                 (error nil (ignore)))
               nil))
       (error nil (ignore)))))
@@ -470,4 +619,3 @@ cursor at that location"
 (provide 'omnisharp)
 
 ;;; omnisharp.el ends here
-

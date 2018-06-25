@@ -1,3 +1,19 @@
+;; -*- lexical-binding: t; -*-
+
+;; This file is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
 (defun omnisharp--path-to-server (path)
   (if (and path (eq system-type 'cygwin))
       (cygwin-convert-file-name-to-windows path)
@@ -79,7 +95,6 @@ recognizes, so that the user may jump to the results."
 format that the compilation major mode understands and lets the user
 follow results to the locations in the actual files."
   (let ((filename (omnisharp--get-filename json-result-single-element))
-        (text (cdr (assoc 'Text json-result-single-element)))
         (line (cdr (assoc 'Line json-result-single-element)))
         (column (cdr (assoc 'Column json-result-single-element)))
         (text (cdr (assoc 'Text json-result-single-element))))
@@ -137,15 +152,22 @@ the OmniSharp server understands."
 (defun omnisharp--get-current-buffer-contents ()
   (buffer-substring-no-properties (buffer-end 0) (buffer-end 1)))
 
+(defun omnisharp--log-reset ()
+  "Kills the *omnisharp-log* buffer"
+  (let ((log-buffer (get-buffer "*omnisharp-log*")))
+    (if log-buffer
+        (kill-buffer log-buffer))))
+
 (defun omnisharp--log (single-or-multiline-log-string)
-  (when omnisharp-debug
-    (shut-up
-      (let* ((log-buffer (get-buffer-create "*omnisharp-debug*")))
-        (save-window-excursion
-          (with-current-buffer log-buffer
-            (end-of-buffer)
-            (insert single-or-multiline-log-string)
-            (insert "\n")))))))
+  "Writes message to the log."
+  (shut-up
+    (let* ((log-buffer (get-buffer-create "*omnisharp-log*")))
+      (save-window-excursion
+        (with-current-buffer log-buffer
+          (goto-char (point-max))
+          (insert (format-time-string "[%H:%M:%S] "))
+          (insert single-or-multiline-log-string)
+          (insert "\n"))))))
 
 (defun omnisharp--json-read-from-string (json-string
                                          &optional error-message)
@@ -213,14 +235,6 @@ moving point."
     "updatebuffer"
     (omnisharp--get-request-object))))
 
-;; this is actually used in tests only
-(defun omnisharp--create-ecukes-test-server (omnisharp-emacs-root-path)
-  (condition-case nil
-      (kill-process "OmniServer")
-    (error nil))
-  (omnisharp-start-omnisharp-server (s-concat omnisharp-emacs-root-path
-                                              "/test/MinimalProject")))
-
 (defun omnisharp--update-files-with-text-changes (file-name text-changes)
   (let ((file (find-file (omnisharp--convert-backslashes-to-forward-slashes
                           file-name))))
@@ -266,7 +280,7 @@ changes to be applied to that buffer instead."
 
 (defun omnisharp--wait-until-request-completed (request-id
                                                 &optional timeout-seconds)
-  (setq timeout-seconds (or timeout-seconds 2))
+  (setq timeout-seconds (or timeout-seconds 30))
 
   (let ((start-time (current-time))
         (process (cdr (assoc :process omnisharp--server-info))))
@@ -281,16 +295,77 @@ changes to be applied to that buffer instead."
       (accept-process-output process 0.1)))
   request-id)
 
-(defun omnisharp--ido-completing-read (&rest args)
-  "Mockable wrapper for ido-completing-read.
-The problem with mocking ido-completing-read directly is that
+(defun omnisharp--completing-read (&rest args)
+  "Mockable wrapper for completing-read.
+The problem with mocking completing-read directly is that
 sometimes the mocks are not removed when an error occurs. This renders
 the developer's emacs unusable."
-  (apply 'ido-completing-read args))
+  (apply 'completing-read args))
 
 (defun omnisharp--read-string (&rest args)
   "Mockable wrapper for read-string, see
-`omnisharp--ido-completing-read' for the explanation."
+`omnisharp--completing-read' for the explanation."
   (apply 'read-string args))
+
+(defun omnisharp--mkdirp (dir)
+  "Makes a directory recursively, similarly to a 'mkdir -p'."
+  (let* ((absolute-dir (expand-file-name dir))
+         (components (f-split absolute-dir)))
+    (omnisharp--mkdirp-item (f-join (apply #'concat (-take 1 components))) (-drop 1 components))
+    absolute-dir))
+
+(defun omnisharp--mkdirp-item (dir remaining)
+  "Makes a directory if not exists,
+ and tries to do the same with the remaining components, recursively."
+  (unless (f-directory-p dir)
+    (f-mkdir dir))
+  (unless (not remaining)
+    (omnisharp--mkdirp-item (f-join dir (car (-take 1 remaining)))
+                            (-drop 1 remaining))))
+
+(defun omnisharp--project-root ()
+  "Tries to resolve project root for current buffer. nil if no project root directory
+was found. Uses projectile for the job."
+  ;; use project root as a candidate (if we have projectile available)
+  (if (require 'projectile nil 'noerror)
+      (condition-case nil
+          (let ((project-root (projectile-project-root)))
+            (if (not (string= project-root default-directory))
+                project-root))
+        (error nil))))
+
+(defun omnisharp--resolve-sln-candidates ()
+  "Resolves a list of .sln file candidates and directories to be used
+for starting a server based on the current buffer."
+  (let ((dir (file-name-directory (or buffer-file-name "")))
+        (candidates nil)
+        (project-root (omnisharp--project-root)))
+    (while (and dir (not (f-root-p dir)))
+      (if (not (file-remote-p dir))
+          (setq candidates (append candidates
+                                   (f-files dir (lambda (filename)
+                                                  (string-match-p "\\.sln$" filename))))))
+      (setq dir (f-parent dir)))
+
+    (setq candidates (reverse candidates))
+
+    ;; use project root as a candidate (if we have projectile available)
+    (if project-root
+        (setq candidates (append candidates (list project-root))))
+
+    candidates))
+
+(defun omnisharp--buffer-contains-metadata()
+  "Returns t if buffer is omnisharp metadata buffer."
+  (or (boundp 'omnisharp--metadata-source)
+      (s-starts-with-p "*omnisharp-metadata:" (buffer-name))))
+
+(defun omnisharp--message (format-string &rest args)
+  "Displays passed text using message function."
+  (apply 'message (cons format-string args)))
+
+(defun omnisharp--message-at-point (format-string &rest args)
+  "Displays passed text at point using popup-tip function."
+  (popup-tip (apply 'format (cons format-string args))))
 
 (provide 'omnisharp-utils)
