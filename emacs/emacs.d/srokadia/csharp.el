@@ -121,12 +121,18 @@
   (set-csharp-compile-command)
   (fix-compilation-regex)
   (add-to-list 'ac-sources 'ac-source-omnisharp)
+
+  (defvar c-hanging-braces-alist '((brace-list-open)
+                                   (substatement-open after)
+                                   (block-close . c-snug-do-while)))
   )
 
 (defun set-csharp-compile-command ()
-  (let ((project-file (find-project-file "\\.csproj$")))
+  (let ((project-file (find-project-file "\\.csproj$"))
+        (sln-file (find-project-file "\\.sln$")))
     (when project-file
       (message "Found project file at %s" project-file)
+      (set (make-local-variable 'project-directory) (file-name-directory project-file))
       (when is-cygwin
         (setq project-file (concat "$(cygpath -aw " project-file ")")))
       (set (make-local-variable 'compile-command)

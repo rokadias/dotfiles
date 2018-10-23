@@ -18,7 +18,7 @@
  '(org-agenda-files (quote ("~/Documents/agenda/work.org")))
  '(package-selected-packages
    (quote
-    (jss uuidgen ztree zoom-frm zenburn-theme yaml-mode xml-rpc ws-trim workgroups2 wiki web-mode web use-package typing-practice typing tide sx sublime-themes smex slime session scss-mode restclient react-snippets powershell-mode powershell pabbrev omnisharp nvm nodejs-repl node-resolver multiple-cursors mediawiki markdown-preview-mode magit key-chord jsx-mode json-mode js-comint ido-vertical-mode hound helm hcl-mode haskell-mode gotham-theme go-mode go-errcheck fsm fsharp-mode frame-restore flymake-go flymake flatland-theme find-file-in-repository expand-region exec-path-from-shell editorconfig-core editorconfig edit-server doremi-frm dockerfile-mode dash-at-point color-theme ack achievements ace-jump-mode ac-js2)))
+    (cider clojure-mode go-scratch company-go flycheck-golangci-lint go-imports go-playground golint jss uuidgen ztree zoom-frm zenburn-theme yaml-mode xml-rpc ws-trim workgroups2 wiki web-mode web use-package typing-practice typing tide sx sublime-themes smex slime session scss-mode restclient react-snippets powershell-mode powershell pabbrev omnisharp nvm nodejs-repl node-resolver multiple-cursors mediawiki markdown-preview-mode magit key-chord jsx-mode json-mode js-comint ido-vertical-mode hound helm hcl-mode haskell-mode gotham-theme go-mode go-errcheck fsm fsharp-mode frame-restore flymake-go flymake flatland-theme find-file-in-repository expand-region exec-path-from-shell editorconfig-core editorconfig edit-server doremi-frm dockerfile-mode dash-at-point color-theme ack achievements ace-jump-mode ac-js2)))
  '(session-use-package t nil (session))
  '(tab-stop-list
    (quote
