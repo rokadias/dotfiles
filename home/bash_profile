@@ -11,4 +11,5 @@ PATH=$PATH:$HOME/.gem/ruby/2.3.0/bin
 [ -s "/home/srokadia/.dnx/dnvm/dnvm.sh" ] && . "/home/srokadia/.dnx/dnvm/dnvm.sh" # Load dnvm
 
 PATH=$PATH:$HOME/.gem/ruby/2.3.0/bin
+PATH=$PATH:$HOME/.local/bin
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
