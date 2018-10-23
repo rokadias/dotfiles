@@ -1,0 +1,6 @@
+# group: typescript
+# A set parameter on an immutable class
+# --
+$>public set$1(${1:$(downcase-first-char yas-text)}: $2) {
+$>return this.setPropertyValue({ ${1:$(downcase-first-char yas-text)} });
+$>}
