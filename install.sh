@@ -10,7 +10,6 @@ ln -s $PWD/scripts/rsyncignore ~/scripts/rsyncignore
 ln -s $PWD/scripts/nunit.sh ~/scripts/nunit.sh
 ln -s $PWD/scripts/xunit.sh ~/scripts/xunit.sh
 
-ln -s $PWD/home/xmonad/xmonad.hs ~/.xmonad/
 mkdir ~/.xmonad/
 ln -s $PWD/home/xmonad/xmonad.hs ~/.xmonad/
 
