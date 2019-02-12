@@ -52,6 +52,7 @@ myKeys =
     , ((myModMask, xK_k), focusDown)
     , ((myModMask, xK_m), focusMaster)
     , ((myModMask, xK_n), clearBoring)
+    , ((myModMask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
     ] ++ [
         ((myModMask, key), (windows $ W.greedyView ws))
         | (key, ws) <- myExtraWorkspaces

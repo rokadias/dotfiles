@@ -55,6 +55,7 @@
   (interactive)
   (tide-setup)
   (flycheck-mode +1)
+  (flycheck-add-next-checker 'typescript-tide '(t . typescript-tslint) 'append)
   (eldoc-mode +1)
   (company-mode +1)
   (let ((project-file (find-project-file "package.json")))
