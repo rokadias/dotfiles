@@ -81,3 +81,6 @@
 (require 'tide)
 (define-key tide-mode-map (kbd "C-; C-k") 'tide-references)
 (define-key tide-mode-map (kbd "C-; C-r") 'tide-rename-symbol)
+
+;; string-inter
+(global-set-key (kbd "C-c C-u") 'string-inflection-underscore)

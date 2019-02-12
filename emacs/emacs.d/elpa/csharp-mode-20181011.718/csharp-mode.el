@@ -3,12 +3,12 @@
 ;; Author     : Dylan R. E. Moonfire (original)
 ;; Maintainer : Jostein Kjønigsen <jostein@gmail.com>
 ;; Created    : Feburary 2005
-;; Modified   : 2016
-;; Version    : 0.9.1
-;; Package-Version: 20170927.816
+;; Modified   : 2018
+;; Version    : 0.9.2
+;; Package-Version: 20181011.718
 ;; Keywords   : c# languages oop mode
 ;; X-URL      : https://github.com/josteink/csharp-mode
-;; Last-saved : 2017-Jan-11
+;; Last-saved : 2018-Jul-08
 
 ;;
 ;; This program is free software; you can redistribute it and/or modify
@@ -300,6 +300,9 @@
 ;;          - Fix fontification of using and namespace-statements with
 ;;            underscores in them.
 ;;          - Fixes for indentation for many kinds of type-initializers.
+;;
+;;    0.9.2 2018 July
+;;          - Try to fix some breakage introduced by changes in Emacs 27.
 ;;
 ;;; Code:
 
@@ -754,7 +757,9 @@ to work properly with code that includes attributes."
              ;; Match a char before the string starter to make
              ;; `c-skip-comments-and-strings' work correctly.
              (concat ".\\(" c-string-limit-regexp "\\)")
-             '((c-font-lock-invalid-string)))
+             '((if (fboundp 'c-font-lock-invalid-string)
+                   (c-font-lock-invalid-string)
+                 (csharp-mode-font-lock-invalid-string))))
 
 
            ;; Fontify keyword constants.
@@ -774,7 +779,7 @@ to work properly with code that includes attributes."
                 "[ \t\n\f\v\r]*="
                 "[ \t\n\f\v\r]*"
                 "\\)?"
-                "\\(\\(?:[A-Za-z0-9_]+\\.\\)*[A-Za-z_]+\\)"
+                "\\(\\(?:[A-Za-z0-9_]+\\.\\)*[A-Za-z0-9_]+\\)"
                 "[ \t\n\f\v\r]*;")
               (2 font-lock-constant-face t t)
               (3 font-lock-constant-face))
@@ -982,7 +987,11 @@ to work properly with code that includes attributes."
                                                       'c-decl-id-start)
                                  (c-forward-syntactic-ws))
                                (save-match-data
-                                 (c-font-lock-declarators limit t nil))
+                                 (with-no-warnings
+                                   (condition-case nil
+                                       (c-font-lock-declarators limit t nil)
+                                     (wrong-number-of-arguments
+                                      (c-font-lock-declarators limit t nil nil)))))
                                (goto-char (match-end 0))
                                )
                              )))
@@ -1120,6 +1129,12 @@ to work properly with code that includes attributes."
            ;; due to the energetic efforts of c-forward-type.
            ,`("\\<\\(namespace\\)[ \t\n\r\f\v]+\\(\\(?:[A-Za-z0-9_]+\\.\\)*[A-Za-z0-9_]+\\)"
               2 font-lock-constant-face t)
+
+
+           ;; Highlight function-invocation.
+           ;; (this may in the future use font-lock-function-call-face, if standardized)
+           ,`(,"\\.\\([A-Za-z0-9_]+\\)("
+              1 font-lock-function-name-face t)
 
 
            ))
@@ -2284,7 +2299,7 @@ your `csharp-mode-hook' function:
                  ;; contains only an open-curly.  In this case, insert a
                  ;; summary element pair.
                  (preceding-line-is-empty
-                  (setq text-to-insert  "/ <summary>\n///   \n/// </summary>"
+                  (setq text-to-insert  "/ <summary>\n ///   \n /// </summary>"
                         flavor 1) )
 
                  ;; The preceding word closed a summary element.  In this case,
@@ -2292,13 +2307,13 @@ your `csharp-mode-hook' function:
                  ;; insert a remarks element.
                  ((and (string-equal word-back "summary") (eq char0 ?/)  (eq char1 ?<))
                   (if (not (and (string-equal word-fore "remarks") (eq char-0 ?<)))
-                      (setq text-to-insert "/ <remarks>\n///   <para>\n///     \n///   </para>\n/// </remarks>"
+                      (setq text-to-insert "/ <remarks>\n ///   <para>\n ///     \n ///   </para>\n /// </remarks>"
                             flavor 2)))
 
                  ;; The preceding word closed the remarks section.  In this case,
                  ;; insert an example element.
                  ((and (string-equal word-back "remarks")  (eq char0 ?/)  (eq char1 ?<))
-                  (setq text-to-insert "/ <example>\n///   \n/// </example>"
+                  (setq text-to-insert "/ <example>\n ///   \n /// </example>"
                         flavor 3))
 
                  ;; The preceding word closed the example section.  In this
@@ -2340,7 +2355,7 @@ your `csharp-mode-hook' function:
                     (if (string-equal word-back "remarks")
                         (setq spacer (concat spacer "   ")))
 
-                    (setq text-to-insert (format "/%s<para>\n///%s  \n///%s</para>"
+                    (setq text-to-insert (format "/%s<para>\n ///%s  \n ///%s</para>"
                                                  spacer spacer spacer)
                           flavor 6)))
 
@@ -2464,7 +2479,47 @@ are the string substitutions (see `format')."
 ;; these defuns.
 ;;
 
-(defun c-looking-at-inexpr-block (lim containing-sexp &optional check-at-end)
+;; verabatim copy of c-font-lock-invalid-string before it was removed
+;; from emacs/cc-mode in Git commit bb591f139f0602af292c772f974dcc14dabb1deb.
+
+(defun csharp-mode-font-lock-invalid-string ()
+  ;; Assuming the point is after the opening character of a string,
+  ;; fontify that char with `font-lock-warning-face' if the string
+  ;; decidedly isn't terminated properly.
+  ;;
+  ;; This function does hidden buffer changes.
+  (let ((start (1- (point))))
+    (save-excursion
+      (and (eq (elt (parse-partial-sexp start (c-point 'eol)) 8) start)
+	   (if (if (eval-when-compile (integerp ?c))
+		   ;; Emacs
+		   (integerp c-multiline-string-start-char)
+		 ;; XEmacs
+		 (characterp c-multiline-string-start-char))
+	       ;; There's no multiline string start char before the
+	       ;; string, so newlines aren't allowed.
+	       (not (eq (char-before start) c-multiline-string-start-char))
+	     ;; Multiline strings are allowed anywhere if
+	     ;; c-multiline-string-start-char is t.
+	     (not c-multiline-string-start-char))
+	   (if c-string-escaped-newlines
+	       ;; There's no \ before the newline.
+	       (not (eq (char-before (point)) ?\\))
+	     ;; Escaped newlines aren't supported.
+	     t)
+	   (c-put-font-lock-face start (1+ start) 'font-lock-warning-face)))))
+
+(advice-add 'c-looking-at-inexpr-block
+            :around 'csharp--c-looking-at-inexpr-block-hack)
+
+(defun csharp--c-looking-at-inexpr-block-hack (orig-fun &rest args)
+  (apply
+   (if (eq major-mode 'csharp-mode)
+       #'csharp--c-looking-at-inexpr-block
+     orig-fun)
+   args))
+
+(defun csharp--c-looking-at-inexpr-block (lim containing-sexp &optional check-at-end)
   ;; Return non-nil if we're looking at the beginning of a block
   ;; inside an expression.  The value returned is actually a cons of
   ;; either 'inlambda, 'inexpr-statement or 'inexpr-class and the
@@ -2577,11 +2632,18 @@ are the string substitutions (see `format')."
 
         res))))
 
+(advice-add 'c-inside-bracelist-p
+            :around 'csharp-inside-bracelist-or-c-inside-bracelist-p)
 
+(defun csharp-inside-bracelist-or-c-inside-bracelist-p (command &rest args)
+  "Run `csharp-inside-bracelist-p' if in `csharp-mode'.
 
+Otherwise run `c-inside-bracelist-p'."
+  (if (eq major-mode 'csharp-mode)
+      (csharp-inside-bracelist-p (nth 0 args) (nth 1 args))
+    (apply command args)))
 
-
-(defun c-inside-bracelist-p (containing-sexp paren-state)
+(defun csharp-inside-bracelist-p (containing-sexp paren-state)
   ;; return the buffer position of the beginning of the brace list
   ;; statement if we're inside a brace list, otherwise return nil.
   ;; CONTAINING-SEXP is the buffer pos of the innermost containing
@@ -3016,10 +3078,10 @@ Key bindings:
 
   ;; The paragraph-separate variable was getting stomped by
   ;; other hooks, so it must reside here.
-  (setq paragraph-separate
-        "[ \t]*\\(//+\\|\\**\\)\\([ \t]+\\|[ \t]+<.+?>\\)$\\|^\f")
+  (setq-local paragraph-separate
+              "[ \t]*\\(//+\\|\\**\\)\\([ \t]+\\|[ \t]+<.+?>\\)$\\|^\f")
 
-  (setq beginning-of-defun-function 'csharp-move-back-to-beginning-of-defun)
+  (setq-local beginning-of-defun-function 'csharp-move-back-to-beginning-of-defun)
   ;; `end-of-defun-function' can remain forward-sexp !!
 
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
@@ -3047,4 +3109,3 @@ Key bindings:
 (provide 'csharp-mode)
 
 ;;; csharp-mode.el ends here
-
