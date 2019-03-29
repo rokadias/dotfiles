@@ -84,3 +84,9 @@
 
 ;; string-inter
 (global-set-key (kbd "C-c C-u") 'string-inflection-underscore)
+
+;; lsp (used by rust)
+(require 'lsp)
+(define-key lsp-mode-map (kbd "C-; C-.") 'lsp-describe-thing-at-point)
+(define-key lsp-mode-map (kbd "C-; C-b") 'lsp-goto-implementation)
+(define-key lsp-mode-map (kbd "C-; C-k") 'lsp-find-references)
