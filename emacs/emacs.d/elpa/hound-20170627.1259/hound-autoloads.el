@@ -1,26 +1,0 @@
-;;; hound-autoloads.el --- automatically extracted autoloads
-;;
-;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
-
-;;;### (autoloads nil "hound" "hound.el" (23026 13012 0 0))
-;;; Generated autoloads from hound.el
-
-(autoload 'hound-link "hound" "\
-
-
-\(fn QUERY)" t nil)
-
-(autoload 'hound "hound" "\
-
-
-\(fn QUERY)" t nil)
-
-;;;***
-
-;; Local Variables:
-;; version-control: never
-;; no-byte-compile: t
-;; no-update-autoloads: t
-;; End:
-;;; hound-autoloads.el ends here

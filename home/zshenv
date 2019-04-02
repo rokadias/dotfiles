@@ -1,6 +1,7 @@
 export PATH="$PATH:$HOME/scripts:$HOME/.gem/ruby/2.3.0/bin:$HOME/.local/bin"
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/scripts:$HOME/.gem/ruby/2.3.0/bin:$PATH"
 export PATH="$PATH:$HOME/go/bin/"
+export PATH="$PATH:$HOME/.cargo/bin/"
 
 export DOTNET_REFERENCE_ASSEMBLIES_PATH=/usr/lib/mono/xbuild-frameworks
 export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.sock"

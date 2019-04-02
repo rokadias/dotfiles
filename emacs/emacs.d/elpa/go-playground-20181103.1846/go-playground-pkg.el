@@ -1,0 +1,2 @@
+;;; -*- no-byte-compile: t -*-
+(define-package "go-playground" "20181103.1846" "Local Golang playground for short snippets." '((emacs "24") (go-mode "1.4.0") (gotest "0.13.0")) :commit "b107196edfe3e436caa5e763fe49f9dac159a5b3" :keywords '("tools" "golang") :authors '(("Alexander I.Grafov (axel)" . "grafov@gmail.com")) :maintainer '("Alexander I.Grafov (axel)" . "grafov@gmail.com") :url "https://github.com/grafov/go-playground")
