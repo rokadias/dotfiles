@@ -1,5 +1,1 @@
-. ~/.zshenv
-
-test -x "$(whereis xmodmap)" && xmodmap ~/.xmodmap
-
-export PATH="$HOME/.cargo/bin:$PATH"
+export PATH=$PATH:$HOME/.linkerd2/bin

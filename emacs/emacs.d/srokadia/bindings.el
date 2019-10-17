@@ -90,3 +90,8 @@
 (define-key lsp-mode-map (kbd "C-; C-.") 'lsp-describe-thing-at-point)
 (define-key lsp-mode-map (kbd "C-; C-b") 'lsp-goto-implementation)
 (define-key lsp-mode-map (kbd "C-; C-k") 'lsp-find-references)
+
+(require 'rust-mode)
+(define-key rust-mode-map (kbd "C-c C-l") 'flymake-show-diagnostics-buffer)
+(define-key rust-mode-map (kbd "C-c C-n") 'flymake-goto-next-error)
+(define-key rust-mode-map (kbd "C-c C-p") 'flymake-goto-prev-error)

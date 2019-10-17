@@ -49,6 +49,7 @@
 (defun compile-override-hook ()
   (progn
     (if (not (or (get-buffer-window "*compilation*" t)
+                 (get-buffer-window "*grep*" t)
                  (get-buffer-window "*Cargo Test*" t)
                  (get-buffer-window "*Cargo Build*" t)))
         (progn

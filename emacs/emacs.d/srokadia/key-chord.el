@@ -13,7 +13,7 @@
   (key-chord-define-global "cv" 'rgrep)
   (key-chord-define-global "x-" 'split-window-below)
   (key-chord-define-global "x\\" 'split-window-right)
-    (key-chord-define-global "gh" 'vc-git-view)
+  (key-chord-define-global "gh" 'vc-git-view)
   (key-chord-define-global ";'" 'vc-git-blame)
   (key-chord-define-global "p[" 'tide-references)
   (key-chord-define-global "vl" 'flycheck-buffer)
