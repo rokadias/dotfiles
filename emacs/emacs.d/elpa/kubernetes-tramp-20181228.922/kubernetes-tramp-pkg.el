@@ -1,0 +1,2 @@
+;;; -*- no-byte-compile: t -*-
+(define-package "kubernetes-tramp" "20181228.922" "TRAMP integration for kubernetes containers" '((emacs "24") (cl-lib "0.5")) :commit "8713571b66940f8f3f496b55baa23cdf1df7a869" :keywords '("kubernetes" "convenience") :authors '(("Giovanni Ruggiero" . "giovanni.ruggiero+github@gmail.com")) :maintainer '("Giovanni Ruggiero" . "giovanni.ruggiero+github@gmail.com") :url "https://github.com/gruggiero/kubernetes-tramp")

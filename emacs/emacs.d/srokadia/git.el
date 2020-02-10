@@ -24,7 +24,7 @@
   (concat remote
           "/"
           operation
-          "/master"
+          "/develop"
           (vc-git-get-relative-path)
           "#L"
           (number-to-string (count-lines 1 (point)))))
