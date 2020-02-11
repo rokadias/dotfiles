@@ -53,7 +53,7 @@
                  (get-buffer-window "*Cargo Test*" t)
                  (get-buffer-window "*Cargo Build*" t)))
         (progn
-          (split-window-vertically)
+          (if (get-buffer-window "*compilation*") (resize-compile-window))
           )
       )
     )

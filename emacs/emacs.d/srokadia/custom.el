@@ -15,7 +15,7 @@
  '(fci-rule-color "#202325")
  '(flycheck-check-syntax-automatically (quote (save mode-enabled)))
  '(jabber-alert-presence-hooks nil)
- '(lsp-rust-server (quote rust-analyzer))
+ '(lsp-rust-server (quote rls))
  '(org-agenda-files (quote ("~/Documents/agenda/work.org")))
  '(package-selected-packages
    (quote
