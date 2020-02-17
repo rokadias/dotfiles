@@ -18,14 +18,14 @@
       (message "Found project file at &s" project-file)
       (set (make-local-variable 'project-directory) (file-name-directory project-file))
       (set (make-local-variable 'compile-command) "cargo make check")
-      (set (make-local-variable 'compile-fun) (lambda () (compile compile-command)))
       )
     )
   )
 
 (defun rust-compile-run-test ()
   (interactive)
-  (let ((project-file (find-project-file "Makefile\\.toml")))
+  (let ((project-file (find-project-file "Makefile\\.toml"))
+        (default-directory (file-name-directory project-file)))
     (when project-file
       (compile "cargo make test")
       (set-rust-compile-command)

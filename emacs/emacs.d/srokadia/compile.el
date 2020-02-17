@@ -20,16 +20,21 @@
          (cw (get-buffer-window "*compilation*"))
          (h (window-height cw)))
     (select-window cw)
-    (shrink-window (- h 15))
+    (shrink-window (- h 40))
     (select-window cur)
     )
   )
 
 (setq compile-fun
-      (lambda ()
-        (when project-directory
-          (pushnew project-directory compilation-search-path))
-        (compile compile-command)))
+  (lambda ()
+    (message (format "Running compile-fun with %s" project-directory))
+    (if project-directory
+        (let ((default-directory project-directory))
+          (pushnew project-directory compilation-search-path)
+          (message "Running with default-directory")
+          (compile compile-command)
+          )
+      (compile compile-command))))
 
 (defun compile-pkg (&optional directory command)
   "Compile a package, moving up to the parent directory
@@ -60,3 +65,19 @@
   )
 
 (add-hook 'compilation-mode-hook 'compile-override-hook)
+
+(defun notify-compilation-result(buffer msg)
+  "Notify that the compilation is finished,
+close the *compilation* buffer if the compilation is successful,
+and set the focus back to Emacs frame"
+  (if (string-match "^finished" msg)
+    (progn
+     (delete-windows-on buffer)
+     (tooltip-show "\n Compilation Successful :-) \n "))
+    (tooltip-show "\n Compilation Failed :-( \n "))
+  (setq current-frame (car (car (cdr (current-frame-configuration)))))
+  (select-frame-set-input-focus current-frame)
+  )
+
+(add-to-list 'compilation-finish-functions
+	     'notify-compilation-result)
