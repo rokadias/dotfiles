@@ -24,7 +24,7 @@
 
 (defun rust-compile-run-test ()
   (interactive)
-  (let ((project-file (find-project-file "Makefile\\.toml"))
+  (let* ((project-file (find-project-file "Makefile\\.toml"))
         (default-directory (file-name-directory project-file)))
     (when project-file
       (compile "cargo make test")
