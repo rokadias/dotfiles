@@ -17,7 +17,7 @@
  '(jabber-alert-presence-hooks nil)
 
  '(lsp-rust-server (quote rls))
- '(ob-mermaid-cli-path "~/node_modules/.bin/mmdc")
+ '(ob-mermaid-cli-path "~/xand/scratch/node_modules/.bin/mmdc")
  '(org-agenda-files (quote ("~/Documents/agenda/work.org")))
  '(package-selected-packages
    (quote
