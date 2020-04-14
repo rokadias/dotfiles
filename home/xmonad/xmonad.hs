@@ -96,7 +96,8 @@ myManageHook = composeAll
     className =? "Gimp"              --> doFloat,
     className =? "Xfce4-appfinder"   --> doFloat,
     className =? "desktop_window"    --> doIgnore,
-    className =? "kdesktop"          --> doIgnore
+    className =? "kdesktop"          --> doIgnore,
+    className =? "zoom"              --> (doShift "0" <+> doFloat)
   ]
 
 -- Helpers --
