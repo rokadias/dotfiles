@@ -43,6 +43,7 @@ ln -s $PWD/emacs/emacs.d/srokadia/rust.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/session.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/shell.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/theme.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/tramp.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/yaml.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/yasnippet.el ~/.emacs.d/srokadia/
 
