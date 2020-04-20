@@ -7,7 +7,6 @@ import System.Exit
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
-import XMonad.Layout.BoringWindows
 import XMonad.Layout.NoBorders
 
 import XMonad.Hooks.DynamicLog
@@ -15,6 +14,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Util.EZConfig (additionalKeys)
+import XMonad.Util.Run
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -34,9 +34,9 @@ myModMask       = mod4Mask
 altMask         = mod1Mask
 
 
-myExtraWorkspaces = [(xK_0, "0"),(xK_minus, "tmp"),(xK_equal, "swap")]
+myExtraWorkspaces = [(xK_0, "network"),(xK_minus, "video"),(xK_equal, "music")]
 
-myWorkspaces = ["emacs","web1","slack","compile","shell","extensions","system","keepass","web2"] ++ (map snd myExtraWorkspaces)
+myWorkspaces = ["emacs","web1","slack","compile","shell","games","system","keepass","web2"] ++ (map snd myExtraWorkspaces)
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -48,10 +48,6 @@ myKeys =
     , ((myModMask, xK_d), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((myModMask .|. shiftMask, xK_q), spawn "xfce4-session-logout")
     , ((altMask, xK_Tab), nextScreen)
-    , ((myModMask, xK_j), focusUp)
-    , ((myModMask, xK_k), focusDown)
-    , ((myModMask, xK_m), focusMaster)
-    , ((myModMask, xK_n), clearBoring)
     , ((myModMask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
     ] ++ [
         ((myModMask, key), (windows $ W.greedyView ws))
@@ -74,12 +70,10 @@ myKeys =
 --
 -- default tiling algorithm partitions the screen into two panes
 
-myLayout = boringAuto (tiled ||| (noBorders Full) ||| halved)
+myLayout =  (noBorders Full) ||| tiled
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
-
-     halved = Tall nmaster (1/10) (1/2)
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -97,7 +91,16 @@ myManageHook = composeAll
     className =? "Xfce4-appfinder"   --> doFloat,
     className =? "desktop_window"    --> doIgnore,
     className =? "kdesktop"          --> doIgnore,
-    className =? "zoom"              --> (doShift "0" <+> doFloat)
+    className =? "emacs"             --> doShift "emacs",
+    className =? "google-chrome"     --> doShift "web1",
+    className =? "slack"             --> doShift "slack",
+    className =? "discord"           --> doShift "slack",
+    className =? "Steam"             --> (doShift "games" <+> doFloat),
+    className =? "keepassx2"         --> doShift "keepass",
+    className =? "conky"             --> doShift "keepass",
+    className =? "zoom"              --> (doShift "video" <+> doFloat),
+    className =? "pritunl"           --> (doShift "network" <+> doFloat),
+    className =? "brave"             --> doShift "music"
   ]
 
 -- Helpers --
@@ -113,7 +116,6 @@ pbManageHook = composeAll $ concat
     [ [ manageDocks ]
     , [ manageHook defaultConfig ]
     , [ isDialog --> doCenterFloat ]
-    , [ isFullscreen --> doFullFloat ]
     , [ fmap not isDialog --> doF avoidMaster ]
     ]
 
@@ -125,9 +127,8 @@ myConfig = ewmh xfceConfig {
 
    -- hooks, layouts
      manageHook      = myManageHook <+> manageDocks <+> manageHook xfceConfig,
-     logHook         = ewmhDesktopsLogHook,
      layoutHook      = avoidStruts $ myLayout,
-     handleEventHook = ewmhDesktopsEventHook,
+     handleEventHook = ewmhDesktopsEventHook <+> docksEventHook,
      startupHook     = ewmhDesktopsStartup,
 
    -- workspaces
@@ -135,13 +136,5 @@ myConfig = ewmh xfceConfig {
    }
    `additionalKeys` myKeys
 
-main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
-
--- Command to launch the bar.
-myBar = "xfce4-panel -r"
-
--- Custom PP, configure it as you like. It determines what is being written to the bar.
-myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">" }
-
--- Key binding to toggle the gap for the bar.
-toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
+main = do
+  xmonad =<< xmobar myConfig
