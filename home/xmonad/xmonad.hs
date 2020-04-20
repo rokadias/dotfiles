@@ -34,7 +34,7 @@ myModMask       = mod4Mask
 altMask         = mod1Mask
 
 
-myExtraWorkspaces = [(xK_0, "network"),(xK_minus, "video"),(xK_equal, "music")]
+myExtraWorkspaces = [(xK_0, "video"),(xK_minus, "network"),(xK_equal, "music")]
 
 myWorkspaces = ["emacs","web1","slack","compile","shell","games","system","keepass","web2"] ++ (map snd myExtraWorkspaces)
 
