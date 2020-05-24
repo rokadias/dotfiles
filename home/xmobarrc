@@ -11,7 +11,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%StdinReader% }{ %multicpu% | %memory% | %dynnetwork%%battery%| %RJTT% | %date%"
+   , template = "%StdinReader% }{ %multicpu% | %memory% | %dynnetwork%%battery%| %KSEA% | %date%"
 
    -- general behavior
    , lowerOnStart =     False   -- send to bottom of window stack on start
@@ -39,7 +39,7 @@ Config {
         [ Run StdinReader
 
         -- weather monitor
-        , Run Weather "RJTT" [ "--template", "<fc=#4682B4><tempF></fc>°F | <fc=#4682B4><rh></fc>%"
+        , Run Weather "KSEA" [ "--template", "<skyCondition> | <fc=#4682B4><tempF></fc>°F"
                              ] 36000
 
         -- network activity monitor (dynamic interface resolution)
