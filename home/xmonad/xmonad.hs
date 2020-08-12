@@ -1,5 +1,5 @@
 import XMonad
-import XMonad.Actions.CycleWS;
+import XMonad.Actions.CycleWS
 import XMonad.Config.Xfce
 import Data.Monoid
 import System.Exit
@@ -114,7 +114,7 @@ avoidMaster = W.modify' $ \c -> case c of
 pbManageHook :: ManageHook
 pbManageHook = composeAll $ concat
     [ [ manageDocks ]
-    , [ manageHook defaultConfig ]
+    , [ manageHook def ]
     , [ isDialog --> doCenterFloat ]
     , [ fmap not isDialog --> doF avoidMaster ]
     ]
