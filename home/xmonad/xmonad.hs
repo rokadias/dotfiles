@@ -1,11 +1,17 @@
+{-# LANGUAGE ImplicitParams, NoMonomorphismRestriction #-}
+
+import Control.Monad
+import Data.Function (on)
+import Data.List ( findIndex, sortBy )
+import System.IO
+
 import XMonad
 import XMonad.Actions.CycleWS
+import XMonad.Actions.PhysicalScreens
 import XMonad.Config.Xfce
-import Data.Monoid
-import System.Exit
+import XMonad.Core
 
 import qualified XMonad.StackSet as W
-import qualified Data.Map        as M
 
 import XMonad.Layout.NoBorders
 
@@ -15,6 +21,17 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Util.EZConfig (additionalKeys)
 import XMonad.Util.Run
+
+myAppendFile :: FilePath -> String -> IO ()
+myAppendFile f s = do
+  withFile f AppendMode $ \h -> do
+    hPutStrLn h s
+
+logToTmpFile :: String -> IO ()
+logToTmpFile = myAppendFile "/tmp/xmonad.log"
+
+lifted :: (Monad m) => m ScreenId -> m (IO ())
+lifted = liftM (logToTmpFile . show)
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -38,6 +55,16 @@ myExtraWorkspaces = [(xK_0, "video"),(xK_minus, "network"),(xK_equal, "music")]
 
 myWorkspaces = ["emacs","web1","slack","compile","shell","games","system","keepass","web2"] ++ (map snd myExtraWorkspaces)
 
+performPrimaryNeighborView index = (getPrimaryNeighbour horizontalScreenOrderer 1) >>= screenWorkspace >>= flip whenJust (windows . W.view)
+
+getPrimaryNeighbour :: ScreenComparator -> Int -> X ScreenId
+getPrimaryNeighbour (ScreenComparator cmpScreen) d =
+  do w <- gets windowset
+     let ss = map W.screen $ sortBy (cmpScreen `on` getScreenIdAndRectangle) $ W.current w : W.visible w
+         curPos = maybe 0 id $ findIndex (== W.screen (W.current w)) ss
+         pos = (curPos + d) `mod` length ss `mod` ((length ss) - 1)
+     return $ ss !! pos
+
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
@@ -47,7 +74,10 @@ myKeys =
     , ((myModMask, xK_b), sendMessage ToggleStruts)
     , ((myModMask, xK_d), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((myModMask .|. shiftMask, xK_q), spawn "xfce4-session-logout")
-    , ((altMask, xK_Tab), nextScreen)
+    , ((altMask, xK_Tab), performPrimaryNeighborView 1)
+    , ((myModMask, xK_w), prevScreen)
+    , ((myModMask, xK_e), nextScreen)
+    , ((myModMask, xK_f), viewScreen horizontalScreenOrderer 2)
     , ((myModMask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
     ] ++ [
         ((myModMask, key), (windows $ W.greedyView ws))
@@ -136,5 +166,4 @@ myConfig = ewmh xfceConfig {
    }
    `additionalKeys` myKeys
 
-main = do
-  xmonad =<< xmobar myConfig
+main = xmonad =<< xmobar myConfig
