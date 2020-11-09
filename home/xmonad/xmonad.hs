@@ -57,6 +57,19 @@ myWorkspaces = ["emacs","web1","slack","compile","shell","games","system","keepa
 
 performPrimaryNeighborView index = (getPrimaryNeighbour horizontalScreenOrderer 1) >>= screenWorkspace >>= flip whenJust (windows . W.view)
 
+greedySwitchMaybe :: Maybe ScreenId -> X (Maybe WorkspaceId)
+greedySwitchMaybe screenId =
+  do w <- gets windowset
+     let result =
+           case screenId of
+             Just sid -> W.lookupWorkspace sid w
+             Nothing -> Nothing
+     return result
+
+
+grabWorkspace :: ScreenComparator -> PhysicalScreen -> X()
+grabWorkspace screenComparer index = (getScreen screenComparer index) >>= greedySwitchMaybe >>= flip whenJust (windows . W.greedyView)
+
 getPrimaryNeighbour :: ScreenComparator -> Int -> X ScreenId
 getPrimaryNeighbour (ScreenComparator cmpScreen) d =
   do w <- gets windowset
@@ -78,10 +91,10 @@ myKeys =
     , ((myModMask, xK_d), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((myModMask .|. shiftMask, xK_q), spawn "xfce4-session-logout")
     , ((altMask, xK_Tab), performPrimaryNeighborView 1)
-    , ((myModMask, xK_w), prevScreen)
-    , ((myModMask, xK_e), nextScreen)
-    , ((myModMask, xK_f), viewScreen horizontalScreenOrderer 2)
     , ((myModMask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
+    ] ++ [
+        ((myModMask .|. m, xK_f), f horizontalScreenOrderer 2)
+        | (f, m) <- [(viewScreen, 0), (grabWorkspace, shiftMask)]
     ] ++ [
         ((myModMask, key), (windows $ W.greedyView ws))
         | (key, ws) <- myExtraWorkspaces
