@@ -62,7 +62,10 @@ getPrimaryNeighbour (ScreenComparator cmpScreen) d =
   do w <- gets windowset
      let ss = map W.screen $ sortBy (cmpScreen `on` getScreenIdAndRectangle) $ W.current w : W.visible w
          curPos = maybe 0 id $ findIndex (== W.screen (W.current w)) ss
-         pos = (curPos + d) `mod` length ss `mod` ((length ss) - 1)
+         initialPos = (curPos + d) `mod` length ss
+         pos = case (length ss) > 2 of
+           True -> initialPos `mod` ((length ss) - 1)
+           False -> initialPos
      return $ ss !! pos
 
 ------------------------------------------------------------------------
