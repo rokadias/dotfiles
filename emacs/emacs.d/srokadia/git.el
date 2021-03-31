@@ -1,3 +1,11 @@
+(defun vc-git-checkout-branch (arg)
+  (interactive "sNew Branch Name: ")
+  (shell-command (concat "git checkout -b " arg)))
+
+(defun vc-git-rebase ()
+  (interactive)
+  (async-shell-command "EDITOR='emacsclient -c' git rebase -i origin/master"))
+
 (defun vc-git-view ()
   (interactive)
   (let ((remote (vc-git-remote)))

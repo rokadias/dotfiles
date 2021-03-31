@@ -38,6 +38,7 @@
 (global-set-key [(control x) (control meta F)] 'find-file-in-repository-other-window)
 (global-set-key [(control c) (control r)] 'rgrep)
 
+;; org
 (global-set-key [(control c) (l)] 'org-store-link)
 (global-set-key [(control c) (a)] 'org-agenda)
 
@@ -90,8 +91,16 @@
 (define-key lsp-mode-map (kbd "C-; C-.") 'lsp-describe-thing-at-point)
 (define-key lsp-mode-map (kbd "C-; C-b") 'lsp-goto-implementation)
 (define-key lsp-mode-map (kbd "C-; C-k") 'lsp-find-references)
+(define-key lsp-mode-map (kbd "C-; C-r") 'lsp-rename)
 
 (require 'rust-mode)
 (define-key rust-mode-map (kbd "C-c C-l") 'flymake-show-diagnostics-buffer)
 (define-key rust-mode-map (kbd "C-c C-n") 'flymake-goto-next-error)
 (define-key rust-mode-map (kbd "C-c C-p") 'flymake-goto-prev-error)
+
+;; Presenting in screenshare
+(global-set-key (kbd "C-x <C-return>") '(lambda () (interactive) (text-scale-adjust 2)))
+
+;; VC commands
+(global-set-key (kbd "C-x v w") 'vc-git-checkout-branch)
+(global-set-key (kbd "C-x v .") 'vc-git-rebase)
