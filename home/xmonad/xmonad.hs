@@ -142,12 +142,14 @@ myManageHook = composeAll
     className =? "slack"             --> doShift "slack",
     className =? "discord"           --> doShift "slack",
     className =? "Steam"             --> (doShift "games" <+> doFloat),
+    className =? "Moonlight"         --> (doShift "games" <+> unfloat),
     className =? "keepassx2"         --> doShift "keepass",
     className =? "conky"             --> doShift "keepass",
     className =? "zoom"              --> (doShift "video" <+> doFloat),
     className =? "pritunl"           --> (doShift "network" <+> doFloat),
     className =? "brave"             --> doShift "music"
   ]
+  where unfloat = ask >>= doF . W.sink
 
 -- Helpers --
 -- avoidMaster:  Avoid the master window, but otherwise manage new windows normally
