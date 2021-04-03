@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Creates import component
+# key: impc
+# --
+import { $1 } from '$2';

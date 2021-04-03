@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Creates import as
+# key: impas
+# --
+import * as $1 from '$2';

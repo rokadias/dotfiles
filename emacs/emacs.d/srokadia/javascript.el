@@ -70,3 +70,4 @@
 (setq tide-tsserver-process-environment '("TSS_LOG=-level verbose -file /tmp/tss.log"))
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
+(add-hook 'jsx-mode-hook #'setup-tide-mode)
