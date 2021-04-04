@@ -1,11 +1,12 @@
-(setq auto-mode-alist (append '(("\\.aspx$" . nxml-mode)) auto-mode-alist))
-(setq auto-mode-alist (append '(("\\.ascx$" . nxml-mode)) auto-mode-alist))
-(setq auto-mode-alist (append '(("\\.html$" . nxml-mode)) auto-mode-alist))
+(setq auto-mode-alist (append '(("\\.aspx$" . html-mode)) auto-mode-alist))
+(setq auto-mode-alist (append '(("\\.ascx$" . html-mode)) auto-mode-alist))
+(setq auto-mode-alist (append '(("\\.html$" . html-mode)) auto-mode-alist))
 
 (defun on-nxml-loaded ()
   (setq show-trailing-whitespace t))
 
 (add-hook 'nxml-mode-hook 'on-nxml-loaded)
+(add-hook 'html-mode-hook 'on-nxml-loaded)
 
 (defun my-web-mode-hook ()
   "Hooks for Web mode. Adjust indents"
