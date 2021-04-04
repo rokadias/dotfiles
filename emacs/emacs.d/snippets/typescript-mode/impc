@@ -2,4 +2,4 @@
 # name: Creates import component
 # key: impc
 # --
-import { $1 } from '$2';
+import { ${2:$1} } from '$1';
