@@ -104,3 +104,7 @@
 ;; VC commands
 (global-set-key (kbd "C-x v w") 'vc-git-checkout-branch)
 (global-set-key (kbd "C-x v .") 'vc-git-rebase)
+
+;; browser
+(global-set-key (kbd "C-x g") 'eww)
+(global-set-key (kbd "C-x <C-return>") 'browse-url)
