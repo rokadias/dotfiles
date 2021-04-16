@@ -6,6 +6,21 @@
   (interactive)
   (async-shell-command "EDITOR='emacsclient -c' git rebase -i origin/master"))
 
+(defun vc-git-push (prompt)
+  (let* ((branch (vc-git--current-symbolic-ref (buffer-file-name (current-buffer))))
+         (extra-args (list "--set-upstream" "origin" branch)))
+    (when prompt (add-to-list 'extra-args "--force"))
+    (vc-git--pushpull "push" nil extra-args)))
+
+(defun vc-git--current-symbolic-ref (file)
+  (let* (process-file-side-effects
+         (str (vc-git--run-command-string nil "symbolic-ref" "HEAD")))
+    (vc-file-setprop file 'vc-git-symbolic-ref
+                     (if str
+                         (if (string-match "^\\(refs/heads/\\)?\\(.+\\)$" str)
+                             (match-string 2 str)
+                           str)))))
+
 (defun vc-git-view ()
   (interactive)
   (let ((remote (vc-git-remote)))
