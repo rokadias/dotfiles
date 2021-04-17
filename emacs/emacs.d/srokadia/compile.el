@@ -27,8 +27,7 @@
 
 (setq compile-fun
   (lambda ()
-    (message (format "Running compile-fun with %s" project-directory))
-    (if project-directory
+    (if (and (boundp 'project-directory) project-directory)
         (let ((default-directory project-directory))
           (pushnew project-directory compilation-search-path)
           (message "Running with default-directory")
@@ -81,3 +80,15 @@ and set the focus back to Emacs frame"
 
 (add-to-list 'compilation-finish-functions
 	     'notify-compilation-result)
+
+(defun compile-markdown-mode()
+  (let ((project-file (find-project-file "Makefile")))
+    (when project-file
+      (set (make-local-variable 'project-file) project-file)
+      (set (make-local-variable 'project-directory) (file-name-directory project-file))
+      (progn (message "Found project file at %s" project-file)
+             (when is-cygwin
+               (setq project-file (concat "$(cygpath -aw " project-file ")"))))
+      (set (make-local-variable 'compile-command) "make"))))
+
+(add-hook 'markdown-mode-hook #'compile-markdown-mode)
