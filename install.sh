@@ -38,6 +38,9 @@ ln -s $PWD/emacs/emacs.d/srokadia/org.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/package.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/powershell.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/progmodefunctions.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/python.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/ra-emacs-lsp.el ~/.emacs.d/srokadia/
+ln -s $PWD/emacs/emacs.d/srokadia/ra-lsp.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/restclient.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/rust.el ~/.emacs.d/srokadia/
 ln -s $PWD/emacs/emacs.d/srokadia/session.el ~/.emacs.d/srokadia/
