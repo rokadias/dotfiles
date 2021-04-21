@@ -1,0 +1,6 @@
+[Unit]
+Description=Daily Cleanup of Temporary Files
+
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=1d

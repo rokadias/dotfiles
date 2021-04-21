@@ -1,0 +1,13 @@
+[Unit]
+Description=Running Rewards Max Project
+DefaultDependencies=no
+Conflicts=shutdown.target
+After=local-fs.target time-set.target graphical.target
+Before=shutdown.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/srokadia/projects/rewards-max
+ExecStart=/usr/bin/npm start
+SuccessExitStatus=DATAERR
+IOSchedulingClass=idle

@@ -1,0 +1,6 @@
+[Unit]
+Description=Semi-day Rewards Max
+
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=8h

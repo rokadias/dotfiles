@@ -69,10 +69,13 @@ ln -s $PWD/home/zshrc ~/.zshrc
 sudo ln -s $PWD/etc/pacman.conf /etc/
 sudo ln -s $PWD/etc/pacman.d/mirrorlist /etc/pacman.d/
 
-sudo cp $PWD/etc/systemd/system/docker.service /etc/systemd/system/
+sudo cp $PWD/etc/systemd/system/clean_tmp.service /etc/systemd/system/
+sudo cp $PWD/etc/systemd/system/clean_tmp.timer /etc/systemd/system/
 sudo cp $PWD/etc/systemd/user/skydns.service /etc/systemd/user/
 sudo cp $PWD/etc/systemd/user/skydock.service /etc/systemd/user/
 sudo cp $PWD/etc/systemd/user/evincer.service /etc/systemd/user/
 sudo cp $PWD/etc/systemd/user/nexxusblog.service /etc/systemd/user/
 sudo cp $PWD/etc/systemd/user/trunk-mysql.service /etc/systemd/user/
 sudo cp $PWD/etc/systemd/user/redis-container.service /etc/systemd/user/
+sudo cp $PWD/etc/systemd/user/rewards-max.service /etc/systemd/system/
+sudo cp $PWD/etc/systemd/user/rewards-max.timer /etc/systemd/system/

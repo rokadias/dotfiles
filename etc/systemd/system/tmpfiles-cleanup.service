@@ -1,0 +1,12 @@
+[Unit]
+Description=Cleanup of Temporary Files
+DefaultDependencies=no
+Conflicts=shutdown.target
+After=local-fs.target time-set.target
+Before=shutdown.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/srokadia/scripts/clean_tmp.sh
+SuccessExitStatus=DATAERR
+IOSchedulingClass=idle
