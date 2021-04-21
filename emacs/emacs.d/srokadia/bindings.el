@@ -114,4 +114,5 @@
 (global-set-key (kbd "C-x <C-return>") 'browse-url)
 
 ;; terminal
+(require 'term)
 (define-key term-mode-map (kbd "C-c C-y") 'term-paste)

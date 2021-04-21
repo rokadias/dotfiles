@@ -14,8 +14,6 @@
   :hostmode 'poly-tsx-hostmode
   :innermodes '(poly-tsx-html-innermode))
 
-
-
 (define-innermode poly-jsx-html-innermode
   :mode 'html-mode
   :head-matcher (cons "\\(.*(.*\n\\)[ \t]*<[[:alpha:]]*.*>.*\n" 1)
