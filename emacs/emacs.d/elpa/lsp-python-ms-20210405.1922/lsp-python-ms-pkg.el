@@ -1,0 +1,2 @@
+;;; Generated package description from lsp-python-ms.el  -*- no-byte-compile: t -*-
+(define-package "lsp-python-ms" "20210405.1922" "The lsp-mode client for Microsoft python-language-server" '((emacs "25.1") (lsp-mode "6.1")) :commit "8d228b0f6dde3a4d1327650c17b21539ff4a08ee" :authors '(("Charl Botha")) :maintainer '("Andrew Christianson, Vincent Zhang") :keywords '("languages" "tools") :url "https://github.com/emacs-lsp/lsp-python-ms")
