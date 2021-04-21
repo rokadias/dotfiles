@@ -38,6 +38,10 @@
 (global-set-key [(control x) (control meta F)] 'find-file-in-repository-other-window)
 (global-set-key [(control c) (control r)] 'rgrep)
 
+;; Files/Buffers
+(global-set-key (kbd "C-x C-S-b") 'rename-buffer)
+(global-set-key (kbd "C-x C-S-v") 'rename-file)
+
 ;; org
 (global-set-key [(control c) (l)] 'org-store-link)
 (global-set-key [(control c) (a)] 'org-agenda)
@@ -108,3 +112,6 @@
 ;; browser
 (global-set-key (kbd "C-x g") 'eww)
 (global-set-key (kbd "C-x <C-return>") 'browse-url)
+
+;; terminal
+(define-key term-mode-map (kbd "C-c C-y") 'term-paste)
