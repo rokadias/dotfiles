@@ -40,7 +40,7 @@ myTerminal      = "terminator"
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 2
+myBorderWidth   = 1
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -116,7 +116,7 @@ myKeys =
 --
 -- default tiling algorithm partitions the screen into two panes
 
-myLayout =  (noBorders Full) ||| tiled
+myLayout =  (Full) ||| tiled
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
