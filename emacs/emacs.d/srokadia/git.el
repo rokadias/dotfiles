@@ -21,6 +21,13 @@
                              (match-string 2 str)
                            str)))))
 
+(defun vc-git-view-kill ()
+  (interactive)
+  (let ((remote (vc-git-remote)))
+    (when remote
+      (let ((file-url (vc-git-view-url remote)))
+        (kill-new file-url)))))
+
 (defun vc-git-view ()
   (interactive)
   (let ((remote (vc-git-remote)))
