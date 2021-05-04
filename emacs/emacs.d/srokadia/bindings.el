@@ -12,7 +12,6 @@
 (global-set-key [mouse-5] 'up-three)
 
 (global-set-key (kbd "M-m") 'compile-override)
-(global-set-key (kbd "C-x 7") 'remove-compile-window)
 
 (global-set-key [(control c) (r)] 'revert-buffer)
 
@@ -29,6 +28,9 @@
 (global-set-key [(control x) (B)] 'windmove-left)
 (global-set-key [(control x) (P)] 'windmove-up)
 (global-set-key [(control x) (N)] 'windmove-down)
+
+;; Window Fiting
+(global-set-key (kbd "C-x 7") 'fit-window-to-buffer)
 
 ;; Comparing
 (global-set-key [(control c) (b)] 'ediff-buffers)
@@ -112,7 +114,9 @@
 ;; browser
 (global-set-key (kbd "C-x g") 'eww)
 (global-set-key (kbd "C-x <C-return>") 'browse-url)
+(global-set-key (kbd "C-x <C-S-return>") 'browse-url-of-file)
 
 ;; terminal
 (require 'term)
 (define-key term-mode-map (kbd "C-c C-y") 'term-paste)
+(global-set-key (kbd "<M-S-return>") '(lambda (newname) (interactive "sBuffer Name:") (term "/bin/zsh") (rename-buffer newname)))

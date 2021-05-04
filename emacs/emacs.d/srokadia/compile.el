@@ -19,10 +19,12 @@
   (let* ((cur (selected-window))
          (cw (get-buffer-window "*compilation*"))
          (h (window-height cw)))
-    (select-window cw)
-    (shrink-window (- h 40))
-    (select-window cur)
-    )
+    (when cw
+      (fit-window-to-buffer cw 20 10)
+      ;; (select-window cw)
+      ;; (shrink-window (- h 40))
+      ;; (select-window cur)
+      ))
   )
 
 (setq compile-fun
@@ -72,8 +74,12 @@ and set the focus back to Emacs frame"
   (if (string-match "^finished" msg)
     (progn
      (resize-compile-window)
-     (tooltip-show "\n Compilation Successful :-) \n "))
-    (tooltip-show "\n Compilation Failed :-( \n "))
+     (tooltip-show "\n Compilation Successful :-) \n ")
+     (remove-compile-window))
+    (progn
+      (tooltip-show "\n Compilation Failed :-( \n ")
+      (select-window (get-buffer-window buffer))
+      (compile-next-error)))
   (setq current-frame (car (car (cdr (current-frame-configuration)))))
   (select-frame-set-input-focus current-frame)
   )
