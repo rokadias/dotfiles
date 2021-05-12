@@ -105,9 +105,10 @@
 (define-key rust-mode-map (kbd "C-c C-p") 'flymake-goto-prev-error)
 
 ;; Presenting in screenshare
-(global-set-key (kbd "C-x <C-return>") '(lambda () (interactive) (text-scale-adjust 2)))
+(global-set-key (kbd "C-x <C-M-return>") '(lambda () (interactive) (text-scale-adjust 2)))
 
 ;; VC commands
+(require 'vc)
 (global-set-key (kbd "C-x v w") 'vc-git-checkout-branch)
 (global-set-key (kbd "C-x v .") 'vc-git-rebase)
 

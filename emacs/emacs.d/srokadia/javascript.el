@@ -48,7 +48,6 @@
 
 (add-hook 'js2-mode-hook 'on-javascript-loaded)
 (add-hook 'js2-mode-hook 'comment-fill-mode-hook)
-(add-hook 'js2-mode-hook 'ac-js2-mode)
 
 ;; Typescript setup
 (defun setup-tide-mode ()
@@ -71,3 +70,4 @@
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
 (add-hook 'jsx-mode-hook #'setup-tide-mode)
+(add-hook 'js2-mode-hook #'setup-tide-mode)

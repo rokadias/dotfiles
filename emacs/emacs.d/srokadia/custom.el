@@ -21,7 +21,7 @@
  '(lsp-rust-server 'rls)
  '(lsp-ui-doc-delay 1)
  '(lsp-ui-doc-use-webkit nil)
- '(ob-mermaid-cli-path "~/xand/scratch/node_modules/.bin/mmdc")
+ '(ob-mermaid-cli-path "/usr/bin/mmdc")
  '(org-agenda-files '("~/Documents/agenda/work.org"))
  '(org-confirm-babel-evaluate nil)
  '(package-selected-packages

@@ -42,7 +42,7 @@
 (setq is-w32 (string-equal system-type "windows-nt"))
 (setq is-cygwin (string-equal system-type "cygwin"))
 (setq is-mac (memq window-system '(mac ns)))
-(setq server-use-tcp t)
+(setq server-use-tcp nil)
 
 (when is-w32
   (setq find-program
