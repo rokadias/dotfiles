@@ -1,4 +1,3 @@
-(require 'vc-git)
 (defun vc-git-checkout-branch (arg)
   (interactive "sNew Branch Name: ")
   (shell-command (concat "git checkout -b " arg)))

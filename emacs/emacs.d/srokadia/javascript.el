@@ -71,3 +71,5 @@
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
 (add-hook 'jsx-mode-hook #'setup-tide-mode)
 (add-hook 'js2-mode-hook #'setup-tide-mode)
+(add-hook 'js-mode-hook #'prettier-js-mode)
+(add-hook 'js-mode-hook #'setup-tide-mode)

@@ -4,7 +4,7 @@
   :mode 'typescript-mode)
 
 (define-innermode poly-tsx-html-innermode
-  :mode 'html-mode
+  :mode 'js-mode
   :head-matcher (cons "\\(.*(.*\n\\)[ \t]*<[[:alpha:]]*.*>.*\n" 1)
   :tail-matcher "^[ \t]*);?.*\n"
   :head-mode 'host
@@ -15,9 +15,9 @@
   :innermodes '(poly-tsx-html-innermode))
 
 (define-innermode poly-jsx-html-innermode
-  :mode 'html-mode
+  :mode 'js-mode
   :head-matcher (cons "\\(.*(.*\n\\)[ \t]*<[[:alpha:]]*.*>.*\n" 1)
-  :tail-matcher "^[ \t]*);?.*\n"
+  :tail-matcher "^[ \t]*);?.*\n[:space:]*}"
   :head-mode 'host
   :tail-mode 'host)
 
@@ -31,4 +31,4 @@
 (setq auto-mode-alist (append '(("\\.tsx$" . poly-tsx-mode)) auto-mode-alist))
 (add-hook 'poly-tsx-mode-hook #'setup-tide-mode)
 
-(setq auto-mode-alist (append '(("\\.jsx?$" . poly-jsx-mode)) auto-mode-alist))
+(setq auto-mode-alist (append '(("\\.jsx?$" . js-mode)) auto-mode-alist))
