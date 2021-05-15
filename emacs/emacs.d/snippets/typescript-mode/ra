@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: React#attribute
+# key: ra
+# --
+$1={$1}$0
