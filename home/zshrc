@@ -125,3 +125,9 @@ if [ -f '/home/srokadia/google-cloud-sdk/path.zsh.inc' ]; then . '/home/srokadia
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/srokadia/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/srokadia/google-cloud-sdk/completion.zsh.inc'; fi
+
+if [ -x $(command -v pyenv) ]; then
+    export PATH="$HOME/.pyenv/bin:$PATH"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
