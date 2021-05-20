@@ -2,9 +2,13 @@
   (interactive "sNew Branch Name: ")
   (shell-command (concat "git checkout -b " arg)))
 
+(defun vc-git-main-branch ()
+  (let* ((remote (shell-command-to-string "git remote show origin | grep 'HEAD branch:'")))
+    (replace-regexp-in-string ".*HEAD branch: \\([^ ]*\\).*\n" "\\1" remote)))
+
 (defun vc-git-rebase ()
   (interactive)
-  (async-shell-command "EDITOR='emacsclient -c' git rebase -i origin/main"))
+  (async-shell-command (concat "EDITOR='emacsclient -c' git rebase -i origin/" (vc-git-main-branch))))
 
 (defun vc-git-push (prompt)
   (let* ((branch (vc-git--current-symbolic-ref (buffer-file-name (current-buffer))))
