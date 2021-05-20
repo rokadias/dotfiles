@@ -74,12 +74,11 @@ and set the focus back to Emacs frame"
   (if (string-match "^finished" msg)
     (progn
      (resize-compile-window)
-     (tooltip-show "\n Compilation Successful :-) \n ")
+     (notify "Compilation" "Compilation Successful :-)")
      (remove-compile-window))
     (progn
-      (tooltip-show "\n Compilation Failed :-( \n ")
-      (select-window (get-buffer-window buffer))
-      (compile-next-error)))
+      (notify "Compilation" "Compilation Failed :-(")
+      (select-window (get-buffer-window buffer))))
   (setq current-frame (car (car (cdr (current-frame-configuration)))))
   (select-frame-set-input-focus current-frame)
   )

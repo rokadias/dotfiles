@@ -55,8 +55,10 @@
   (tide-setup)
   (flycheck-mode +1)
   (flycheck-add-next-checker 'typescript-tide '(t . typescript-tslint) 'append)
+  (setq flycheck-javascript-eslint-executable "eslint_d")
   (eldoc-mode +1)
   (company-mode +1)
+  (eslintd-fix-mode)
   (let ((project-file (find-project-file "package.json")))
     (when project-file
       (set (make-local-variable 'project-file) project-file)
@@ -73,3 +75,4 @@
 (add-hook 'js2-mode-hook #'setup-tide-mode)
 (add-hook 'js-mode-hook #'prettier-js-mode)
 (add-hook 'js-mode-hook #'setup-tide-mode)
+(add-hook 'js-mode-hook #'semantic-mode)

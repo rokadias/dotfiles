@@ -4,7 +4,7 @@
 
 (defun vc-git-rebase ()
   (interactive)
-  (async-shell-command "EDITOR='emacsclient -c' git rebase -i origin/master"))
+  (async-shell-command "EDITOR='emacsclient -c' git rebase -i origin/main"))
 
 (defun vc-git-push (prompt)
   (let* ((branch (vc-git--current-symbolic-ref (buffer-file-name (current-buffer))))

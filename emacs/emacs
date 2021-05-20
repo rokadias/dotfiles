@@ -22,7 +22,7 @@
 
 (load-uid-library
          '("package" "session" "generalfunctions" "theme" "global" "compile" "bindings" "find-file-in-repository"
-           "key-chord" "progmodefunctions" "erc" "powershell" "yaml" "org" "restclient" "css"
+           "key-chord" "progmodefunctions" "erc" "powershell" "yaml" "org" "restclient" "css" "notify"
            "autocomplete" "yasnippet" "csharp" "rust" "python" "haskell" "html" "javascript" "jsx" "hg" "git" "tramp"))
 
 ;; assume files in the private directory are order-independent, and
