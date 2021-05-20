@@ -111,6 +111,7 @@
 (require 'vc)
 (global-set-key (kbd "C-x v w") 'vc-git-checkout-branch)
 (global-set-key (kbd "C-x v .") 'vc-git-rebase)
+(global-set-key (kbd "C-x v o") 'vc-git-retrieve-main-branch)
 
 ;; browser
 (global-set-key (kbd "C-x g") 'eww)

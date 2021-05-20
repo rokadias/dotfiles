@@ -1,10 +1,16 @@
-(defun vc-git-checkout-branch (arg)
-  (interactive "sNew Branch Name: ")
+(defun vc-git-checkout-branch (retrieve-arg arg)
+  (interactive "P\nsNew Branch Name: ")
+  (when retrieve-arg (vc-git-retrieve-main-branch))
   (shell-command (concat "git checkout -b " arg)))
 
 (defun vc-git-main-branch ()
   (let* ((remote (shell-command-to-string "git remote show origin | grep 'HEAD branch:'")))
     (replace-regexp-in-string ".*HEAD branch: \\([^ ]*\\).*\n" "\\1" remote)))
+
+(defun vc-git-retrieve-main-branch ()
+  (interactive)
+  (vc-retrieve-tag (vc-root-dir) (vc-git-main-branch))
+  (vc-pull))
 
 (defun vc-git-rebase ()
   (interactive)
