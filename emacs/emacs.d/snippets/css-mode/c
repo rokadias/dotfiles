@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# group: css-mode
+# name: Class
+# key: c
+# --
+.$1 {
+    $0
+}

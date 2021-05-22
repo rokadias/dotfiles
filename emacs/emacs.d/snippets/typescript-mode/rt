@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# group: reactjs
+# key: rt
+# --
+<${1:Card} ${2:={$3}}>
+  $0
+</$1>

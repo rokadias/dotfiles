@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# group: reactjs
+# key: rci
+# --
+import React, { useState, useEffect } from "react";
+
+import { Card } from "components/Workspace";
+
+export function ${1:$$(file-name-base (buffer-file-name))}({$2}) {
+  return (
+    <${3:Card}>
+      $0
+    </$3>
+  );
+}
