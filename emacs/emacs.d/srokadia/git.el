@@ -1,6 +1,11 @@
 (defun vc-git-checkout-branch (retrieve-arg arg)
   (interactive "P\nsNew Branch Name: ")
-  (when retrieve-arg (vc-git-retrieve-main-branch))
+  (when retrieve-arg
+    (let* ((working-files (shell-command-to-string "git status --porcelain")))
+      (when (> (length working-files) 1) (vc-git-stash "vc-git-checkout-branch"))
+      (vc-git-retrieve-main-branch)
+      (when (> (length working-files) 1) (vc-git-stash-pop "0"))
+      ))
   (shell-command (concat "git checkout -b " arg)))
 
 (defun vc-git-main-branch ()
