@@ -58,6 +58,7 @@
   (setq flycheck-javascript-eslint-executable "eslint_d")
   (eldoc-mode +1)
   (company-mode +1)
+  (set (make-local-variable 'company-backends) '(company-tide company-yasnippet company-semantic company-dabbrev-code company-gtags company-etags company-keywords company-dabbrev))
   (eslintd-fix-mode)
   (let ((project-file (find-project-file "package.json")))
     (when project-file

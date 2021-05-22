@@ -6,3 +6,4 @@
         yas-indent-line 'auto))
 
 (setq yasnippets-root (concat emacs-dir-root "snippets/"))
+(add-to-list 'warning-suppress-types '(yasnippet backquote-change))
