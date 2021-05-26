@@ -112,6 +112,10 @@
 (global-set-key (kbd "C-x v w") 'vc-git-checkout-branch)
 (global-set-key (kbd "C-x v .") 'vc-git-rebase)
 (global-set-key (kbd "C-x v o") 'vc-git-retrieve-main-branch)
+(global-set-key (kbd "C-x v a") 'vc-git-add-manually)
+(global-set-key (kbd "C-x v >") 'vc-git-merge-main-branch)
+(global-set-key (kbd "C-x v ,") 'vc-git-merge-continue)
+(global-set-key (kbd "C-x v k") 'vc-git-merge-abort)
 
 ;; browser
 (global-set-key (kbd "C-x g") 'eww)

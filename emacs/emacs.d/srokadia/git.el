@@ -15,11 +15,34 @@
 (defun vc-git-retrieve-main-branch ()
   (interactive)
   (vc-retrieve-tag (vc-root-dir) (vc-git-main-branch))
-  (vc-pull))
+  (vc-pull)
+  (when (get-buffer-window "*vc-git*")
+    (delete-window (get-buffer-window "*vc-git*"))))
 
 (defun vc-git-rebase ()
   (interactive)
   (async-shell-command (concat "EDITOR='emacsclient -c' git rebase -i origin/" (vc-git-main-branch))))
+
+(defun vc-git-merge-continue ()
+  (interactive)
+    (async-shell-command (concat "EDITOR='emacsclient -c' git merge --continue")))
+
+(defun vc-git-merge-abort ()
+  (interactive)
+    (async-shell-command (concat "EDITOR='emacsclient -c' git merge --abort")))
+
+(defun vc-git-add-manually ()
+  (interactive)
+  (shell-command (concat "git add " (buffer-file-name (current-buffer)))))
+
+(defun vc-git-merge-main-branch ()
+  (interactive)
+  (let* ((working-files (shell-command-to-string "git status --porcelain")))
+    (when (> (length working-files) 1) (vc-git-stash "vc-git-checkout-branch"))
+    (vc-pull)
+    (async-shell-command (concat "EDITOR='emacsclient -c' git merge origin/" (vc-git-main-branch)))
+    (when (> (length working-files) 1) (vc-git-stash-pop "0"))
+  ))
 
 (defun vc-git-push (prompt)
   (let* ((branch (vc-git--current-symbolic-ref (buffer-file-name (current-buffer))))
