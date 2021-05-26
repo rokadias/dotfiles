@@ -52,12 +52,17 @@
 
 (defun vc-git--current-symbolic-ref (file)
   (let* (process-file-side-effects
-         (str (vc-git--run-command-string nil "symbolic-ref" "HEAD")))
-    (vc-file-setprop file 'vc-git-symbolic-ref
-                     (if str
-                         (if (string-match "^\\(refs/heads/\\)?\\(.+\\)$" str)
-                             (match-string 2 str)
-                           str)))))
+         (str (vc-git--run-command-string nil "symbolic-ref" "HEAD"))
+         (short-hand (vc-git--short-ref-from-full-ref str)))
+    (when (not (string-match-p (regexp-quote "vc-dir") (buffer-name)))
+        (vc-file-setprop file 'vc-git-symbolic-ref short-hand))
+      short-hand))
+
+(defun vc-git--short-ref-from-full-ref (str)
+  (if str
+    (if (string-match "^\\(refs/heads/\\)?\\(.+\\)$" str)
+        (match-string 2 str)
+      str)))
 
 (defun vc-git-view-kill ()
   (interactive)
