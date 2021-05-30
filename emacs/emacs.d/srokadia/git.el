@@ -1,3 +1,4 @@
+(require 'vc)
 (defun vc-git-checkout-branch (retrieve-arg arg)
   (interactive "P\nsNew Branch Name: ")
   (when retrieve-arg
@@ -49,11 +50,13 @@
     (when (> (length working-files) 1) (vc-git-stash-pop "0"))
   ))
 
-(defun vc-git-push (prompt)
+(defun vc-git-new-push (prompt)
   (let* ((branch (vc-git--current-symbolic-ref (buffer-file-name (current-buffer))))
          (extra-args (list "--set-upstream" "origin" branch)))
     (when prompt (add-to-list 'extra-args "--force"))
     (vc-git--pushpull "push" nil extra-args)))
+
+(advice-add 'vc-git-push :override #'vc-git-new-push)
 
 (defun vc-git--current-symbolic-ref (file)
   (let* (process-file-side-effects
