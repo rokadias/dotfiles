@@ -1,3 +1,8 @@
+(setq is-w32 (string-equal system-type "windows-nt"))
+(setq is-cygwin (string-equal system-type "cygwin"))
+(setq is-mac (memq window-system '(mac ns)))
+(setq yasnippets-root (concat emacs-dir-root "snippets/"))
+
 (when (not is-w32)
   (server-start))
 
@@ -54,7 +59,7 @@
 (setq auto-save-default nil)
 (setq create-lockfiles nil)
 (setq inhibit-startup-screen t)
-(kill-buffer "*scratch*")
+;; (kill-buffer "*scratch*")
 
 (setq indent-tabs-mode nil)
 (setq-default indent-tabs-mode nil)
@@ -70,9 +75,6 @@
 
 (put 'upcase-region 'disabled nil)
 
-(setq is-w32 (string-equal system-type "windows-nt"))
-(setq is-cygwin (string-equal system-type "cygwin"))
-(setq is-mac (memq window-system '(mac ns)))
 (setq server-use-tcp nil)
 
 (when is-w32

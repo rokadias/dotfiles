@@ -18,14 +18,25 @@
 
 (setq custom-file (concat elisp-root "/custom.el"))
 (load custom-file 'noerror)
+
+(setq order-dependent-libraries '("package" "session" "generalfunctions" "progmodefunctions" "global"))
 (setq uid-libraries
       '("package" "session" "generalfunctions" "theme" "global" "compile" "git" "bindings" "find-file-in-repository"
         "progmodefunctions" "erc" "powershell" "yaml" "org" "restclient" "css" "notify"
         "autocomplete" "yasnippet" "csharp" "rust" "python" "haskell" "html" "javascript" "jsx" "hg" "tramp"
         "key-chord" ))
 
+(defun order-dependent-libraries-p (library)
+  (seq-some '(lambda (odl) (string-equal library odl)) order-dependent-libraries))
+
 (defun load-uid-libraries ()
-  (load-uid-library uid-libraries))
+  (let* ((all-uid-libraries (directory-files elisp-root nil "\\.el$"))
+         (not-order-dependent (lambda (l) (not (order-dependent-libraries-p l))))
+         (non-order-libraries (seq-filter not-order-dependent all-uid-libraries)))
+    (load-uid-library order-dependent-libraries)
+    (message "non-order-libraries")
+    (print non-order-libraries)
+    (load-uid-library non-order-libraries)))
 
 (load-uid-libraries)
 (add-hook 'after-init-hook #'load-uid-libraries)
