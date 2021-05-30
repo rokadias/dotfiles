@@ -10,4 +10,5 @@
               (list backends))
             '(:with company-yasnippet))))
 
+(require 'company)
 (setq company-backends (mapcar #'company-backend-with-yas company-backends))

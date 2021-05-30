@@ -21,7 +21,12 @@
 
 (defun vc-git-rebase ()
   (interactive)
-  (async-shell-command (concat "EDITOR='emacsclient -c' git rebase -i origin/" (vc-git-main-branch))))
+  (let* ((working-files (shell-command-to-string "git status --porcelain")))
+    (when (> (length working-files) 1) (vc-git-stash "vc-git-checkout-branch"))
+    (vc-pull)
+    (async-shell-command (concat "EDITOR='emacsclient -c' git rebase -i origin/" (vc-git-main-branch)))
+    (when (> (length working-files) 1) (vc-git-stash-pop "0"))
+  ))
 
 (defun vc-git-merge-continue ()
   (interactive)
@@ -116,3 +121,8 @@
      )
     )
   )
+
+(require 'ghub)
+(require 'github-notifier)
+(setq github-notifier-token (ghub--token "api.github.com" "rokadias" "github-review"))
+(github-notifier-mode 1)

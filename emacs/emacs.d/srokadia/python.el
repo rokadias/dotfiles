@@ -3,3 +3,5 @@
 
 (add-hook 'python-mode-hook #'lsp)
 (add-hook 'rust-mode-hook #'company-mode)
+(with-eval-after-load "semantic/idle"
+  (advice-add 'semantic-idle-scheduler-function :around #'ignore))

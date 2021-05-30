@@ -1,0 +1,10 @@
+
+export GH_JSON_FIELDS="assignees,author,reviewDecision,number,url,title,headRefName"
+export GH_COLUMN_FIELDS="ASSIGNEE,AUTHOR,REVIEW STATUS,number,URL,TITLE,BRANCH"
+export GH_JQ='.[] | [.assignees[].login //"unassigned", .author.login, .reviewDecision, .number, .url, .title, .headRefName] | @csv'
+
+alias gh-pr-all="gh pr list  --json $GH_JSON_FIELDS --jq '$GH_JQ' | grep -v dependabot | column -t -s, -N \"$GH_COLUMN_FIELDS\" -T TITLE -n 'All PRs'"
+alias gh-pr-me="gh pr list --assignee @me  --json $GH_JSON_FIELDS --jq '$GH_JQ' | grep -v dependabot | column -t -s, -N \"$GH_COLUMN_FIELDS\" -T TITLE -n 'Needs Review'"
+alias gh-pr-my="gh pr list --author @me  --json $GH_JSON_FIELDS --jq '$GH_JQ' | grep -v dependabot | column -t -s, -N \"$GH_COLUMN_FIELDS\" -T TITLE -n 'Needs Review'"
+
+alias sc="ffmpeg -f x11grab -video_size 2560x1440 -i $DISPLAY -vframes 1"

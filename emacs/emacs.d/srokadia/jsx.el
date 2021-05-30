@@ -32,3 +32,6 @@
 (add-hook 'poly-tsx-mode-hook #'setup-tide-mode)
 
 (setq auto-mode-alist (append '(("\\.jsx?$" . js-mode)) auto-mode-alist))
+
+(with-eval-after-load "polymode"
+  (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode)))

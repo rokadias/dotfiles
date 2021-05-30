@@ -98,6 +98,7 @@
 (define-key lsp-mode-map (kbd "C-; C-b") 'lsp-goto-implementation)
 (define-key lsp-mode-map (kbd "C-; C-k") 'lsp-find-references)
 (define-key lsp-mode-map (kbd "C-; C-r") 'lsp-rename)
+(define-key lsp-mode-map (kbd "C-; C-i") 'lsp-execute-code-action)
 
 (require 'rust-mode)
 (define-key rust-mode-map (kbd "C-c C-l") 'flymake-show-diagnostics-buffer)
@@ -109,13 +110,16 @@
 
 ;; VC commands
 (require 'vc)
-(global-set-key (kbd "C-x v w") 'vc-git-checkout-branch)
-(global-set-key (kbd "C-x v .") 'vc-git-rebase)
-(global-set-key (kbd "C-x v o") 'vc-git-retrieve-main-branch)
-(global-set-key (kbd "C-x v a") 'vc-git-add-manually)
-(global-set-key (kbd "C-x v >") 'vc-git-merge-main-branch)
-(global-set-key (kbd "C-x v ,") 'vc-git-merge-continue)
-(global-set-key (kbd "C-x v k") 'vc-git-merge-abort)
+(defun custom-git-bindings ()
+  (global-set-key (kbd "C-x v w") 'vc-git-checkout-branch)
+  (global-set-key (kbd "C-x v .") 'vc-git-rebase)
+  (global-set-key (kbd "C-x v o") 'vc-git-retrieve-main-branch)
+  (global-set-key (kbd "C-x v a") 'vc-git-add-manually)
+  (global-set-key (kbd "C-x v >") 'vc-git-merge-main-branch)
+  (global-set-key (kbd "C-x v ,") 'vc-git-merge-continue)
+  (global-set-key (kbd "C-x v k") 'vc-git-merge-abort))
+(custom-git-bindings)
+(with-eval-after-load 'vc (custom-git-bindings))
 
 ;; browser
 (global-set-key (kbd "C-x g") 'eww)

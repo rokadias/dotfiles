@@ -53,6 +53,7 @@
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
+  (lsp)
   (flycheck-mode +1)
   (flycheck-add-next-checker 'typescript-tide '(t . typescript-tslint) 'append)
   (setq flycheck-javascript-eslint-executable "eslint_d")
@@ -77,3 +78,8 @@
 (add-hook 'js-mode-hook #'prettier-js-mode)
 (add-hook 'js-mode-hook #'setup-tide-mode)
 (add-hook 'js-mode-hook #'semantic-mode)
+
+(use-package lsp-mode
+  :hook (web-mode . lsp)
+  :custom
+  (lsp-clients-typescript-server-args '("--stdio" "--tsserver-log-file" "/dev/stderr")))

@@ -11,16 +11,11 @@ if [ -f ~/Downloads/wallpapers/arch-linux-1.jpg ]; then
     xloadimage -onroot -display $DISPLAY ~/Downloads/wallpapers/arch-linux-1.jpg
 fi
 
-xrandr -q | grep "DisplayPort-1"
-if [[ $? -eq 0 ]]; then
-    xrandr --output DisplayPort-1 --auto --right-of HDMI-A-0
-fi
-
-xrandr -q | grep "DisplayPort-2"
-if [[ $? -eq 0 ]]; then
-    xrandr --output DisplayPort-2 --auto --left-of HDMI-A-0 --auto
-fi
-
 if [ -f ~/.xmodmap ]; then
     xmodmap ~/.xmodmap
 fi
+
+if [ -x $(command -v autorandr) ]; then
+    autorandr -c
+fi
+
