@@ -7,7 +7,7 @@
   (resize-compile-window)
   )
 
-(setq compilation-removal-modes '("compilation-mode" "grep-mode"))
+(setq compilation-removal-modes '("compilation-mode" "grep-mode" "shell-mode"))
 
 (defun mode-buffer-matches-buffer-p (buffer matching-modes)
   (if (local-variable-p 'major-mode buffer)
