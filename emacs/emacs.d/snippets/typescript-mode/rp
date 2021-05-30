@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# group: reactjs
+# key: rp
+# --
+function $1({$2}) {
+  return (
+    <${3:Card}>
+      $0
+    </$3>
+  );
+}

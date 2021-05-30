@@ -2,4 +2,4 @@
 # name: printformat
 # key: pf
 # --
-print(f'$1: {${1:$(downcase (yas-text ))}}')
+print(f'$1: {${1:$(downcase (yas-text))}}')
