@@ -125,6 +125,15 @@
     )
   )
 
+(defun vc-new-github-pr ()
+  (interactive)
+  (let* ((branch (vc-git--current-symbolic-ref (buffer-file-name (current-buffer))))
+         (remote (vc-git-remote))
+         (new-pr-url (concat remote "/pull/new/" branch)))
+    (kill-new new-pr-url)
+    (browse-url new-pr-url)
+  ))
+
 (require 'ghub)
 (require 'github-notifier)
 (setq github-notifier-token (ghub--token "api.github.com" "rokadias" "github-review"))

@@ -118,6 +118,7 @@
   (global-set-key (kbd "C-x v >") 'vc-git-merge-main-branch)
   (global-set-key (kbd "C-x v ,") 'vc-git-merge-continue)
   (global-set-key (kbd "C-x v k") 'vc-git-merge-abort))
+  (global-set-key (kbd "C-x v n") 'vc-new-github-pr)
 (custom-git-bindings)
 (with-eval-after-load 'vc (custom-git-bindings))
 
