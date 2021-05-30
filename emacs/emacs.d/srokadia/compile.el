@@ -36,11 +36,7 @@
          (cw (get-buffer-window "*compilation*"))
          (h (window-height cw)))
     (when cw
-      (fit-window-to-buffer cw 20 10)
-      ;; (select-window cw)
-      ;; (shrink-window (- h 40))
-      ;; (select-window cur)
-      ))
+      (fit-window-to-buffer cw 20 10)))
   )
 
 (setq compile-fun
