@@ -5,6 +5,7 @@ google-chrome
 laptop-mode-tools
 pyenv-virtualenv
 slack-desktop
+ttf-fira-code
 xf86-input-mtrack
 yay
 zoom
