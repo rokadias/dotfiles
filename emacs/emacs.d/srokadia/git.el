@@ -58,6 +58,30 @@
 
 (advice-add 'vc-git-push :override #'vc-git-new-push)
 
+(defun vc-git-compile-buffer-successful-p (buffer)
+  (with-current-buffer buffer
+    (save-excursion
+      (goto-char (point-max))
+      (save-match-data
+        (re-search-backward "Running \"[^\"]*\"" nil t 1)
+        (not (re-search-forward "fatal" nil t 1)))))
+  )
+
+(defun vc-git-close-if-succesful(a b c)
+  (let* ((starts-with-vc-git (lambda (buffer) (string-prefix-p "*vc-git" (buffer-name buffer))))
+         (all-window-buffers (seq-map #'window-buffer (window-list)))
+         (vc-git-buffers (seq-filter starts-with-vc-git all-window-buffers)))
+
+    (dolist (buffer vc-git-buffers)
+      (if (vc-git-compile-buffer-successful-p buffer)
+          (progn
+            (notify "VC GIT" "Git Command SUCCESSFUL!")
+            (delete-window (get-buffer-window buffer)))
+        (select-window (get-buffer-window buffer)))
+      ))
+  )
+(add-hook 'vc-post-command-functions #'vc-git-close-if-succesful)
+
 (defun vc-git--current-symbolic-ref (file)
   (let* (process-file-side-effects
          (str (vc-git--run-command-string nil "symbolic-ref" "HEAD"))
