@@ -6,6 +6,7 @@
 (key-chord-define-global "ji" 'ido-switch-buffer)
 (key-chord-define-global "je" 'delete-window)
 (key-chord-define-global "jd" 'delete-other-windows)
+(key-chord-define-global "jw" 'remove-compile-windows)
 (key-chord-define-global "fk" 'split-window-below)
 (key-chord-define-global "fl" 'split-window-right)
 
