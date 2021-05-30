@@ -65,6 +65,7 @@
 (setq-default indent-tabs-mode nil)
 (setq c-basic-offset 4)
 (setq nxml-child-indent 2)
+(show-paren-mode t)
 
 (setq dabbrev-case-fold-search nil)
 (setq dabbrev-case-replace nil)
@@ -123,7 +124,6 @@
        (is-mac 'rcy-browse-url-default-macosx-browser)
        (t 'browse-url-chromium)))
 
-(setq visible-bell (not is-mac))
 (when is-mac
   (setq visible-bell       nil
         ring-bell-function #'my-terminal-visible-bell))
