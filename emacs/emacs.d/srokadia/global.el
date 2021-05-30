@@ -1,3 +1,34 @@
+(when (not is-w32)
+  (server-start))
+
+(when (and (not is-cygwin) (require 'edit-server nil :noerror))
+  (setq edit-server-new-frame nil)
+  (edit-server-start))
+
+(icomplete-mode 99)
+(ido-mode 1)
+(ido-vertical-mode 1)
+
+(setq ;; Use it for many file dialogs
+      ido-everywhere t
+      ;; Don't be case sensitive
+      ido-case-fold t
+      ;; If the file at point exists, use that
+      ido-use-filename-at-point nil
+      ;; If the input does not exist,
+      ;; don't look in unexpected places.
+      ;; I probably want a new file.
+      ido-auto-merge-work-directories-length -1
+      ;; Flexible string matching
+      ido-enable-flex-matching t)
+
+(add-hook 'comint-output-filter-functions
+          'shell-script-ctrl-m nil t)
+(add-hook 'comint-output-filter-functions
+          'comint-watch-for-password-prompt nil t)
+
+(setq tags-revert-without-query t)
+
 (require 'editorconfig)
 (editorconfig-mode 1)
 

@@ -29,11 +29,3 @@
 
 (load-uid-libraries)
 (add-hook 'after-init-hook #'load-uid-libraries)
-
-;; assume files in the private directory are order-independent, and
-;; load them all
-(let ((private-root (concat elisp-root "/private" )))
-  (when (file-exists-p private-root)
-    (dolist (library (directory-files private-root nil "\\.el$"))
-      (load (concat elisp-root "/private/" (file-name-sans-extension library))))))
-
