@@ -7,12 +7,28 @@
   (resize-compile-window)
   )
 
-(defun remove-compile-window ()
+(setq compilation-removal-modes '("compilation-mode" "grep-mode"))
+
+(defun mode-buffer-matches-buffer-p (buffer matching-modes)
+  (if (local-variable-p 'major-mode buffer)
+      (seq-some
+       (lambda (mode) (string-equal (buffer-local-value 'major-mode buffer) mode))
+       compilation-removal-modes)
+    nil)
+  )
+
+(defun remove-compile-windows (&optional removing-modes)
   (interactive)
-  (let* ((cur (selected-window))
-         (cw (get-buffer-window "*compilation*")))
-    (if cw (delete-window cw))
-    )
+  (let* ((modes (or removing-modes compilation-removal-modes))
+         (all-window-buffers (seq-map #'window-buffer (window-list)))
+         (is-remove-compile (lambda (buffer) (is-remove-compile-buffer-p buffer modes)))
+         (compile-window-buffers (seq-filter #'is-remove-compile all-window-buffers))
+         (compile-windows (seq-map #'get-buffer-window compile-window-buffers)))
+    (seq-map #'delete-window compile-windows))
+  )
+
+(defun remove-compile-window (interactive)
+  (remove-compile-windows '("compilation-mode"))
   )
 
 (defun resize-compile-window ()
