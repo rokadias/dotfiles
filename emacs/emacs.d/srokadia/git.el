@@ -66,6 +66,7 @@
         (re-search-backward "Running \"[^\"]*\"" nil t 1)
         (and
          (not (re-search-forward "fatal" nil t 1))
+         (not (re-search-forward "error" nil t 1))
          (not (re-search-forward "rejected" nil t 1))))))
   )
 
