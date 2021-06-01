@@ -135,7 +135,7 @@ source_if_available "/home/srokadia/google-cloud-sdk/path.zsh.inc"
 source_if_available "/home/srokadia/google-cloud-sdk/completion.zsh.inc"
 
 # Aliases
-source_if_available "/home/srokadia/dotfiles/home/aliases"
+source_if_available "/home/srokadia/.aliases"
 
 if [ -x $(command -v pyenv) ]; then
     # TODO Remove after restart.

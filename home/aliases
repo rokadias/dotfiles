@@ -7,4 +7,16 @@ alias gh-pr-all="gh pr list  --json $GH_JSON_FIELDS --jq '$GH_JQ' | grep -v depe
 alias gh-pr-me="gh pr list --assignee @me  --json $GH_JSON_FIELDS --jq '$GH_JQ' | grep -v dependabot | column -t -s, -N \"$GH_COLUMN_FIELDS\" -T TITLE -n 'Needs Review'"
 alias gh-pr-my="gh pr list --author @me  --json $GH_JSON_FIELDS --jq '$GH_JQ' | grep -v dependabot | column -t -s, -N \"$GH_COLUMN_FIELDS\" -T TITLE -n 'Needs Review'"
 
+alias gbrdf="git push origin --delete"
+
+function makeGIF {
+    local VIDEO=$1
+    local FILENAME=$(basename $VIDEO)
+    local DIRECTORY=$(dirname $VIDEO)
+    ffmpeg -i $VIDEO -vf "fps=15,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop -1 $DIRECTORY/${FILENAME%.*}.gif
+}
+
 alias sc="ffmpeg -f x11grab -video_size 2560x1440 -i $DISPLAY -vframes 1"
+alias scr="ffmpeg -f x11grab -video_size 2560x1440 -framerate 25 -i $DISPLAY -c:v libx264 -preset ultrafast -c:a aac"
+alias scr-gif="makeGIF"
+
