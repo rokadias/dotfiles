@@ -2,7 +2,7 @@
 (defun vc-git-checkout-branch (retrieve-arg arg)
   (interactive "P\nsNew Branch Name: ")
   (when retrieve-arg
-    (let* ((working-files (shell-command-to-string "git status --porcelain")))
+    (let* ((working-files (shell-command-to-string "git status --porcelain -uno")))
       (when (> (length working-files) 1) (vc-git-stash "vc-git-checkout-branch"))
       (vc-git-retrieve-main-branch)
       (when (> (length working-files) 1) (vc-git-stash-pop "0"))
@@ -22,7 +22,7 @@
 
 (defun vc-git-rebase ()
   (interactive)
-  (let* ((working-files (shell-command-to-string "git status --porcelain")))
+  (let* ((working-files (shell-command-to-string "git status --porcelain -uno")))
     (when (> (length working-files) 1) (vc-git-stash "vc-git-checkout-branch"))
     (vc-pull)
     (async-shell-command (concat "EDITOR='emacsclient -c' git rebase -i origin/" (vc-git-main-branch)))
@@ -43,7 +43,7 @@
 
 (defun vc-git-merge-main-branch ()
   (interactive)
-  (let* ((working-files (shell-command-to-string "git status --porcelain")))
+  (let* ((working-files (shell-command-to-string "git status --porcelain -uno")))
     (when (> (length working-files) 1) (vc-git-stash "vc-git-checkout-branch"))
     (vc-pull)
     (async-shell-command (concat "EDITOR='emacsclient -c' git merge origin/" (vc-git-main-branch)))
