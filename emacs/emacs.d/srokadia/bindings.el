@@ -62,10 +62,6 @@
 (define-key omnisharp-mode-map (kbd "C-; C-/") 'omnisharp-current-type-documentation)
 (define-key omnisharp-mode-map (kbd "C-; C-SPC") 'omnisharp-auto-complete)
 
-(require 'auto-complete)
-(define-key ac-complete-mode-map (kbd "C-n") 'ac-next)
-(define-key ac-complete-mode-map (kbd "C-p") 'ac-previous)
-
 (require 'multiple-cursors)
 
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -131,3 +127,8 @@
 (require 'term)
 (define-key term-mode-map (kbd "C-c C-y") 'term-paste)
 (global-set-key (kbd "<M-S-return>") '(lambda (newname) (interactive "sBuffer Name:") (term "/bin/zsh") (rename-buffer newname)))
+
+;; restclient
+(require 'restclient)
+(define-key restclient-mode-map (kbd "M-p") 'restclient-jump-prev)
+(define-key restclient-mode-map (kbd "M-n") 'restclient-jump-next)

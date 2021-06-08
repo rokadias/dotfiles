@@ -1,7 +1,3 @@
-(require 'auto-complete)
-(require 'auto-complete-config)
-(ac-config-default)
-
 (defun company-backend-with-yas (backends)
   (if (and (listp backends) (memq 'company-yasnippet backends))
       backends
@@ -12,3 +8,5 @@
 
 (require 'company)
 (setq company-backends (mapcar #'company-backend-with-yas company-backends))
+(setq company-dabbrev-downcase 0)
+(setq company-idle-delay 0)
