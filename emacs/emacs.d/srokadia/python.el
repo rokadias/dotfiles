@@ -3,7 +3,8 @@
 
 (defun on-python-load ()
   (require 'lsp-pyright)
-  (lsp))
+  (lsp)
+  (company-mode nil))
 (add-hook 'python-mode-hook #'on-python-load)
 
 
