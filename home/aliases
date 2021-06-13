@@ -7,6 +7,30 @@ alias gh-pr-all="gh pr list  --json $GH_JSON_FIELDS --jq '$GH_JQ' | grep -v depe
 alias gh-pr-me="gh pr list --assignee @me  --json $GH_JSON_FIELDS --jq '$GH_JQ' | grep -v dependabot | column -t -s, -N \"$GH_COLUMN_FIELDS\" -T TITLE -n 'Needs Review'"
 alias gh-pr-my="gh pr list --author @me  --json $GH_JSON_FIELDS --jq '$GH_JQ' | grep -v dependabot | column -t -s, -N \"$GH_COLUMN_FIELDS\" -T TITLE -n 'Needs Review'"
 
+function watchLatestMainBuild {
+    local WORKFLOW_NAME=$1
+    local SecondFilter=$2
+    JOBS=$(gh run list -w "$WORKFLOW_NAME" | grep "\(main\)\|\(master\)")
+    if [[ -n $SecondFilter ]]; then
+        JOBS=$(echo -n "$JOBS" | grep "$SecondFilter")
+    fi
+    echo $JOBS | column -t -s$'\t' -T 3
+    JOB_ID=$(echo -n "$JOBS" | head -n 1 | cut -f 8)
+    echo "Found Workflow Job Id: $JOB_ID"
+    gh run watch $JOB_ID && notify-send "$WORKFLOW_NAME Done :-)"
+}
+
+alias gh-watch-main="watchLatestMainBuild"
+
+function watchWorkflow {
+    local WORKFLOW_NAME=$1
+    JOB_ID=$(gh run list -w "$WORKFLOW_NAME" -L 1 | cut -f 8)
+    echo "Found Workflow Job Id: $JOB_ID"
+    gh run watch $JOB_ID && notify-send "$WORKFLOW_NAME Done :-)"
+}
+
+alias gh-watch-workflow="watchWorkflow"
+
 alias gbrdf="git push origin --delete"
 
 function makeGIF {
