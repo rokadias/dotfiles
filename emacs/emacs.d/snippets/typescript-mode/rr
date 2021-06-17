@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# group: reactjs
+# key: rr
+# --
+const [$1, toggle${1:$(upcase-first-char yas-text)}] = useReducer(${2:(toggle) => !toggle}, ${3:false});

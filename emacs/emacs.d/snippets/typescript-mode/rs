@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# group: reactjs
+# key: rs
+# --
+const [$1, set${1:$(upcase-first-char yas-text)}] = useState($2);

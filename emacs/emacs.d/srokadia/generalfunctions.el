@@ -103,8 +103,15 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   )
 
 (defun downcase-first-char (&optional string)
-  "Capitalize only the first character of the input STRING."
+  "Downcase the first character of the input STRING."
   (when (and string (> (length string) 0))
     (let ((first-char (substring string 0 1))
           (rest-str   (substring string 1)))
       (concat (downcase first-char) rest-str))))
+
+(defun upcase-first-char (&optional string)
+  "Capitalize the first character of the input STRING."
+  (when (and string (> (length string) 0))
+    (let ((first-char (substring string 0 1))
+          (rest-str   (substring string 1)))
+      (concat (upcase first-char) rest-str))))
