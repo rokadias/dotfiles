@@ -83,3 +83,4 @@
   :hook (web-mode . lsp)
   :custom
   (lsp-clients-typescript-server-args '("--stdio" "--tsserver-log-file" "/dev/stderr")))
+(setq lsp-disabled-clients '(eslint))
