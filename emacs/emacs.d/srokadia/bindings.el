@@ -132,3 +132,6 @@
 (require 'restclient)
 (define-key restclient-mode-map (kbd "M-p") 'restclient-jump-prev)
 (define-key restclient-mode-map (kbd "M-n") 'restclient-jump-next)
+
+(require 'yas)
+(global-set-key (kbd "C-,") 'yas-expand)
