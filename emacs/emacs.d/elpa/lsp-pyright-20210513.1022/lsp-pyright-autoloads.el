@@ -6,10 +6,18 @@
                          (or (file-name-directory #$) (car load-path))))
 
 
-;;;### (autoloads nil "lsp-pyright" "lsp-pyright.el" (0 0 0 0))
-;;; Generated autoloads from lsp-pyright.el
+;;;### (autoloads "actual autoloads are elsewhere" "lsp-pyright"
+;;;;;;  "../../../../../.emacs.d/elpa/lsp-pyright-20210513.1022/lsp-pyright.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ../../../../../.emacs.d/elpa/lsp-pyright-20210513.1022/lsp-pyright.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "lsp-pyright" '("lsp-pyright-")))
+
+;;;***
+
+;;;### (autoloads nil nil ("../../../../../.emacs.d/elpa/lsp-pyright-20210513.1022/lsp-pyright-autoloads.el"
+;;;;;;  "../../../../../.emacs.d/elpa/lsp-pyright-20210513.1022/lsp-pyright.el")
+;;;;;;  (0 0 0 0))
 
 ;;;***
 
