@@ -27,6 +27,7 @@
     (when (> (length working-files) 1) (vc-git-stash "vc-git-checkout-branch"))
     (vc-retrieve-tag (vc-root-dir) (vc-git-main-branch))
     (vc-pull)
+    (sleep-for 2)
     (vc-retrieve-tag (vc-root-dir) branch)
     (async-shell-command (concat "EDITOR='emacsclient -c' git rebase -i origin/" (vc-git-main-branch)))
     (when (> (length working-files) 1) (vc-git-stash-pop "0"))
