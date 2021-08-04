@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: React#import-classnames
+# key: impcx
+# --
+import cx from "classnames";

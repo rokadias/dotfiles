@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: React#import-styles
+# key: impsty
+# --
+import styles from "./${1:$$(file-name-base (buffer-file-name))}.module.scss";
