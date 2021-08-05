@@ -142,7 +142,7 @@
           "/master"
           (vc-git-get-relative-path)
           "#L"
-          (number-to-string (count-lines 1 (point)))))
+          (number-to-string (get-current-line-number))))
 
 (defun vc-git-get-relative-path()
   (let* ((root (string-trim (shell-command-to-string "git rev-parse --show-toplevel")))

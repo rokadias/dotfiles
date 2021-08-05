@@ -115,3 +115,10 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
     (let ((first-char (substring string 0 1))
           (rest-str   (substring string 1)))
       (concat (upcase first-char) rest-str))))
+
+(defun get-current-line-number ()
+  (save-restriction)
+  (widen)
+  (save-excursion
+    (beginning-of-line)
+    (1+ (count-lines 1 (point)))))
