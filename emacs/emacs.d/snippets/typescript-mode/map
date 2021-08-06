@@ -1,0 +1,6 @@
+
+# -*- mode: snippet -*-
+# group: js
+# key: map
+# --
+.map(($1${2:, idx}) => $3);

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# group: reactjs
+# key: um
+# --
+const $1 = useMemo(() => {
+  $0
+}, [$2]);

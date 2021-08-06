@@ -1,0 +1,8 @@
+
+# -*- mode: snippet -*-
+# group: reactjs
+# key: ue
+# --
+useEffect(() => {
+  $0
+}, [$1]);
