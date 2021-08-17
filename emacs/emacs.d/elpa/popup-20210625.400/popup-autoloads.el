@@ -6,10 +6,26 @@
                          (or (file-name-directory #$) (car load-path))))
 
 
-;;;### (autoloads nil "popup" "popup.el" (0 0 0 0))
+;;;### (autoloads "actual autoloads are elsewhere" "../../../dotfiles/emacs/emacs.d/elpa/popup-20210625.400/popup"
+;;;;;;  "popup.el" (0 0 0 0))
 ;;; Generated autoloads from popup.el
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "../../../dotfiles/emacs/emacs.d/elpa/popup-20210625.400/popup" '("popup-")))
+
+;;;***
+
+;;;### (autoloads "actual autoloads are elsewhere" "popup" "../../../../../.emacs.d/elpa/popup-20210625.400/popup.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ../../../../../.emacs.d/elpa/popup-20210625.400/popup.el
+
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "popup" '("popup-")))
+
+;;;***
+
+;;;### (autoloads nil nil ("../../../../../.emacs.d/elpa/popup-20210625.400/popup-autoloads.el"
+;;;;;;  "../../../../../.emacs.d/elpa/popup-20210625.400/popup-pkg.el"
+;;;;;;  "../../../../../.emacs.d/elpa/popup-20210625.400/popup.el"
+;;;;;;  "popup.el") (0 0 0 0))
 
 ;;;***
 

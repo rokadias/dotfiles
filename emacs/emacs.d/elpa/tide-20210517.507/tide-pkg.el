@@ -5,7 +5,7 @@
     (flycheck "27")
     (typescript-mode "0.1")
     (cl-lib "0.5"))
-  :commit "c593153373d05b56ae56b0ca3a6752ee86708aaa" :authors
+  :commit "1e376e3e9798206ea3e42a5c037a7c00aa64ee00" :authors
   '(("Anantha kumaran" . "ananthakumaran@gmail.com"))
   :maintainer
   '("Anantha kumaran" . "ananthakumaran@gmail.com")

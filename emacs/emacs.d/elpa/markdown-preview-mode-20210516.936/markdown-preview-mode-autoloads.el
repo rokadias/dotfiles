@@ -6,9 +6,39 @@
                          (or (file-name-directory #$) (car load-path))))
 
 
-;;;### (autoloads nil "markdown-preview-mode" "markdown-preview-mode.el"
-;;;;;;  (0 0 0 0))
+;;;### (autoloads nil "../../../dotfiles/emacs/emacs.d/elpa/markdown-preview-mode-20210516.936/markdown-preview-mode"
+;;;;;;  "markdown-preview-mode.el" "ae3874d636ab50a9c8ccae3770a194f2")
 ;;; Generated autoloads from markdown-preview-mode.el
+
+(autoload 'markdown-preview-open-browser "../../../dotfiles/emacs/emacs.d/elpa/markdown-preview-mode-20210516.936/markdown-preview-mode" "\
+Open the `markdown-preview' in the browser." t nil)
+
+(autoload 'markdown-preview-cleanup "../../../dotfiles/emacs/emacs.d/elpa/markdown-preview-mode-20210516.936/markdown-preview-mode" "\
+Cleanup `markdown-preview' mode." t nil)
+
+(autoload 'markdown-preview-mode "../../../dotfiles/emacs/emacs.d/elpa/markdown-preview-mode-20210516.936/markdown-preview-mode" "\
+Markdown preview mode.
+
+If called interactively, enable Markdown-Preview mode if ARG is
+positive, and disable it if ARG is zero or negative.  If called
+from Lisp, also enable the mode if ARG is omitted or nil, and
+toggle it if ARG is `toggle'; disable the mode otherwise.
+
+\(fn &optional ARG)" t nil)
+
+;;;### (autoloads "actual autoloads are elsewhere" "../../../dotfiles/emacs/emacs.d/elpa/markdown-preview-mode-20210516.936/markdown-preview-mode"
+;;;;;;  "markdown-preview-mode.el" (0 0 0 0))
+;;; Generated autoloads from markdown-preview-mode.el
+
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "../../../dotfiles/emacs/emacs.d/elpa/markdown-preview-mode-20210516.936/markdown-preview-mode" '("markdown-preview-")))
+
+;;;***
+
+;;;***
+
+;;;### (autoloads nil "markdown-preview-mode" "../../../../../.emacs.d/elpa/markdown-preview-mode-20210516.936/markdown-preview-mode.el"
+;;;;;;  "ae3874d636ab50a9c8ccae3770a194f2")
+;;; Generated autoloads from ../../../../../.emacs.d/elpa/markdown-preview-mode-20210516.936/markdown-preview-mode.el
 
 (autoload 'markdown-preview-open-browser "markdown-preview-mode" "\
 Open the `markdown-preview' in the browser." t nil)
@@ -25,13 +55,22 @@ from Lisp, also enable the mode if ARG is omitted or nil, and
 toggle it if ARG is `toggle'; disable the mode otherwise.
 
 \(fn &optional ARG)" t nil)
+
+;;;### (autoloads "actual autoloads are elsewhere" "markdown-preview-mode"
+;;;;;;  "../../../../../.emacs.d/elpa/markdown-preview-mode-20210516.936/markdown-preview-mode.el"
+;;;;;;  (0 0 0 0))
+;;; Generated autoloads from ../../../../../.emacs.d/elpa/markdown-preview-mode-20210516.936/markdown-preview-mode.el
 
 (if (fboundp 'register-definition-prefixes) (register-definition-prefixes "markdown-preview-mode" '("markdown-preview-")))
 
 ;;;***
+
+;;;***
 
-;;;### (autoloads nil nil ("markdown-preview-mode-pkg.el") (0 0 0
-;;;;;;  0))
+;;;### (autoloads nil nil ("../../../../../.emacs.d/elpa/markdown-preview-mode-20210516.936/markdown-preview-mode-autoloads.el"
+;;;;;;  "../../../../../.emacs.d/elpa/markdown-preview-mode-20210516.936/markdown-preview-mode-pkg.el"
+;;;;;;  "../../../../../.emacs.d/elpa/markdown-preview-mode-20210516.936/markdown-preview-mode.el"
+;;;;;;  "markdown-preview-mode.el") (0 0 0 0))
 
 ;;;***
 
