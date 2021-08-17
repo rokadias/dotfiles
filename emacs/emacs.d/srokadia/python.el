@@ -4,7 +4,8 @@
 (defun on-python-load ()
   (require 'lsp-pyright)
   (lsp)
-  (company-mode nil))
+  (company-mode nil)
+  (python-black-on-save-mode-enable-dwim))
 (add-hook 'python-mode-hook #'on-python-load)
 
 
