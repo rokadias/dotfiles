@@ -18,7 +18,13 @@ function watchLatestMainBuild {
     echo $JOBS | column -t -s$'\t' -T 3
     JOB_ID=$(echo -n "$JOBS" | head -n 1 | cut -f 8)
     echo "Found Workflow Job Id: $JOB_ID"
-    gh run watch $JOB_ID && notify-send "$WORKFLOW_NAME Done :-)"
+    gh run watch $JOB_ID  && RETURN_CODE=$? || RETURN_CODE=$?
+    if [[ $RETURN_CODE -eq 0 ]]; then
+        notify-send "$WORKFLOW_NAME Done :-)"
+    else
+        notify-send "Oh no $WORKFLOW_NAME Failed !!"
+        exit 1
+    fi
 }
 
 alias gh-watch-main="watchLatestMainBuild"
@@ -27,10 +33,26 @@ function watchWorkflow {
     local WORKFLOW_NAME=$1
     JOB_ID=$(gh run list -w "$WORKFLOW_NAME" -L 1 | cut -f 8)
     echo "Found Workflow Job Id: $JOB_ID"
-    gh run watch $JOB_ID && notify-send "$WORKFLOW_NAME Done :-)"
+    gh run watch --exit-status $JOB_ID && RETURN_CODE=$? || RETURN_CODE=$?
+    if [[ $RETURN_CODE -eq 0 ]]; then
+        notify-send "$WORKFLOW_NAME Done :-)"
+    else
+        notify-send "Oh no $WORKFLOW_NAME Failed !!"
+        exit 1
+    fi
 }
 
 alias gh-watch-workflow="watchWorkflow"
+
+function runAndWatchWorkflow {
+    local WORKFLOW_NAME=$1
+    gh workflow run "$WORKFLOW_NAME"
+    echo "Sleep for 20 seconds to make sure that github triggers the $WORKFLOW_NAME workflow"
+    sleep 20
+    watchWorkflow "$WORKFLOW_NAME"
+}
+
+alias gh-run-and-watch-workflow="runAndWatchWorkflow"
 
 alias gbrdf="git push origin --delete"
 
