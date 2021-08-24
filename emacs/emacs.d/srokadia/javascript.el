@@ -5,7 +5,6 @@
 
 (autoload 'js2-mode "js2-mode" "JavaScript editing mode" t)
 (setq auto-mode-alist (append '(("\\.js$" . js2-mode)) auto-mode-alist))
-(setq ac-js2-evaluate-calls t)
 
 (setq js-indent-level 2
       js2-basic-offset 2
@@ -38,8 +37,7 @@
   '(let ((js2-snippets (concat yasnippets-root "js2-mode")))
      (when (file-exists-p js2-snippets)
        (add-to-list 'load-path js2-snippets)
-       (yas/load-directory js2-snippets)
-       (add-to-list 'ac-sources 'ac-source-yasnippet))))
+       (yas/load-directory js2-snippets))))
 
 (eval-after-load "compile"
   '(setq compilation-error-regexp-alist
