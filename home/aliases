@@ -16,7 +16,7 @@ function watchLatestMainBuild {
         JOBS=$(echo -n "$JOBS" | grep "$SecondFilter")
     fi
     echo $JOBS | column -t -s$'\t' -T 3
-    JOB_ID=$(echo -n "$JOBS" | head -n 1 | cut -f 7)
+    JOB_ID=$(echo -n "$JOBS" | head -n 1 | sed -e 's/.*\([0-9]\{10\}\).*/\1/')
     echo "Found Workflow Job Id: $JOB_ID"
     gh run watch $JOB_ID  && RETURN_CODE=$? || RETURN_CODE=$?
     if [[ $RETURN_CODE -eq 0 ]]; then
@@ -31,7 +31,7 @@ alias gh-watch-main="watchLatestMainBuild"
 
 function watchWorkflow {
     local WORKFLOW_NAME=$1
-    JOB_ID=$(gh run list -w "$WORKFLOW_NAME" -L 1 | cut -f 7)
+    JOB_ID=$(gh run list -w "$WORKFLOW_NAME" -L 1 | sed -e 's/.*\([0-9]\{10\}\).*/\1/')
     echo "Found Workflow Job Id: $JOB_ID"
     gh run watch --exit-status $JOB_ID && RETURN_CODE=$? || RETURN_CODE=$?
     if [[ $RETURN_CODE -eq 0 ]]; then
@@ -66,4 +66,3 @@ function makeGIF {
 alias sc="ffmpeg -f x11grab -video_size 2560x1440 -i $DISPLAY -vframes 1"
 alias scr="ffmpeg -f x11grab -video_size 2560x1440 -framerate 25 -i $DISPLAY -c:v libx264 -preset ultrafast -c:a aac"
 alias scr-gif="makeGIF"
-
