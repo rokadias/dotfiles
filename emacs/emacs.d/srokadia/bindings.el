@@ -141,3 +141,6 @@
 
 (require 'yasnippet)
 (global-set-key (kbd "C-,") 'yas-expand)
+
+(require 'github-review)
+(define-key github-review-mode-map (kbd "M-DEL") 'backward-kill-word)
