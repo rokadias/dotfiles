@@ -106,6 +106,7 @@
 
 ;; VC commands
 (require 'vc)
+(require 'vc-dir)
 (defun custom-git-bindings ()
   (global-set-key (kbd "C-x v w") 'vc-git-checkout-branch)
   (global-set-key (kbd "C-x v .") 'vc-git-rebase)
@@ -122,7 +123,7 @@
   (define-key vc-dir-mode-map (kbd "k") 'vc-git-merge-abort)
   (define-key vc-dir-mode-map (kbd "N") 'vc-new-github-pr))
 (custom-git-bindings)
-(with-eval-after-load 'vc (custom-git-bindings))
+(with-eval-after-load 'vc-dir (custom-git-bindings))
 
 ;; browser
 (global-set-key (kbd "C-x g") 'eww)
