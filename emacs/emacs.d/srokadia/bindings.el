@@ -88,13 +88,20 @@
 ;; string-inter
 (global-set-key (kbd "C-c C-u") 'string-inflection-underscore)
 
-;; lsp (used by rust)
 (require 'lsp)
 (define-key lsp-mode-map (kbd "C-; C-.") 'lsp-describe-thing-at-point)
 (define-key lsp-mode-map (kbd "C-; C-b") 'lsp-goto-implementation)
 (define-key lsp-mode-map (kbd "C-; C-k") 'lsp-find-references)
 (define-key lsp-mode-map (kbd "C-; C-r") 'lsp-rename)
 (define-key lsp-mode-map (kbd "C-; C-i") 'lsp-execute-code-action)
+(define-key lsp-mode-map (kbd "C-; C-f") 'lsp-ui-imenu)
+
+(require 'lsp-ui)
+(define-key lsp-ui-imenu-mode-map (kbd "p") 'up)
+(define-key lsp-ui-imenu-mode-map (kbd "n") 'down)
+(define-key lsp-ui-imenu-mode-map (kbd "M-p") 'lsp-ui-imenu--prev-kind)
+(define-key lsp-ui-imenu-mode-map (kbd "M-n") 'lsp-ui-imenu--next-kind)
+
 
 (require 'rust-mode)
 (define-key rust-mode-map (kbd "C-c C-l") 'flymake-show-diagnostics-buffer)

@@ -18,6 +18,7 @@
   (vc-retrieve-tag (vc-root-dir) (vc-git-main-branch))
   (sleep-for 2)
   (vc-pull)
+  (sleep-for 2)
   (when (get-buffer-window "*vc-git*")
     (delete-window (get-buffer-window "*vc-git*"))))
 
