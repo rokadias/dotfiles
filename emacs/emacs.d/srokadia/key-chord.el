@@ -10,10 +10,7 @@
 (key-chord-define-global "fk" 'split-window-below)
 (key-chord-define-global "fl" 'split-window-right)
 
-(key-chord-define-global "sl" 'semantic-complete-jump-local)
-(key-chord-define-global "sj" 'senator-next-tag)
-(key-chord-define-global "sk" 'senator-previous-tag)
-(key-chord-define-global "qw" 'senator-kill-tag)
+(key-chord-define-global "sj" 'term-paste)
 
 (key-chord-define-global "kl" 'find-file-other-window)
 (key-chord-define-global "df" 'find-file-in-repository)
