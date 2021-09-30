@@ -1,4 +1,5 @@
 alias gbds='git checkout -q $(git_main_branch) && git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do mergeBase=$(git merge-base $(git_main_branch) $branch) && [[ $(git cherry $(git_main_branch) $(git commit-tree $(git rev-parse $branch\^{tree}) -p $mergeBase -m _)) == "-"* ]] && git branch -D $branch; done'
+alias gbc="git branch --sort=-committerdate | grep sr/"
 
 export GH_JSON_FIELDS="assignees,author,reviewDecision,number,url,title,headRefName"
 export GH_COLUMN_FIELDS="ASSIGNEE,AUTHOR,REVIEW STATUS,number,URL,TITLE,BRANCH"
