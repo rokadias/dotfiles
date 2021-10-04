@@ -13,4 +13,4 @@
   (setq w32-get-true-file-attributes nil))
 
 (unless (or is-w32 is-cygwin)
-  (modify-all-frames-parameters (list (cons 'font "Fira Code 10"))))
+  (modify-all-frames-parameters (list (cons 'font "Fira Code 9"))))

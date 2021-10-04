@@ -3,6 +3,7 @@
 (key-chord-define-global "jk" 'find-file)
 (key-chord-define-global "jo" 'other-window)
 (key-chord-define-global "jp" '(lambda () (interactive) (other-window -1)))
+(key-chord-define-global "j]" '(lambda () (interactive) (other-window -1) (delete-window)))
 (key-chord-define-global "ji" 'ido-switch-buffer)
 (key-chord-define-global "je" 'delete-window)
 (key-chord-define-global "jd" 'delete-other-windows)
