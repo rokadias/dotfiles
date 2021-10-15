@@ -17,7 +17,9 @@ function watchLatestMainBuild {
         JOBS=$(echo -n "$JOBS" | grep "$SecondFilter")
     fi
     echo $JOBS | column -t -s$'\t' -T 3
-    JOB_ID=$(echo -n "$JOBS" | head -n 1 | sed -e 's/.*\([0-9]\{10\}\).*/\1/')
+    JOB=$(echo -n "$JOBS" | head -n 1)
+    NAME=$(echo -n "$JOB" | cut -f 3)
+    JOB_ID=$(echo -n "$JOB" | sed -e 's/.*\([0-9]\{10\}\).*/\1/')
     echo "Found Workflow Job Id: $JOB_ID"
     gh run watch $JOB_ID  && RETURN_CODE=$? || RETURN_CODE=$?
     if [[ $RETURN_CODE -eq 0 ]]; then
@@ -32,7 +34,9 @@ alias gh-watch-main="watchLatestMainBuild"
 
 function watchWorkflow {
     local WORKFLOW_NAME=$1
-    JOB_ID=$(gh run list -w "$WORKFLOW_NAME" -L 1 | sed -e 's/.*\([0-9]\{10\}\).*/\1/')
+    JOB=$(echo -n "$JOBS" | head -n 1)
+    NAME=$(echo -n "$JOB" | cut -f 3)
+    JOB_ID=$(echo -n "$JOB" | sed -e 's/.*\([0-9]\{10\}\).*/\1/')
     echo "Found Workflow Job Id: $JOB_ID"
     gh run watch --exit-status $JOB_ID && RETURN_CODE=$? || RETURN_CODE=$?
     if [[ $RETURN_CODE -eq 0 ]]; then
