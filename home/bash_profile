@@ -15,3 +15,5 @@ PATH=$PATH:$HOME/.local/bin
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+export PATH="$HOME/.poetry/bin:$PATH"
