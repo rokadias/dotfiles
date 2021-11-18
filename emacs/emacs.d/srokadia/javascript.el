@@ -7,6 +7,7 @@
 (setq auto-mode-alist (append '(("\\.js$" . js2-mode)) auto-mode-alist))
 
 (setq js-indent-level 2
+      typescript-indent-level 2
       js2-basic-offset 2
       js2-bounce-indent-flag t
       js2-cleanup-whitespace nil

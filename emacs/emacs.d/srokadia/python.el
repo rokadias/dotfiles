@@ -8,6 +8,7 @@
   (python-black-on-save-mode-enable-dwim))
 (add-hook 'python-mode-hook #'on-python-load)
 
+(setq python-indent-def-block-scale 1)
 
 (with-eval-after-load "semantic/idle"
   (advice-add 'semantic-idle-scheduler-function :around #'ignore))
