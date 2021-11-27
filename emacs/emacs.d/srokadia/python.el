@@ -3,9 +3,12 @@
 
 (defun on-python-load ()
   (require 'lsp-pyright)
+  (require 'python-black)
+  (require 'python-isort)
   (lsp)
   (company-mode nil)
-  (python-black-on-save-mode-enable-dwim))
+  (python-black-on-save-mode)
+  (python-isort-on-save-mode))
 (add-hook 'python-mode-hook #'on-python-load)
 
 (setq python-indent-def-block-scale 1)

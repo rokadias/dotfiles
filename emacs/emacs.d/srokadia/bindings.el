@@ -152,3 +152,10 @@
 
 (require 'github-review)
 (define-key github-review-mode-map (kbd "M-DEL") 'backward-kill-word)
+
+(require 'pyimport)
+(define-key python-mode-map (kbd "C-; C-c") 'pyimport-remove-unused)
+(define-key python-mode-map (kbd "C-; C-a") 'pyimport-insert-missing)
+
+(require 'python-black)
+(define-key python-mode-map (kbd "C-; C-f") 'python-black-buffer)
