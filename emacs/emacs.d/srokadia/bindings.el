@@ -159,3 +159,6 @@
 
 (require 'python-black)
 (define-key python-mode-map (kbd "C-; C-f") 'python-black-buffer)
+
+(require 'python-pytest)
+(define-key python-mode-map (kbd "C-; C-t") 'python-pytest-file)

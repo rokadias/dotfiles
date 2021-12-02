@@ -8,7 +8,11 @@
   (lsp)
   (company-mode nil)
   (python-black-on-save-mode)
-  (python-isort-on-save-mode))
+  (python-isort-on-save-mode)
+  (let ((project-file (find-project-file "\\.isort.cfg$")))
+    (when project-file
+      (make-local-variable 'py-isort-options)
+      (setq py-isort-options (concat "--settings-path " project-file)))))
 (add-hook 'python-mode-hook #'on-python-load)
 
 (setq python-indent-def-block-scale 1)
