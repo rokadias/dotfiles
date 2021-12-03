@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: assertCountEqual
+# key: ace
+# --
+self.assertCountEqual($1, $2)

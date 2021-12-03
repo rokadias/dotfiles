@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: isNotNone
+# key: inn
+# --
+is not None
