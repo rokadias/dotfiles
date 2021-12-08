@@ -29,6 +29,10 @@
 (global-set-key [(control x) (P)] 'windmove-up)
 (global-set-key [(control x) (N)] 'windmove-down)
 
+;; Kill Ring
+(global-set-key (kbd "C-M-SPC") 'mark-current-sexp)
+(global-set-key (kbd "C-M-w") 'kill-ring-save-sexp)
+
 ;; Window Fiting
 (global-set-key (kbd "C-x 7") 'fit-window-to-buffer)
 
@@ -73,9 +77,6 @@
 ;; Helm mode config
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-M-/") 'helm-dabbrev)
-
-;; ace-jump-mode
-(global-set-key (kbd "C-M-SPC") 'ace-jump-mode)
 
 ;; uuidgen
 (global-set-key (kbd "C-x g") '(lambda () (interactive) (insert (trim-string (shell-command-to-string "sequuid")))))

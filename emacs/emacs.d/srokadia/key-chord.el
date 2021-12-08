@@ -32,4 +32,6 @@
 (key-chord-define-global "xk" 'flymake-goto-prev-error)
 (key-chord-define-global "cx" 'ace-jump-mode)
 (key-chord-define-global "xi" 'eval-print-last-sexp)
+(key-chord-define-global "qj" 'kill-ring-save-sexp)
+
 (setq key-chord-two-keys-delay 0.02)

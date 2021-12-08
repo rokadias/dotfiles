@@ -122,3 +122,18 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (save-excursion
     (beginning-of-line)
     (1+ (count-lines 1 (point)))))
+
+(defun mark-current-sexp ()
+  (interactive)
+  (backward-sexp)
+  (set-mark-command nil)
+  (forward-sexp)
+)
+
+(defun kill-ring-save-sexp ()
+  (interactive)
+  (save-excursion
+    (mark-current-sexp)
+    (kill-ring-save nil nil t)
+    )
+)
