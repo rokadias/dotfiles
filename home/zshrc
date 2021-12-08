@@ -134,6 +134,10 @@ source_if_available "/home/srokadia/google-cloud-sdk/path.zsh.inc"
 # The next line enables shell command completion for gcloud.
 source_if_available "/home/srokadia/google-cloud-sdk/completion.zsh.inc"
 
+if [ -x $(command -v kubectl) ]; then
+   source <(kubectl completion zsh)
+fi
+
 # Aliases
 source_if_available "/home/srokadia/.aliases"
 source_if_available "/home/srokadia/falkon/playground/saqib/aliases"
