@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: enum_value
+# key: ev
+# --
+${1:$(upcase (yas-text))} = "$1"
