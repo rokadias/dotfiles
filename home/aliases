@@ -63,7 +63,7 @@ function makeGIF {
     local VIDEO=$1
     local FILENAME=$(basename $VIDEO)
     local DIRECTORY=$(dirname $VIDEO)
-    ffmpeg -i $VIDEO -vf "fps=10,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop -1 $DIRECTORY/${FILENAME%.*}.gif
+    ffmpeg -i $VIDEO -vf "fps=5,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse,setpts=PTS/2" -loop -1 $DIRECTORY/${FILENAME%.*}.gif
 }
 
 alias sc="ffmpeg -f x11grab -video_size 2560x1440 -i $DISPLAY -vframes 1"
