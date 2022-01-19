@@ -125,6 +125,7 @@
   (global-set-key (kbd "C-x v ,") 'vc-git-merge-continue)
   (global-set-key (kbd "C-x v k") 'vc-git-merge-abort)
   (global-set-key (kbd "C-x v n") 'vc-new-github-pr)
+  (define-key vc-dir-mode-map (kbd "r") 'vc-retrieve-tag)
   (define-key vc-dir-mode-map (kbd "w") 'vc-git-checkout-branch)
   (define-key vc-dir-mode-map (kbd ".") 'vc-git-rebase)
   (define-key vc-dir-mode-map (kbd ">") 'vc-git-merge-main-branch)
