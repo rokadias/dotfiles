@@ -1,13 +1,12 @@
 (require 'vc)
 (defun vc-git-checkout-branch (retrieve-arg arg)
   (interactive "P\nsNew Branch Name: ")
-  (when retrieve-arg
     (let* ((working-files (shell-command-to-string "git status --porcelain -uno")))
       (when (> (length working-files) 1) (vc-git-stash "vc-git-checkout-branch"))
-      (vc-git-retrieve-main-branch)
-      (when (> (length working-files) 1) (vc-git-stash-pop "0"))
-      ))
-  (shell-command (concat "git checkout -b " arg)))
+      (when retrieve-arg (vc-git-retrieve-main-branch))
+      (shell-command (concat "git checkout -b " arg (if retrieve-arg (concat " origin/" (vc-git-main-branch)) "")))
+      (vc-retrieve-tag (string-trim (shell-command-to-string "git rev-parse --show-toplevel")) arg)
+      (when (> (length working-files) 1) (vc-git-stash-pop "0"))))
 
 (defun vc-git-main-branch ()
   (let* ((remote (shell-command-to-string "git remote show origin | grep 'HEAD branch:'")))
@@ -15,7 +14,7 @@
 
 (defun vc-git-retrieve-main-branch ()
   (interactive)
-  (vc-git--pushpull "pull" nil (list "origin" (vc-git-main-branch) "--stat"))
+  (vc-git--pushpull "fetch" nil (list "origin" (vc-git-main-branch)))
   (when (get-buffer-window "*vc-git*")
     (delete-window (get-buffer-window "*vc-git*"))))
 
@@ -28,6 +27,14 @@
     (async-shell-command (concat "EDITOR='emacsclient -c' git rebase -i origin/" (vc-git-main-branch)))
     (when (> (length working-files) 1) (vc-git-stash-pop "0"))
   ))
+
+(defun vc-git-rebase-continue ()
+  (interactive)
+    (async-shell-command (concat "EDITOR='emacsclient -c' git rebase --continue")))
+
+(defun vc-git-rebase-abort ()
+  (interactive)
+    (async-shell-command (concat "EDITOR='emacsclient -c' git rebase --abort")))
 
 (defun vc-git-merge-continue ()
   (interactive)
