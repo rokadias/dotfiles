@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Console log with format.
+# key: clf
+# --
+console.log("$1: ", {${1:$(yas-text)}})
