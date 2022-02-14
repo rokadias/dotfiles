@@ -1,0 +1,2 @@
+;;; Generated package description from todoist.el  -*- no-byte-compile: t -*-
+(define-package "todoist" "20220126.1813" "Extension for interacting and managing todoist tasks" '((dash "2.15.0") (transient "0.1.0") (org "8.3.5") (emacs "25.3")) :commit "585cd45b2c1442888a465e4e9d538eeb1a7b3c0a" :authors '(("Adrien Brochard")) :maintainer '("Adrien Brochard") :keywords '("todoist" "task" "todo" "comm") :url "https://github.com/abrochard/emacs-todoist")
