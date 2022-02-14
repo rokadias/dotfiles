@@ -53,6 +53,9 @@
 (global-set-key [(control c) (l)] 'org-store-link)
 (global-set-key [(control c) (a)] 'org-agenda)
 
+(require 'org-trello)
+(define-key org-trello-mode-map (kbd "C-c o s") '(lambda () (interactive) (org-trello-sync-buffer t)))
+
 (autoload 'omnisharp-mode "omnisharp-mode" "Minor mode for C# intellisense." t)
 (require 'omnisharp)
 ;; omnisharp config

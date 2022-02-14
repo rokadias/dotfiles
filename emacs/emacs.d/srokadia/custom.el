@@ -29,13 +29,16 @@
  '(lsp-ui-doc-delay 1)
  '(lsp-ui-doc-use-webkit nil)
  '(ob-mermaid-cli-path "/usr/bin/mmdc")
- '(org-agenda-files '("~/Documents/agenda/work.org"))
+ '(org-agenda-files '("~/Documents/Notes/WeightLoss.org" "~/Documents/agenda/"))
  '(org-confirm-babel-evaluate nil)
+ '(org-trello-current-prefix-keybinding "C-c o" nil (org-trello))
  '(package-selected-packages
-   '(org-trello python-pytest python-isort pyimport python-black prettier async-await yafolding lsp-mode lsp-pyright lsp-ui ox-gfm github-notifier github-review eslintd-fix js-doc prettier-js jupyter markdown-preview-eww poly-ansible poly-markdown polymode rjsx-mode docker-tramp floobits php-mode jq-mode pyenv-mode graphviz-dot-mode ob-mermaid pivotal-tracker kubernetes-tramp mermaid-mode vue-mode protobuf-mode elpy terraform-mode cargo company-racer flycheck-rust racer rust-mode rust-playground cider clojure-mode go-scratch company-go flycheck-golangci-lint go-imports go-playground golint jss uuidgen ztree zoom-frm zenburn-theme xml-rpc ws-trim wiki web-mode web use-package typing-practice typing tide sx sublime-themes smex slime session scss-mode restclient react-snippets powershell-mode powershell pabbrev omnisharp nvm nodejs-repl node-resolver multiple-cursors mediawiki markdown-preview-mode magit key-chord jsx-mode json-mode js-comint ido-vertical-mode hound helm hcl-mode haskell-mode gotham-theme go-mode go-errcheck fsm fsharp-mode frame-restore flymake-go flymake flatland-theme find-file-in-repository expand-region exec-path-from-shell editorconfig-core editorconfig edit-server doremi-frm dockerfile-mode dash-at-point color-theme ack achievements ace-jump-mode))
+   '(todoist org-trello python-pytest python-isort pyimport python-black prettier async-await yafolding lsp-mode lsp-pyright lsp-ui ox-gfm github-notifier github-review eslintd-fix js-doc prettier-js jupyter markdown-preview-eww poly-ansible poly-markdown polymode rjsx-mode docker-tramp floobits php-mode jq-mode pyenv-mode graphviz-dot-mode ob-mermaid pivotal-tracker kubernetes-tramp mermaid-mode vue-mode protobuf-mode elpy terraform-mode cargo company-racer flycheck-rust racer rust-mode rust-playground cider clojure-mode go-scratch company-go flycheck-golangci-lint go-imports go-playground golint jss uuidgen ztree zoom-frm zenburn-theme xml-rpc ws-trim wiki web-mode web use-package typing-practice typing tide sx sublime-themes smex slime session scss-mode restclient react-snippets powershell-mode powershell pabbrev omnisharp nvm nodejs-repl node-resolver multiple-cursors mediawiki markdown-preview-mode magit key-chord jsx-mode json-mode js-comint ido-vertical-mode hound helm hcl-mode haskell-mode gotham-theme go-mode go-errcheck fsm fsharp-mode frame-restore flymake-go flymake flatland-theme find-file-in-repository expand-region exec-path-from-shell editorconfig-core editorconfig edit-server doremi-frm dockerfile-mode dash-at-point color-theme ack achievements ace-jump-mode))
+ '(request-backend 'url-retrieve)
  '(session-use-package t nil (session))
  '(tab-stop-list
    '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
+ '(todoist-backing-buffer "~/Documents/agenda/todoist.org")
  '(vc-annotate-background "#1f2124")
  '(vc-annotate-color-map
    '((20 . "#ff0000")
@@ -69,3 +72,4 @@
  '(default ((t (:background nil)))))
 
 (put 'downcase-region 'disabled nil)
+(setq todoist-token (funcall (plist-get (car (auth-source-search :host "todoist")) :secret)))
