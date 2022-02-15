@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: passthrough
+# key: pt
+# --
+$1=${2:$1}
