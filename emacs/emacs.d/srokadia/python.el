@@ -2,6 +2,7 @@
 ;; (setq lsp-python-ms-executable "~/OpenSource/python-language-server/output/bin/Release/linux-x64/publish/Microsoft.Python.LanguageServer")
 
 (defun on-python-load ()
+  (require 'importmagic)
   (require 'lsp-pyright)
   (require 'python-black)
   (require 'python-isort)
@@ -9,6 +10,7 @@
   (company-mode nil)
   (python-black-on-save-mode)
   (python-isort-on-save-mode)
+  (importmagic-mode)
   (let ((project-file (find-project-file "\\.isort.cfg$")))
     (when project-file
       (make-local-variable 'py-isort-options)

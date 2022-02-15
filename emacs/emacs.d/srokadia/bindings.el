@@ -170,3 +170,6 @@
 
 (require 'python-pytest)
 (define-key python-mode-map (kbd "C-; C-t") 'python-pytest-file)
+
+(require 'importmagic)
+(define-key importmagic-mode-map (kbd "C-; C-a") 'importmagic-fix-symbol-at-point)
