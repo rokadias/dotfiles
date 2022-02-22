@@ -92,6 +92,9 @@ myKeys =
     , ((myModMask .|. shiftMask, xK_q), spawn "xfce4-session-logout")
     , ((altMask, xK_Tab), performPrimaryNeighborView 1)
     , ((myModMask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
+    , ((myModMask, xK_grave), spawn "dunstctl history-pop")
+    , ((myModMask, xK_bracketright), spawn "dunstctl close")
+    , ((myModMask .|. shiftMask, xK_bracketright), spawn "dunstctl close-all")
     ] ++ [
         ((myModMask .|. m, xK_f), f horizontalScreenOrderer 2)
         | (f, m) <- [(viewScreen, 0), (grabWorkspace, shiftMask)]
