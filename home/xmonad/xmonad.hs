@@ -133,6 +133,13 @@ myLayout =  (Full) ||| tiled
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
 
+-- Helpers --
+-- avoidMaster:  Avoid the master window, but otherwise manage new windows normally
+avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
+avoidMaster = W.modify' $ \c -> case c of
+    W.Stack t [] (r:rs) -> W.Stack t [r] rs
+    otherwise           -> c
+
 myManageHook = composeAll
   [
     className =? "Xfce4-notifyd"     --> doIgnore,
@@ -150,25 +157,12 @@ myManageHook = composeAll
     className =? "conky"             --> doShift "keepass",
     className =? "zoom"              --> (doShift "video" <+> doFloat),
     className =? "pritunl"           --> (doShift "network" <+> doFloat),
-    className =? "brave"             --> doShift "music"
+    className =? "brave"             --> doShift "music",
+    isFullscreen                     --> doFullFloat,
+    isDialog                         --> doCenterFloat,
+    fmap not isDialog                --> doF avoidMaster
   ]
   where unfloat = ask >>= doF . W.sink
-
--- Helpers --
--- avoidMaster:  Avoid the master window, but otherwise manage new windows normally
-avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
-avoidMaster = W.modify' $ \c -> case c of
-    W.Stack t [] (r:rs) -> W.Stack t [r] rs
-    otherwise           -> c
-
--- ManageHook --
-pbManageHook :: ManageHook
-pbManageHook = composeAll $ concat
-    [ [ manageDocks ]
-    , [ manageHook def ]
-    , [ isDialog --> doCenterFloat ]
-    , [ fmap not isDialog --> doF avoidMaster ]
-    ]
 
 myConfig = ewmh xfceConfig {
    -- simple stuff
