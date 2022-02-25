@@ -34,6 +34,9 @@
 (global-set-key (kbd "C-M-SPC") 'mark-current-sexp)
 (global-set-key (kbd "C-M-w") 'kill-ring-save-sexp)
 
+;; isearch
+(global-set-key (kbd "M-s") 'isearch-forward-symbol-at-point)
+
 ;; Window Fiting
 (global-set-key (kbd "C-x 7") 'fit-window-to-buffer)
 
