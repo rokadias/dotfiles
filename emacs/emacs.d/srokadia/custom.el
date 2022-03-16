@@ -20,7 +20,7 @@
  '(erc-irccontrols-mode t)
  '(erc-notifications-mode t)
  '(fci-rule-color "#202325")
- '(flycheck-check-syntax-automatically '(save mode-enabled))
+ '(flycheck-check-syntax-automatically '(save idle-change mode-enabled))
  '(frame-zoom-font-difference 3)
  '(haskell-compile-command
    "ghc -Wall -ferror-spans -fforce-recomp -make -dynamic -c %s")
@@ -34,7 +34,8 @@
  '(org-agenda-files '("~/Documents/Notes/WeightLoss.org" "~/Documents/agenda/"))
  '(org-confirm-babel-evaluate nil)
  '(org-trello-current-prefix-keybinding "C-c o" nil (org-trello))
- '(org-trello-files '("~/Documents/Notes/MetricPlatform.org") nil (org-trello))
+ '(org-trello-files
+   '("~/Documents/Notes/MetricPlatform.org" "~/Documents/Notes/PlatformLedGrowth.org") nil (org-trello))
  '(org-trello-mode-limit-fetch-since "2022-02-01")
  '(orgtrello-log-level 3 nil (org-trello))
  '(package-selected-packages
