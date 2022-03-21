@@ -15,7 +15,7 @@
 (defun vc-git-retrieve-main-branch ()
   (interactive)
   (vc-git--pushpull "fetch" nil (list "origin" (vc-git-main-branch)))
-  (when (get-buffer-window "*vc-git*")
+  (when (and (get-buffer-window "*vc-git*") (> (length (window-list)) 1))
     (delete-window (get-buffer-window "*vc-git*"))))
 
 (defun vc-git-rebase ()
@@ -84,7 +84,7 @@
          (vc-git-buffers (seq-filter starts-with-vc-git all-window-buffers)))
 
     (dolist (buffer vc-git-buffers)
-      (if (vc-git-compile-buffer-successful-p buffer)
+      (if (and (vc-git-compile-buffer-successful-p buffer) (> (length (window-list)) 1))
           (progn
             (notify "VC GIT" "Git Command SUCCESSFUL!")
             (delete-window (get-buffer-window buffer)))
