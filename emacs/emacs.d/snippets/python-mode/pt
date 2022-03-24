@@ -2,4 +2,4 @@
 # name: passthrough
 # key: pt
 # --
-$1=${2:$1}
+${1:$$(replace-regexp-in-string "[[:space:]]" "_" yas-text)}=$2$1,$0

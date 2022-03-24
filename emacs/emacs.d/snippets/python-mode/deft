@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: def test
+# key: deft
+# --
+def test_${1:$$(replace-regexp-in-string "[[:space:]]" "_" yas-text)}__${2:$$(replace-regexp-in-string "[[:space:]]" "_" yas-text)}(self) -> None:
+    $0
