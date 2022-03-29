@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: space replace with underscore
+# key: sr
+# --
+${1:$$(replace-regexp-in-string "[[:space:]]" "_" yas-text)}

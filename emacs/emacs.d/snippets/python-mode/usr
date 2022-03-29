@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: upper case space replace with underscore
+# key: usr
+# --
+${1:$$(upcase(replace-regexp-in-string "[[:space:]]" "_" yas-text))}

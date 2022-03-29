@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: assertIsNotNone
+# name: assertIsNone
 # key: aisn
 # --
 self.assertIsNone(${1:$$(replace-regexp-in-string "[[:space:]]" "_" yas-text)})
