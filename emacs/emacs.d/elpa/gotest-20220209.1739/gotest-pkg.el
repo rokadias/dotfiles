@@ -1,0 +1,2 @@
+;;; Generated package description from gotest.el  -*- no-byte-compile: t -*-
+(define-package "gotest" "20220209.1739" "Launch GO unit tests" '((emacs "24.3") (s "1.11.0") (f "0.19.0") (go-mode "1.5.0")) :commit "78be56c0f210224b1e3a7d58239e2a32f8f84bf4" :authors '(("Nicolas Lamirault" . "nicolas.lamirault@gmail.com")) :maintainer '("Nicolas Lamirault" . "nicolas.lamirault@gmail.com") :keywords '("languages" "go" "tests") :url "https://github.com/nlamirault/gotest.el")
