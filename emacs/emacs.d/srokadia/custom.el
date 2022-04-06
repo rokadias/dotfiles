@@ -29,6 +29,7 @@
  '(ido-create-new-buffer 'always)
  '(importmagic-style-configuration-alist '((multiline . parentheses) (max_columns . 700)))
  '(jabber-alert-presence-hooks nil)
+ '(lsp-pyright-venv-path "~/.pyenv/versions/")
  '(lsp-rust-server 'rls)
  '(lsp-ui-doc-delay 1)
  '(lsp-ui-doc-use-webkit nil)
@@ -41,7 +42,7 @@
  '(org-trello-mode-limit-fetch-since "2022-03-01")
  '(orgtrello-log-level 3 nil (org-trello))
  '(package-selected-packages
-   '(importmagic todoist org-trello python-pytest python-isort pyimport python-black prettier async-await yafolding lsp-mode lsp-pyright lsp-ui ox-gfm github-notifier github-review eslintd-fix js-doc prettier-js jupyter markdown-preview-eww poly-ansible poly-markdown polymode rjsx-mode docker-tramp floobits php-mode jq-mode pyenv-mode graphviz-dot-mode ob-mermaid pivotal-tracker kubernetes-tramp mermaid-mode vue-mode protobuf-mode elpy terraform-mode cargo company-racer flycheck-rust racer rust-mode rust-playground cider clojure-mode go-scratch company-go flycheck-golangci-lint go-imports go-playground golint jss uuidgen ztree zoom-frm zenburn-theme xml-rpc ws-trim wiki web-mode web use-package typing-practice typing tide sx sublime-themes smex slime session scss-mode restclient react-snippets powershell-mode powershell pabbrev omnisharp nvm nodejs-repl node-resolver multiple-cursors mediawiki markdown-preview-mode magit key-chord jsx-mode json-mode js-comint ido-vertical-mode hound helm hcl-mode haskell-mode gotham-theme go-mode go-errcheck fsm fsharp-mode frame-restore flymake-go flymake flatland-theme find-file-in-repository expand-region exec-path-from-shell editorconfig-core editorconfig edit-server doremi-frm dockerfile-mode dash-at-point color-theme ack achievements ace-jump-mode))
+   '(async importmagic org-trello python-isort pyimport python-black prettier async-await yafolding lsp-pyright ox-gfm github-notifier github-review eslintd-fix js-doc prettier-js markdown-preview-eww poly-ansible poly-markdown rjsx-mode floobits php-mode jq-mode pyenv-mode ob-mermaid pivotal-tracker kubernetes-tramp mermaid-mode vue-mode terraform-mode company-racer flycheck-rust racer rust-playground go-scratch company-go flycheck-golangci-lint go-imports go-playground golint jss ztree zoom-frm xml-rpc ws-trim wiki web use-package typing-practice typing sx sublime-themes smex session scss-mode restclient react-snippets powershell-mode pabbrev omnisharp nvm nodejs-repl node-resolver mediawiki markdown-preview-mode key-chord jsx-mode json-mode js-comint ido-vertical-mode hound hcl-mode gotham-theme go-mode go-errcheck fsm fsharp-mode frame-restore flymake-go flymake flatland-theme find-file-in-repository expand-region exec-path-from-shell editorconfig-core edit-server doremi-frm dash-at-point color-theme ack achievements ace-jump-mode))
  '(request-backend 'url-retrieve)
  '(session-use-package t nil (session))
  '(tab-stop-list
