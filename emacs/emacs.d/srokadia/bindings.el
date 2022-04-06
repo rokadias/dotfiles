@@ -172,7 +172,6 @@
 (require 'python)
 (require 'pyimport)
 (define-key python-mode-map (kbd "C-; C-c") 'pyimport-remove-unused)
-(define-key python-mode-map (kbd "C-; C-a") 'pyimport-insert-missing)
 
 (require 'python-black)
 (define-key python-mode-map (kbd "C-; C-f") 'python-black-buffer)
@@ -181,4 +180,15 @@
 (define-key python-mode-map (kbd "C-; C-t") 'python-pytest-file)
 
 (require 'importmagic)
-(define-key importmagic-mode-map (kbd "C-; C-a") 'importmagic-fix-symbol-at-point)
+(define-key importmagic-mode-map (kbd "C-; C-a")
+  '(lambda () (interactive)
+       (when (not (and importmagic-server (epc:live-p importmagic-server)))
+         (epc:stop-epc importmagic-server)
+         (setq importmagic-server
+               (epc:start-epc (importmagic--epc-python-interpreter)
+                              (importmagic--epc-args))
+               )
+         )
+       (importmagic-fix-symbol-at-point)
+       )
+  )
