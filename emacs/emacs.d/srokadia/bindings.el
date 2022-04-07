@@ -180,6 +180,7 @@
 (define-key python-mode-map (kbd "C-; C-t") 'python-pytest-file)
 
 (require 'importmagic)
+(define-key importmagic-mode-map (kbd "C-; a") '(lambda () (interactive) (importmagic--auto-update-index)))
 (define-key importmagic-mode-map (kbd "C-; C-a")
   '(lambda () (interactive)
        (when (not (and importmagic-server (epc:live-p importmagic-server)))
@@ -192,3 +193,8 @@
        (importmagic-fix-symbol-at-point)
        )
   )
+(defun importmagic-build-import-statement (statement)
+  (interactive (list (read-string (format "import statement(%s): " (thing-at-point 'symbol t)) (cons (concat "from  import " (thing-at-point 'symbol t)) 6) nil nil nil)))
+  (importmagic--fix-imports (concat statement "\n") 0 0)
+  )
+(define-key importmagic-mode-map (kbd "C-; C-S-a") 'importmagic-build-import-statement)
