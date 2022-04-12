@@ -58,6 +58,7 @@
 
 (require 'org-trello)
 (defun custom-org-trello-bindings ()
+  (interactive)
   (define-key org-trello-mode-map (kbd "C-c o s") '(lambda () (interactive) (org-trello-sync-buffer t))))
 (custom-org-trello-bindings)
 (with-eval-after-load 'org-trello (custom-org-trello-bindings))

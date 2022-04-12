@@ -5,6 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#26292c" "#ff4a52" "#40b83e" "#f6f080" "#afc4db" "#dc8cc3" "#93e0e3" "#f8f8f8"])
+ '(auto-revert-verbose nil)
  '(auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
  '(backup-directory-alist '((".*" . "~/.emacs.d/backups/")))
  '(case-replace t)
