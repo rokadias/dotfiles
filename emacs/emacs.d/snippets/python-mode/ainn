@@ -2,4 +2,4 @@
 # name: assertIsNotNone
 # key: ainn
 # --
-self.assertIsNotNone(${1:$$(replace-regexp-in-string "[[:space:]]" "_" yas-text)})
+assert ${1:$$(replace-regexp-in-string "[[:space:]]" "_" yas-text)} is not None
