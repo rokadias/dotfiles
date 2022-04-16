@@ -33,6 +33,7 @@
 ;; Kill Ring
 (global-set-key (kbd "C-M-SPC") 'mark-current-sexp)
 (global-set-key (kbd "C-M-w") 'kill-ring-save-sexp)
+(global-set-key (kbd "C-; C-w") 'er-copy-file-name-to-clipboard)
 
 ;; isearch
 (global-set-key (kbd "M-s") 'isearch-forward-symbol-at-point)
@@ -173,6 +174,7 @@
 (require 'python)
 (require 'pyimport)
 (define-key python-mode-map (kbd "C-; C-c") 'pyimport-remove-unused)
+(define-key python-mode-map (kbd "C-; M-w") 'python-copy-get-library-path)
 
 (require 'python-black)
 (define-key python-mode-map (kbd "C-; C-f") 'python-black-buffer)

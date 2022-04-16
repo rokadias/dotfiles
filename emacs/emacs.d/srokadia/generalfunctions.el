@@ -137,3 +137,16 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
     (kill-ring-save nil nil t)
     )
 )
+
+(defun get-file-name ()
+  (if (equal major-mode 'dired-mode)
+      default-directory
+    (buffer-file-name)))
+
+(defun er-copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename ))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))
