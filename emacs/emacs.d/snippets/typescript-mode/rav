@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: React#attribute_value
+# key: rav
+# --
+$1="${2:$1}"$0

@@ -175,6 +175,7 @@
 (require 'pyimport)
 (define-key python-mode-map (kbd "C-; C-c") 'pyimport-remove-unused)
 (define-key python-mode-map (kbd "C-; M-w") 'python-copy-get-library-path)
+(define-key python-mode-map (kbd "C-; C-w") 'python-copy-get-file-path)
 
 (require 'python-black)
 (define-key python-mode-map (kbd "C-; C-f") 'python-black-buffer)
