@@ -156,6 +156,7 @@ myManageHook = composeAll
     className =? "keepassx2"         --> doShift "keepass",
     className =? "conky"             --> doShift "keepass",
     className =? "zoom"              --> (doShift "video" <+> doFloat),
+    className =? "zoom "              --> (doShift "video" <+> doFloat),
     className =? "pritunl"           --> (doShift "network" <+> doFloat),
     className =? "brave"             --> doShift "music",
     isFullscreen                     --> doFullFloat,
