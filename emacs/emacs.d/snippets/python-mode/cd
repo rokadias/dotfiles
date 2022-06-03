@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: classmethod_docstring
+# key: cd
+# group: definitions
+# NOTE: Use minimum indentation, because Emacs 25+ doesn't dedent docstrings.
+# --
+@classmethod
+def ${1:name}(cls, $2) -> $3:
+    \"\"\"$4
+    ${2:$(python-args-to-docstring)}
+    \"\"\"
+     $0
