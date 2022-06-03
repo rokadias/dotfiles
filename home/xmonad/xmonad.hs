@@ -1,9 +1,10 @@
-{-# LANGUAGE ImplicitParams, NoMonomorphismRestriction #-}
+{-# LANGUAGE ImplicitParams, NoMonomorphismRestriction, QuasiQuotes #-}
 
 import Control.Monad
 import Data.Function (on)
 import Data.List ( findIndex, sortBy )
 import System.IO
+import Text.Regex.Posix ((=~))
 
 import XMonad
 import XMonad.Actions.CycleWS
@@ -140,6 +141,10 @@ avoidMaster = W.modify' $ \c -> case c of
     W.Stack t [] (r:rs) -> W.Stack t [r] rs
     otherwise           -> c
 
+-- | Regular expressions matching for ManageHooks
+(~?) :: (Functor f) => f String -> String -> f Bool
+q ~? x = fmap (=~ x) q
+
 myManageHook = composeAll
   [
     className =? "Xfce4-notifyd"     --> doIgnore,
@@ -156,7 +161,7 @@ myManageHook = composeAll
     className =? "keepassx2"         --> doShift "keepass",
     className =? "conky"             --> doShift "keepass",
     className =? "zoom"              --> (doShift "video" <+> doFloat),
-    className =? "zoom "              --> (doShift "video" <+> doFloat),
+    className ~? "^join\\?action=join" --> (doShift "video" <+> doFloat),
     className =? "pritunl"           --> (doShift "network" <+> doFloat),
     className =? "brave"             --> doShift "music",
     isFullscreen                     --> doFullFloat,
