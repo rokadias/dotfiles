@@ -27,7 +27,8 @@
     (seq-map #'delete-window compile-windows))
   )
 
-(defun remove-compile-window (interactive)
+(defun remove-compile-window ()
+  (interactive)
   (remove-compile-windows '("compilation-mode"))
   )
 
@@ -79,6 +80,7 @@
 
 (add-hook 'compilation-mode-hook 'compile-override-hook)
 
+(require 'notifications)
 (defun notify-compilation-result(buffer msg)
   "Notify that the compilation is finished,
 close the *compilation* buffer if the compilation is successful,
@@ -86,10 +88,10 @@ and set the focus back to Emacs frame"
   (if (string-match "^finished" msg)
     (progn
      (resize-compile-window)
-     (notify "Compilation" "Compilation Successful :-)")
+     (notifications-notify :title (concat (buffer-name buffer) " Finished") :body "Compilation Successful :-)")
      (remove-compile-window))
     (progn
-      (notify "Compilation" "Compilation Failed :-(")
+      (notifications-notify :title (concat (buffer-name buffer) " Finished") :body "Compilation Failed :-(")
       (select-window (get-buffer-window buffer))))
   (setq current-frame (car (car (cdr (current-frame-configuration)))))
   (select-frame-set-input-focus current-frame)

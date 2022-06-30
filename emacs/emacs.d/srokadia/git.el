@@ -78,6 +78,7 @@
          (not (re-search-forward "rejected" nil t 1))))))
   )
 
+(require 'notifications)
 (defun vc-git-close-if-succesful(a b c)
   (let* ((starts-with-vc-git (lambda (buffer) (string-prefix-p "*vc-git" (buffer-name buffer))))
          (all-window-buffers (seq-map #'window-buffer (window-list)))
@@ -86,7 +87,7 @@
     (dolist (buffer vc-git-buffers)
       (if (and (vc-git-compile-buffer-successful-p buffer) (> (length (window-list)) 1))
           (progn
-            (notify "VC GIT" "Git Command SUCCESSFUL!")
+            (notifications-notify :title "VC GIT" :body "Git Command SUCCESSFUL!")
             (delete-window (get-buffer-window buffer)))
         (select-window (get-buffer-window buffer)))
       ))
