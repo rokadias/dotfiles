@@ -89,7 +89,8 @@ and set the focus back to Emacs frame"
     (progn
      (resize-compile-window)
      (notifications-notify :title (concat (buffer-name buffer) " Finished") :body "Compilation Successful :-)")
-     (remove-compile-window))
+     (unless (string= (buffer-name buffer) "*grep*")
+       (remove-compile-window)))
     (progn
       (notifications-notify :title (concat (buffer-name buffer) " Finished") :body "Compilation Failed :-(")
       (select-window (get-buffer-window buffer))))
