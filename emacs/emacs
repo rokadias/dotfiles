@@ -19,7 +19,7 @@
 (setq custom-file (concat elisp-root "/custom.el"))
 (load custom-file 'noerror)
 
-(setq order-dependent-libraries '("package" "session" "generalfunctions" "progmodefunctions" "notify" "global"))
+(setq order-dependent-libraries '("package" "session" "generalfunctions" "progmodefunctions" "global"))
 
 (defun order-dependent-libraries-p (library)
   (seq-some '(lambda (odl) (string-equal library odl)) order-dependent-libraries))

@@ -4,6 +4,7 @@
 (defun compile-override ()
   (interactive)
   (funcall compile-fun)
+  (sit-for 10000)
   (resize-compile-window)
   )
 
@@ -33,8 +34,7 @@
   )
 
 (defun resize-compile-window ()
-  (let* ((cur (selected-window))
-         (cw (get-buffer-window "*compilation*"))
+  (let* ((cw (get-buffer-window "*compilation*"))
          (h (window-height cw)))
     (when cw
       (fit-window-to-buffer cw 20 10)))
@@ -80,19 +80,27 @@
 
 (add-hook 'compilation-mode-hook 'compile-override-hook)
 
+(defvar my-compilation-exit-code nil)
+(defun my-compilation-exit-message-function (status_ code message)
+  (message (concat "Compilation Exit Code: " (number-to-string code)))
+  (setq my-compilation-exit-code code)
+  (cons message code)
+  )
+(setq compilation-exit-message-function 'my-compilation-exit-message-function)
+
 (require 'notifications)
 (defun notify-compilation-result(buffer msg)
   "Notify that the compilation is finished,
 close the *compilation* buffer if the compilation is successful,
 and set the focus back to Emacs frame"
-  (if (string-match "^finished" msg)
+  (if (and (eq my-compilation-exit-code 0) (string-match "^finished" msg))
     (progn
      (resize-compile-window)
-     (notifications-notify :title (concat (buffer-name buffer) " Finished") :body "Compilation Successful :-)")
+     (notifications-notify :title (concat (buffer-name buffer) " Finished") :body "Successful!! :-)")
      (unless (string= (buffer-name buffer) "*grep*")
        (remove-compile-window)))
     (progn
-      (notifications-notify :title (concat (buffer-name buffer) " Finished") :body "Compilation Failed :-(")
+      (notifications-notify :title (concat (buffer-name buffer) " Finished") :body "Failure, go take a look!")
       (select-window (get-buffer-window buffer))))
   (setq current-frame (car (car (cdr (current-frame-configuration)))))
   (select-frame-set-input-focus current-frame)

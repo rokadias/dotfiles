@@ -59,4 +59,4 @@
     (when (and check-python-file (file-exists-p check-python-file))
       (message "Found project file at %s and check-python at %s" project-file check-python-file)
       (set (make-local-variable 'project-directory) project-parent-dir)
-      (set (make-local-variable 'compile-command) (concat check-python-file " --nobuild" " --skip-sdk" " | sed -e 's/\\x1b\\[[0-9;]*m//g'")))))
+      (set (make-local-variable 'compile-command) (concat "set -o pipefail; " check-python-file " --nobuild" " --skip-sdk" " | sed -e 's/\\x1b\\[[0-9;]*m//g'")))))
