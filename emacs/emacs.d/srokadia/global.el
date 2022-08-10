@@ -13,6 +13,7 @@
 (icomplete-mode 99)
 (ido-mode 1)
 (ido-vertical-mode 1)
+(ido-complete-space-or-hyphen-mode 1)
 
 (setq ;; Use it for many file dialogs
       ido-everywhere t
