@@ -82,4 +82,5 @@
  '(default ((t (:background nil)))))
 
 (put 'downcase-region 'disabled nil)
-(setq todoist-token (funcall (plist-get (car (auth-source-search :host "todoist")) :secret)))
+(when (auth-source-search :host "todoist")
+    (setq todoist-token (funcall (plist-get (car (auth-source-search :host "todoist")) :secret))))

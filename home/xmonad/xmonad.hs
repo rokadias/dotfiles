@@ -141,10 +141,6 @@ avoidMaster = W.modify' $ \c -> case c of
     W.Stack t [] (r:rs) -> W.Stack t [r] rs
     otherwise           -> c
 
--- | Regular expressions matching for ManageHooks
-(~?) :: (Functor f) => f String -> String -> f Bool
-q ~? x = fmap (=~ x) q
-
 myManageHook = composeAll
   [
     className =? "Xfce4-notifyd"     --> doIgnore,
@@ -179,8 +175,6 @@ myConfig = ewmh xfceConfig {
    -- hooks, layouts
      manageHook      = myManageHook <+> manageDocks <+> manageHook xfceConfig,
      layoutHook      = avoidStruts $ myLayout,
-     handleEventHook = ewmhDesktopsEventHook <+> docksEventHook,
-     startupHook     = ewmhDesktopsStartup,
 
    -- workspaces
      workspaces      = myWorkspaces

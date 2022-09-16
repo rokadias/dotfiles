@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# group: webpack
+# key: sl
+# --
+import * as styles from "./${1:$$(file-name-base (buffer-file-name))}.module.scss"

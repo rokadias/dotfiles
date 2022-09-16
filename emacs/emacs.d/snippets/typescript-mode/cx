@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# group: reactjs
+# key: cx
+# --
+import cx from "classnames";

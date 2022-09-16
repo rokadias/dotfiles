@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# group: reactjs
+# key: cn
+# --
+className={cx(${1:styles.$2})}
