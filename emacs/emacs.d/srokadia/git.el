@@ -4,6 +4,7 @@
     (let* ((working-files (shell-command-to-string "git status --porcelain -uno")))
       (when (> (length working-files) 1) (vc-git-stash "vc-git-checkout-branch"))
       (when retrieve-arg (vc-git-retrieve-main-branch))
+      (sleep-for 10)
       (shell-command (concat "git checkout -b " arg (if retrieve-arg (concat " origin/" (vc-git-main-branch)) "")))
       (vc-retrieve-tag (string-trim (shell-command-to-string "git rev-parse --show-toplevel")) arg)
       (when (> (length working-files) 1) (vc-git-stash-pop "0"))))
@@ -12,9 +13,33 @@
   (let* ((remote (shell-command-to-string "git remote show origin | grep 'HEAD branch:'")))
     (replace-regexp-in-string ".*HEAD branch: \\([^ ]*\\).*\n" "\\1" remote)))
 
+(defun vc-git--sync-pushpull (command extra-args)
+  (let* ((root (vc-git-root default-directory))
+	 (buffer (format "*vc-git : %s*" (expand-file-name root)))
+	 (git-program vc-git-program)
+         ;; Make a copy of the args so that we can alter it
+         (full-args (append extra-args nil)))
+    (add-to-list 'full-args command)
+    (apply #'vc-git-command buffer 0 nil full-args)
+    (with-current-buffer buffer
+      (vc-run-delayed
+        (vc-compilation-mode 'git)
+        (setq-local compile-command
+                    (concat git-program " " command " "
+                            (mapconcat #'identity extra-args " ")))
+        (setq-local compilation-directory root)
+        ;; Either set `compilation-buffer-name-function' locally to nil
+        ;; or use `compilation-arguments' to set `name-function'.
+        ;; See `compilation-buffer-name'.
+        (setq-local compilation-arguments
+                    (list compile-command nil
+                          (lambda (_name-of-mode) buffer)
+                          nil))))
+    (vc-set-async-update buffer)))
+
 (defun vc-git-retrieve-main-branch ()
   (interactive)
-  (vc-git--pushpull "fetch" nil (list "origin" (vc-git-main-branch)))
+  (vc-git--sync-pushpull "fetch" (list "origin" (vc-git-main-branch)))
   (when (and (get-buffer-window "*vc-git*") (> (length (window-list)) 1))
     (delete-window (get-buffer-window "*vc-git*"))))
 
