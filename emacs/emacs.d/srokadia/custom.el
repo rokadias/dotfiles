@@ -71,6 +71,7 @@
      (340 . "#cfe2f2")
      (360 . "#dc8cc3")))
  '(vc-annotate-very-old-color "#dc8cc3")
+ '(vc-git-print-log-follow t)
  '(visible-bell nil)
  '(yas-prompt-functions '(yas/no-prompt))
  '(yas-triggers-in-field t))
