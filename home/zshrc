@@ -1,3 +1,6 @@
+# Adding to handle when using emacs tramp mode to make it look like a bash prompt.
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
