@@ -158,7 +158,7 @@
 ;; terminal
 (require 'term)
 (define-key term-mode-map (kbd "C-c C-y") 'term-paste)
-(global-set-key (kbd "<M-S-return>") '(lambda (newname) (interactive "sBuffer Name:") (ansi-term "/bin/zsh") (rename-buffer newname)))
+(global-set-key (kbd "<M-S-return>") 'saqib-ansi-terminal)
 
 ;; restclient
 (require 'restclient)
