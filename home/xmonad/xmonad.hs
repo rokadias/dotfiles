@@ -94,6 +94,7 @@ myKeys =
     , ((altMask, xK_Tab), performPrimaryNeighborView 1)
     , ((myModMask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
     , ((myModMask, xK_grave), spawn "dunstctl history-pop")
+    , ((myModMask, xK_bracketleft), spawn "dunstctl context")
     , ((myModMask, xK_bracketright), spawn "dunstctl close")
     , ((myModMask .|. shiftMask, xK_bracketright), spawn "dunstctl close-all")
     ] ++ [

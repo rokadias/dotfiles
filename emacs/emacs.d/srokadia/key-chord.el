@@ -19,7 +19,7 @@
 (key-chord-define-global ",." '(lambda () (interactive) (other-window -1) (ido-switch-buffer)))
 (key-chord-define-global "m," 'other-frame)
 (key-chord-define-global "x9" 'delete-other-windows)
-(key-chord-define-global "cv" 'rgrep)
+(key-chord-define-global "cv" 'helm-grep-do-git-grep)
 (key-chord-define-global "gh" 'vc-git-view)
 (key-chord-define-global ";'" 'vc-git-blame)
 (key-chord-define-global "p[" 'tide-references)
