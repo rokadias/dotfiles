@@ -92,6 +92,8 @@ myKeys =
     , ((myModMask, xK_d), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((altMask, xK_Tab), performPrimaryNeighborView 1)
     , ((myModMask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
+    , ((myModMask .|. shiftMask, xK_s), spawn "sudo synclient TouchpadOff=1")
+    , ((myModMask, xK_s), spawn "sudo synclient TouchpadOff=0")
     , ((myModMask, xK_grave), spawn "dunstctl history-pop")
     , ((myModMask, xK_bracketleft), spawn "dunstctl context")
     , ((myModMask, xK_bracketright), spawn "dunstctl close")
