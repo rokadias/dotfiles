@@ -85,3 +85,4 @@
 (put 'downcase-region 'disabled nil)
 (when (auth-source-search :host "todoist")
     (setq todoist-token (funcall (plist-get (car (auth-source-search :host "todoist")) :secret))))
+  (setq-default tide-user-preferences '(:importModuleSpecifierPreference "relative" :includeCompletionsForModuleExports t :includeCompletionsWithInsertText t :allowTextChangesInNewFiles t))
