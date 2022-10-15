@@ -90,7 +90,6 @@ myKeys =
     [((controlMask .|. altMask, xK_a), spawn "keepass -auto-type")
     , ((myModMask, xK_b), sendMessage ToggleStruts)
     , ((myModMask, xK_d), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
-    , ((myModMask .|. shiftMask, xK_q), spawn "xfce4-session-logout")
     , ((altMask, xK_Tab), performPrimaryNeighborView 1)
     , ((myModMask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
     , ((myModMask, xK_grave), spawn "dunstctl history-pop")

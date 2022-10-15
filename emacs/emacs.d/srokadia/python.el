@@ -1,11 +1,15 @@
-;; (require 'lsp-python-ms)
-;; (setq lsp-python-ms-executable "~/OpenSource/python-language-server/output/bin/Release/linux-x64/publish/Microsoft.Python.LanguageServer")
-
+;;; python --- Saqib's python configuration.
+;;; Commentary:
+;;; Sets general things that I like.
+;;; Code:
 (defun on-python-load ()
   (require 'importmagic)
   (require 'lsp-pyright)
   (require 'python-black)
   (require 'python-isort)
+  (require 'pyenv-mode)
+  (set-python-env-if-available)
+  (pyenv-mode t)
   (lsp)
   (company-mode nil)
   (python-black-on-save-mode)
@@ -60,3 +64,13 @@
       (message "Found project file at %s and check-python at %s" project-file check-python-file)
       (set (make-local-variable 'project-directory) project-parent-dir)
       (set (make-local-variable 'compile-command) (concat "set -o pipefail; " check-python-file " --nobuild" " --skip-sdk" " | sed -e 's/\\x1b\\[[0-9;]*m//g'")))))
+
+(defun set-python-env-if-available ()
+  "Set the python compile command which is just check mypy."
+  (let* ((python-version-file (find-project-file "^\\.python-version$")))
+    (when (file-exists-p python-version-file)
+      (message "Found python version file at %s" python-version-file)
+      (pyenv-mode-set (s-trim (f-read-text python-version-file 'utf-8))))))
+
+(provide 'python)
+;;; python.el ends here
