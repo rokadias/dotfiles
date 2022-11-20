@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: space_function_docstring
+# key: sfd
+# group: definitions
+# NOTE: Use minimum indentation, because Emacs 25+ doesn't dedent docstrings.
+# --
+def ${1:$$(replace-regexp-in-string "[[:space:]]" "_" yas-text)}($2) -> ${3:None}:
+ \"\"\"
+ $4
+ ${2:$(python-args-to-docstring)}
+ \"\"\"
+ $0
