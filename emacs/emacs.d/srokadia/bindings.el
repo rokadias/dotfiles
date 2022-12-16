@@ -198,7 +198,7 @@
        )
   )
 (defun importmagic-build-import-statement (statement)
-  (interactive (list (read-string (format "import statement(%s): " (thing-at-point 'symbol t)) (cons (concat "from  import " (thing-at-point 'symbol t)) 6) nil nil nil)))
+  (interactive (list (read-string (format "import statement(%s): " (thing-at-point 'symbol t)) (cons (concat "from " (python-get-library-path (other-buffer (current-buffer) t nil))' " import " (thing-at-point 'symbol t)) 6) nil nil nil)))
   (importmagic--fix-imports (concat statement "\n") 0 0)
   )
 (define-key importmagic-mode-map (kbd "C-; C-S-a") 'importmagic-build-import-statement)

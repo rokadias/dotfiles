@@ -138,10 +138,10 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
     )
 )
 
-(defun get-file-name ()
+(defun get-file-name (&optional BUFFER)
   (if (equal major-mode 'dired-mode)
       default-directory
-    (buffer-file-name)))
+    (buffer-file-name BUFFER)))
 
 (defun er-copy-file-name-to-clipboard ()
   "Copy the current buffer file name to the clipboard."

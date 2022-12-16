@@ -27,24 +27,29 @@
 (with-eval-after-load "semantic/idle"
   (advice-add 'semantic-idle-scheduler-function :around #'ignore))
 
-(defun python-get-file-path ()
-  (let* ((filename (get-file-name))
-         (lsp-root (lsp--calculate-root (lsp-session) buffer-file-name))
+(defun python-get-file-path (&optional BUFFER)
+  (let* ((filename (get-file-name BUFFER))
+         (lsp-root (lsp--calculate-root (lsp-session) (buffer-file-name BUFFER)))
          (lsp-root-path (file-name-as-directory lsp-root)))
     (replace-regexp-in-string lsp-root-path "" filename))
   )
 
-(defun python-get-library-path ()
-  (replace-regexp-in-string "/" "." (replace-regexp-in-string ".py" "" (python-get-file-path)))
+(defun python-get-library-path (&optional BUFFER)
+  (replace-regexp-in-string "/" "." (replace-regexp-in-string ".py" "" (python-get-file-path BUFFER)))
   )
 
-(defun python-copy-get-library-path ()
+(defun python-copy-get-library-path (&optional BUFFER)
   "Copy the current buffer file name to the clipboard as a libary path."
   (interactive)
-  (let ((library-path (python-get-library-path)))
+  (let ((library-path (python-get-library-path BUFFER)))
     (when library-path
       (kill-new library-path)
       (message "Copied library path '%s' to the clipboard." library-path))))
+
+(defun python-copy-other-buffer-library-path ()
+  "Copy the current buffer file name to the clipboard as a libary path."
+  (interactive)
+  (python-copy-get-library-path (other-buffer (current-buffer) t nil)))
 
 (defun python-copy-get-file-path ()
   "Copy the current buffer file name to the clipboard as a libary path."
