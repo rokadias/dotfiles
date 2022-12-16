@@ -5,7 +5,7 @@
 # NOTE: Use minimum indentation, because Emacs 25+ doesn't dedent docstrings.
 # --
 @classmethod
-def ${1:name}(cls, $2) -> $3:
+def ${1:$$(replace-regexp-in-string "[[:space:]]" "_" yas-text)}(cls, $2) -> $3:
     \"\"\"$4
     ${2:$(python-args-to-docstring)}
     \"\"\"

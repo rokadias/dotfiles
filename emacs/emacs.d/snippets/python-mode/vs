@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: var set
+# key: vs
+# --
+${1:$$(replace-regexp-in-string "[[:space:]]" "_" yas-text)} = ${2:$1}
+$0
