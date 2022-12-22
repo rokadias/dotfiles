@@ -61,13 +61,33 @@ function runAndWatchWorkflow {
 
 alias gh-run-and-watch-workflow="runAndWatchWorkflow"
 
+function viewFailedPRJobLogs {
+    local WORKFLOW_NAME=$1
+    JOB=$(gh run list -w "$WORKFLOW_NAME" -b $(git rev-parse --abbrev-ref HEAD) -L 1)
+    NAME=$(echo -n "$JOB" | cut -f 3)
+    JOB_ID=$(echo -n "$JOB" | sed -e 's/.*\([0-9]\{10\}\).*/\1/')
+    FAILED_RUNS=$(gh run view -q '.jobs | map(select(.conclusion == "failure"))' --json 'jobs' $JOB_ID)
+    FAILED_RUN_IDS=$(echo -n "$FAILED_RUNS" | jq '.[].databaseId')
+    REMOTE_REPO=$(g remote get-url origin | sed -e 's!\(ssh://\|https://\)github.com/!!' -e 's/\.git//')
+    for FAIL_RUN_ID in $(echo -n "$FAILED_RUN_IDS" | sed -e 's/\n/ /g')
+    do
+        FAILED_RUN_NAME=$(echo -n "$FAILED_RUNS" | jq "map(select(.databaseId == $FAIL_RUN_ID)) | .[0].name")
+        echo
+        echo "Viewing Failed Job Run for '$FAILED_RUN_NAME'"
+        echo
+        PAGER="" gh api /repos/${REMOTE_REPO}/actions/jobs/${FAIL_RUN_ID}/logs
+    done
+}
+
+alias gh-pr-fl="viewFailedPRJobLogs"
+
 alias gbrdf="git push origin --delete"
 
 function makeGIF {
     local VIDEO=$1
     local FILENAME=$(basename $VIDEO)
     local DIRECTORY=$(dirname $VIDEO)
-    ffmpeg -i $VIDEO -vf "fps=5,split[s0][s1];[s0]palettegen=max_colors=256[p];[s1][p]paletteuse,setpts=PTS/2" -loop -1 $DIRECTORY/${FILENAME%.*}.gif
+    ffmpeg -i $VIDEO -vf "fps=5,split[s0][s1];[s0]palettegen=max_colors=32[p];[s1][p]paletteuse,setpts=PTS/2" -loop -1 $DIRECTORY/${FILENAME%.*}.gif
 }
 
 alias sc="ffmpeg -f x11grab -video_size 2560x1440 -i $DISPLAY -vframes 1"
