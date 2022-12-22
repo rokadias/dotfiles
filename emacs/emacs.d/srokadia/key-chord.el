@@ -7,15 +7,16 @@
 (key-chord-define-global "ji" 'ido-switch-buffer)
 (key-chord-define-global "je" 'delete-window)
 (key-chord-define-global "jd" 'delete-other-windows)
+(key-chord-define-global "jr" '(lambda () (interactive) (delete-other-windows) (split-window-right) (other-window 1)))
 (key-chord-define-global "jw" 'remove-compile-windows)
 (key-chord-define-global "fk" 'split-window-below)
 (key-chord-define-global "fl" 'split-window-right)
 
 (key-chord-define-global "sj" 'term-paste)
 
-(key-chord-define-global "kl" 'find-file-other-window)
 (key-chord-define-global "df" 'find-file-in-repository)
 (key-chord-define-global "fg" 'find-name-dired)
+(key-chord-define-global "gk" 'goto-line)
 (key-chord-define-global "sd" 'find-file-in-repository-other-window)
 (key-chord-define-global ",." '(lambda () (interactive) (other-window -1) (ido-switch-buffer)))
 (key-chord-define-global "m," 'other-frame)
