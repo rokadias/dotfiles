@@ -20,7 +20,7 @@ If no PATH is given, it will use the default value of
     (if (tramp-tramp-file-p path)
     (let ((tstruct (tramp-dissect-file-name path)))
       (cond
-       ((equal (tramp-file-name-method tstruct) "ssh")
+       ((member (tramp-file-name-method tstruct) '("ssh" "rsync"))
         (process-send-string name (format
                       (concat  "ssh -t %s '"
                            cd-str
