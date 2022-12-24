@@ -97,6 +97,10 @@ myKeys =
     , ((myModMask, xK_grave), spawn "dunstctl history-pop")
     , ((myModMask, xK_bracketleft), spawn "dunstctl context")
     , ((myModMask, xK_bracketright), spawn "dunstctl close")
+    , ((myModMask, xK_y), spawn "pactl set-sink-volume 0 -10%")
+    , ((myModMask .|. shiftMask, xK_y), spawn "pactl set-sink-volume 0 -1%")
+    , ((myModMask, xK_u), spawn "pactl set-sink-volume 0 +10%")
+    , ((myModMask .|. shiftMask, xK_u), spawn "pactl set-sink-volume 0 +1%")
     , ((myModMask .|. shiftMask, xK_bracketright), spawn "dunstctl close-all")
     ] ++ [
         ((myModMask .|. m, xK_f), f horizontalScreenOrderer 2)
