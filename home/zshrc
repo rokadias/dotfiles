@@ -137,7 +137,7 @@ source_if_available "/home/srokadia/google-cloud-sdk/path.zsh.inc"
 # The next line enables shell command completion for gcloud.
 source_if_available "/home/srokadia/google-cloud-sdk/completion.zsh.inc"
 
-if [ -x $(command -v kubectl) ]; then
+if [[ -x $(command -v kubectl) ]]; then
    source <(kubectl completion zsh)
 fi
 
@@ -145,7 +145,7 @@ fi
 source_if_available "/home/srokadia/.aliases"
 source_if_available "/home/srokadia/falkon/playground/saqib/aliases"
 
-if [ -x $(command -v pyenv) ]; then
+if [[ -x $(command -v pyenv) ]]; then
     # TODO Remove after restart.
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
