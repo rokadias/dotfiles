@@ -51,7 +51,7 @@
 ;; Typescript setup
 (defun setup-tide-mode ()
   (interactive)
-  (unless (string-match-p "\*[^\*]+\*" (buffer-name (current-buffer)))
+  (unless (or (string-match-p "\*[^\*]+\*" (buffer-name (current-buffer))) (derived-mode-p 'json-mode))
     (tide-setup)
     (lsp)
     (prettier-js-mode +1)
