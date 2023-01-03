@@ -85,5 +85,29 @@
       (message "Found python version file at %s" python-version-file)
       (pyenv-mode-set (s-trim (f-read-text python-version-file 'utf-8))))))
 
+(require 'lsp)
+(require 'lsp-pyright)
+(lsp-register-client
+ (make-lsp-client
+  :new-connection (lsp-tramp-connection (lambda ()
+                                          (cons (lsp-package-path 'pyright)
+                                                lsp-pyright-langserver-command-args)))
+  :major-modes '(python-mode)
+  :remote? t
+  :server-id 'pyright-remote
+  :multi-root lsp-pyright-multi-root
+  :priority 3
+  :initialized-fn (lambda (workspace)
+                    (with-lsp-workspace workspace
+                      ;; we send empty settings initially, LSP server will ask for the
+                      ;; configuration of each workspace folder later separately
+                      (lsp--set-configuration
+                       (make-hash-table :test 'equal))))
+  :download-server-fn (lambda (_client callback error-callback _update?)
+                        (lsp-package-ensure 'pyright callback error-callback))
+  :notification-handlers (lsp-ht ("pyright/beginProgress" 'lsp-pyright--begin-progress-callback)
+                                 ("pyright/reportProgress" 'lsp-pyright--report-progress-callback)
+                                 ("pyright/endProgress" 'lsp-pyright--end-progress-callback))))
+
 (provide 'python)
 ;;; python.el ends here

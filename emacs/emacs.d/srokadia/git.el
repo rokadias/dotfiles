@@ -193,7 +193,29 @@
          (new-pr-url (concat remote "/pull/new/" branch)))
     (kill-new new-pr-url)
     (browse-url new-pr-url)
-  ))
+    ))
+
+(defun vc-git-print-recent-remote-branches ()
+  ;; git for-each-ref --sort=-committerdate --no-merged HEAD --count 50 refs/remotes --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))' | sed -e 's|origin/||' | grep \"$(git config --global --get user.name)""
+  (interactive)
+  (vc-git-retrieve-main-branch)
+  (let* ((inhibit-read-only t)
+        (buffer-name "*vc-branch-log*")
+        (buffer (get-buffer-create buffer-name)))
+    (with-current-buffer buffer
+      (apply #'vc-git-command buffer
+	     'async nil
+
+             '("for-each-ref" "--sort=-committerdate" "--no-merged=HEAD"
+               "--count=50" "refs/remotes" "--format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'")
+	     ))
+    (pop-to-buffer buffer)
+    (vc-run-delayed
+     (let ((inhibit-read-only t))
+       (shrink-window-if-larger-than-buffer)
+       (set-buffer-modified-p nil)))
+    )
+  )
 
 (require 'ghub)
 (require 'github-notifier)
