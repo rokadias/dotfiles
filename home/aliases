@@ -90,6 +90,14 @@ function makeGIF {
     ffmpeg -i $VIDEO -vf "fps=5,split[s0][s1];[s0]palettegen=max_colors=32[p];[s1][p]paletteuse,setpts=PTS/2" -loop -1 $DIRECTORY/${FILENAME%.*}.gif
 }
 
+function makeMP4 {
+    local VIDEO=$1
+    local FILENAME=$(basename $VIDEO)
+    local DIRECTORY=$(dirname $VIDEO)
+    ffmpeg -i $VIDEO -vf "setpts=PTS/3" -vcodec libx264 -crf 34 $DIRECTORY/${FILENAME%.*}-sm.mp4
+}
+
 alias sc="ffmpeg -f x11grab -video_size 2560x1440 -i $DISPLAY -vframes 1"
 alias scr="ffmpeg -f x11grab -video_size 2560x1440 -framerate 25 -i $DISPLAY -c:v libx264 -preset ultrafast -c:a aac"
 alias scr-gif="makeGIF"
+alias scr-mp4="makeMP4"
