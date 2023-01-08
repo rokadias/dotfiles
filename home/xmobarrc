@@ -11,7 +11,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%StdinReader% }{ %dynnetwork% | %multicpu% | %memory% | %battery% | %KSEA% | %date%"
+   , template = "%StdinReader% }{ %pomobar% | %dynnetwork% | %multicpu% | %memory% | %battery% | %KSEA% | %date%"
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -102,5 +102,6 @@ Config {
         , Run Kbd            [ ("us(dvorak)" , "<fc=#00008B>DV</fc>")
                              , ("us"         , "<fc=#8B0000>US</fc>")
                              ]
+        , Run CommandReader "killall pomobar; ~/.local/bin/pomobar --terminatedShellCmd='mpg123 -q ~/Downloads/alarm-sounds/clock-alarm-8762.mp3'" "pomobar"
         ]
 }
