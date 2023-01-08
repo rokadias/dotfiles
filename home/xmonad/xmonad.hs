@@ -103,7 +103,7 @@ myKeys =
     , ((myModMask, xK_u), spawn "pactl set-sink-volume 0 +10%")
     , ((myModMask .|. shiftMask, xK_u), spawn "pactl set-sink-volume 0 +1%")
     , ((myModMask .|. shiftMask, xK_bracketright), spawn "dunstctl close-all")
-    , ((myModMask, xK_i), spawn "dbus-send --print-reply --dest=org.pomobar /org/pomobar org.Pomobar.startTimerSwitch array:int16:25,10,5")
+    , ((myModMask, xK_i), spawn "dbus-send --print-reply --dest=org.pomobar /org/pomobar org.Pomobar.startTimerSwitch array:int16:35,25,10,5")
     , ((myModMask, xK_p), spawn "dbus-send --print-reply --dest=org.pomobar /org/pomobar org.Pomobar.pauseResumeTimer")
     ] ++ [
         ((myModMask .|. m, xK_f), f horizontalScreenOrderer 2)
