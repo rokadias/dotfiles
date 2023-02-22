@@ -89,7 +89,7 @@ myKeys =
     -- keepass launch
     [((controlMask .|. altMask, xK_a), spawn "keepass -auto-type")
     , ((myModMask, xK_b), sendMessage ToggleStruts)
-    , ((myModMask, xK_d), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
+    , ((myModMask, xK_d), spawn "exe=`dmenu_path | dmenu -b -w 0` && eval \"exec $exe\"")
     , ((altMask, xK_Tab), performPrimaryNeighborView 1)
     , ((myModMask, xK_n), performPrimaryNeighborView 1)
     , ((myModMask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
