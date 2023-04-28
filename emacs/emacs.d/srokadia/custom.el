@@ -19,6 +19,7 @@
  '(compilation-window-height 50)
  '(custom-safe-themes
    '("3a2e0c5597f6d74d99daa2b5bbbc2a653d02d6b88fcd73d3c84ebf25cde37b3f" "ea287582eaea4e0c0a991ad0aa42f679f21b8d92766762bcc4d730d4aa6c8fd7" "117efd35bd4451a2d4ee0180cb2dbfc8601af5c4d9ade3ea575d2afdda0feb82" "bb7303ab60750380957d8205794d031ab222390673ff6dd6369d0277b966c1d4" "79485bab8bb220562d4acd003e4b6f1c9005af41e91f81b7a0e89b7e3a301203" "725a0ac226fc6a7372074c8924c18394448bb011916c05a87518ad4563738668" "b550fc3d6f0407185ace746913449f6ed5ddc4a9f0cf3be218af4fb3127c7877" "573e46dadf8c2623256a164831cfe9e42d5c700baed1f8ecd1de0675072e23c2" "6bb466c89b7e3eedc1f19f5a0cfa53be9baf6077f4d4a6f9b5d087f0231de9c8" "590759adc4a5bf7a183df81654cce13b96089e026af67d92b5eec658fb3fe22f" "50d9d021d33feb35a2328ee7dd4cba97b43815f6972c878f0411d2945e6d0d78" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" "a718cd3fde3231c20a8b8a0c342674a39b8916916195448efc2434ffd354e0ed" "a2c537c981b4419aa3decac8e565868217fc2995b74e1685c5ff8c6d77b198d6" "6e05b0a83b83b5efd63c74698e1ad6feaddf69a50b15a8b4a83b157aac45127c" default))
+ '(desktop-restore-eager 100)
  '(desktop-save-mode t)
  '(erc-irccontrols-mode t)
  '(erc-notifications-mode t)
@@ -73,6 +74,7 @@
      (360 . "#dc8cc3")))
  '(vc-annotate-very-old-color "#dc8cc3")
  '(vc-git-print-log-follow t)
+ '(vc-git-show-stash 10)
  '(visible-bell nil)
  '(yas-prompt-functions '(yas/no-prompt))
  '(yas-triggers-in-field t))

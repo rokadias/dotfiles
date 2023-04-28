@@ -108,6 +108,24 @@
   :notification-handlers (lsp-ht ("pyright/beginProgress" 'lsp-pyright--begin-progress-callback)
                                  ("pyright/reportProgress" 'lsp-pyright--report-progress-callback)
                                  ("pyright/endProgress" 'lsp-pyright--end-progress-callback))))
+(setq-default post-command-hook
+              (--filter (not (and (consp it)
+                                  (eq (car it) 'closure)
+                                  (not (-difference
+                                        '(cancel-callback method buf hook workspaces id)
+                                        (-map #'car (cadr it))))))
+                        (default-value 'post-command-hook)))
+
+(add-hook 'kill-buffer-hook
+          (lambda ()
+            (when (bound-and-true-p lsp-mode)
+              (setq-default post-command-hook
+                            (--filter (not (and (consp it)
+                                                (eq (car it) 'closure)
+                                                (not (-difference
+                                                      '(cancel-callback method buf hook workspaces id)
+                                                      (-map #'car (cadr it))))))
+                                      (default-value 'post-command-hook))))))
 
 (provide 'python)
 ;;; python.el ends here
