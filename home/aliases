@@ -86,7 +86,7 @@ function viewPushedPRJobLogs {
     JOB=$(gh run list -w "$WORKFLOW_NAME" -b $(git rev-parse --abbrev-ref HEAD) -L 1)
     NAME=$(echo -n "$JOB" | cut -f 3)
     JOB_ID=$(echo -n "$JOB" | sed -e 's/.*\([0-9]\{10\}\).*/\1/')
-    PUSHED_JOBS_RUNS=$(gh run view -q '.jobs | map(select(.name == "Python Docker Build and ECR Push" or .name == "Frontend Docker Build and ECR Push"))' --json 'jobs' $JOB_ID)
+    PUSHED_JOBS_RUNS=$(gh run view -q '.jobs | map(select(.name | contains("Docker Build and ECR Push")))' --json 'jobs' $JOB_ID)
     PUSHED_JOBS_RUN_IDS=$(echo -n "$PUSHED_JOBS_RUNS" | jq '.[].databaseId')
     REMOTE_REPO=$(g remote get-url origin | sed -e 's!\(ssh://\|https://\)github.com/!!' -e 's/\.git//')
     for PUSHED_JOBS_RUN_ID in $(echo -n "$PUSHED_JOBS_RUN_IDS" | sed -e 's/\n/ /g')
@@ -99,7 +99,7 @@ function viewPushedPRJobLogs {
     done
 }
 
-alias gh-pr-dp="viewPushedPRJobLogs"
+alias gh-pr-dp='viewPushedPRJobLogs "Build and Test" | grep "server/\(api\|frontend\|migrations\|airflow\):[a-f0-9]\{40\}" | sed -e "s/.*server\/\(api\|frontend\|migrations\|airflow\):\([a-f0-9]\{40\}\).*/server\/\1:\2/" | uniq'
 
 alias gbrdf="git push origin --delete"
 
