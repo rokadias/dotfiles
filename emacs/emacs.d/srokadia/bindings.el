@@ -208,7 +208,7 @@
 (defun importmagic-build-import-statement (prefix)
   (interactive "P")
   (let* ((symbol (thing-at-point 'symbol t))
-         (default-library-path (python-get-library-path (other-buffer (current-buffer) t nil)))
+         (default-library-path (python-get-last-suitable-library-path (current-buffer)))
          (default-import-statement (build-import-statement symbol default-library-path prefix))
          (library-path (read-string (format "import statement '%s' (%s): " default-import-statement default-library-path) nil nil default-library-path nil)))
     (importmagic--fix-imports (concat (build-import-statement symbol library-path prefix) "\n") 2 2)

@@ -34,8 +34,25 @@
     (replace-regexp-in-string lsp-root-path "" filename))
   )
 
+(defun matches-root-path(ROOT_PATH BUFFER)
+  (let* ((file-path (buffer-file-name BUFFER)))
+    (if (and file-path (string-prefix-p ROOT_PATH file-path)) t nil))
+ )
+
+(defun python-get-last-suitable-file-path (&optional BUFFER)
+  (let* ((buf-list (buffer-list (selected-frame)))
+         (lsp-root (lsp--calculate-root (lsp-session) (buffer-file-name BUFFER)))
+         (lsp-root-path (file-name-as-directory lsp-root))
+         (filtered-buffer-list (seq-filter (apply-partially 'matches-root-path lsp-root-path) buf-list)))
+    (python-get-file-path (nth 1 filtered-buffer-list)))
+  )
+
 (defun python-get-library-path (&optional BUFFER)
   (replace-regexp-in-string "/" "." (replace-regexp-in-string ".py" "" (python-get-file-path BUFFER)))
+  )
+
+(defun python-get-last-suitable-library-path (&optional BUFFER)
+  (replace-regexp-in-string "/" "." (replace-regexp-in-string ".py" "" (python-get-last-suitable-file-path BUFFER)))
   )
 
 (defun python-copy-get-library-path (&optional BUFFER)
