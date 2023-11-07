@@ -12,3 +12,9 @@
 
 (global-set-key (kbd "H-w") 'formatted-copy)
 (setq auto-mode-alist (append '(("todoist.org$" . todoist-mode)) auto-mode-alist))
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((mermaid . t)
+   (emacs-lisp . t))
+ )
