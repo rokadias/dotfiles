@@ -35,7 +35,7 @@ alias gh-watch-main="watchLatestMainBuild"
 
 function watchWorkflow {
     local WORKFLOW_NAME=$1
-    JOB=$(gh run list -w "$WORKFLOW_NAME" -L 1)
+    JOB=$(gh run list -w "$WORKFLOW_NAME" -b $(git rev-parse --abbrev-ref HEAD) -L 1)
     NAME=$(echo -n "$JOB" | cut -f 3)
     JOB_ID=$(echo -n "$JOB" | sed -e 's/.*\([0-9]\{10\}\).*/\1/')
     notify-send "Watching latest build: $NAME"
