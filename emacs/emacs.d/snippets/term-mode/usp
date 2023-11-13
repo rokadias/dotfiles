@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: use_prod
+# key: usp
+# --
+use CUSTOMERS_${1:FALKON}.PROD_DATA;

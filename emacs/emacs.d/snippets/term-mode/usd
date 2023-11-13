@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: use_dev
+# key: usd
+# --
+use CUSTOMERS_${1:FALKON}.DEV_DATA_${2:SAQIB};
