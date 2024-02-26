@@ -7,8 +7,8 @@
 #
 
 # ~/.dropbox-dist/dropboxd &
-if [ -f ~/Downloads/wallpapers/arch-linux-1.jpg ]; then
-    xloadimage -onroot -display $DISPLAY ~/Downloads/wallpapers/arch-linux-1.jpg
+if [ -f ~/wallpapers/arch-linux-1.png ]; then
+    xloadimage -onroot -zoom 50 -display $DISPLAY ~/wallpapers/arch-linux-1.png
 fi
 
 if [ -f ~/.xmodmap ]; then
