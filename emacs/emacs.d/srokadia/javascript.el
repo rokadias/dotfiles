@@ -79,6 +79,13 @@
 
 (use-package lsp-mode
   :hook (web-mode . lsp)
-  :custom
-  (lsp-clients-typescript-server-args '("--stdio" "--tsserver-log-file" "/dev/stderr")))
+  :custom)
 (setq lsp-disabled-clients '(eslint))
+
+(require 'tree-sitter)
+(define-derived-mode typescriptreact-mode typescript-mode "Typescript TSX")
+(add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
+;; by default, typescript-mode is mapped to the treesitter typescript parser
+;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
+(add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx))
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
