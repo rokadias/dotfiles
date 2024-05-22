@@ -155,3 +155,5 @@ if [[ -x $(command -v pyenv) ]]; then
 fi
 
 export PATH="$HOME/.poetry/bin:$PATH"
+
+[ -s "/usr/share/nvm/init-nvm.sh" ] && source "/usr/share/nvm/init-nvm.sh"
