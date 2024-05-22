@@ -149,7 +149,7 @@
         (browse-url file-url)))))
 
 (defun vc-git-view-url (remote)
-  (vc-git-file-operation-url remote "tree"))
+  (vc-git-file-operation-url remote "-/blob"))
 
 (defun vc-git-blame ()
   (interactive)
@@ -166,10 +166,10 @@
   (concat remote
           "/"
           operation
-          "/master"
+          "/main"
           (vc-git-get-relative-path)
           "#L"
-          (number-to-string (get-current-line-number))))
+          (number-to-string (get-current-line-number)))) 
 
 (defun vc-git-get-relative-path()
   (let* ((root (string-trim (shell-command-to-string "git rev-parse --show-toplevel")))
@@ -191,6 +191,15 @@
   (let* ((branch (vc-git--current-symbolic-ref (buffer-file-name (current-buffer))))
          (remote (vc-git-remote))
          (new-pr-url (concat remote "/pull/new/" branch)))
+    (kill-new new-pr-url)
+    (browse-url new-pr-url)
+    ))
+
+(defun vc-new-gitlab-pr ()
+  (interactive)
+  (let* ((branch (vc-git--current-symbolic-ref (buffer-file-name (current-buffer))))
+         (remote (vc-git-remote))
+         (new-pr-url (concat remote "/-/merge_requests/new?merge_request[source_branch]=" branch)))
     (kill-new new-pr-url)
     (browse-url new-pr-url)
     ))
