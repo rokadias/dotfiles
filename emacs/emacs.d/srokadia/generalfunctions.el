@@ -136,6 +136,15 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
     (mark-current-sexp)
     (kill-ring-save nil nil t)
     )
+  )
+
+(defun yank-pop-sexp ()
+  (interactive)
+  (save-excursion
+    (mark-current-sexp)
+    (delete-region (region-beginning) (region-end))
+    (yank)
+    )
 )
 
 (defun get-file-name (&optional BUFFER)

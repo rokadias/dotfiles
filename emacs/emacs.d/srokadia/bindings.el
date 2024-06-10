@@ -33,6 +33,7 @@
 ;; Kill Ring
 (global-set-key (kbd "C-M-SPC") 'mark-current-sexp)
 (global-set-key (kbd "C-M-w") 'kill-ring-save-sexp)
+(global-set-key (kbd "C-M-y") 'yank-pop-sexp)
 (global-set-key (kbd "C-; C-w") 'er-copy-file-name-to-clipboard)
 
 ;; isearch

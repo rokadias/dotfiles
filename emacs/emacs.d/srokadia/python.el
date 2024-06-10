@@ -9,7 +9,6 @@
   (require 'pyenv-mode)
   (require 'flymake-ruff)
   (set-python-env-if-available)
-  (pyenv-mode t)
   (lsp)
   (company-mode nil)
   (python-black-on-save-mode)
@@ -19,7 +18,8 @@
     (when project-file
       (make-local-variable 'py-isort-options)
       (setq py-isort-options (concat "--settings-path " project-file))))
-  (set-check-python-compile-command))
+  (set-check-python-compile-command)
+  (pyenv-mode t))
 (add-hook 'python-mode-hook #'on-python-load)
 
 (setq python-indent-def-block-scale 1)
