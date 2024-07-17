@@ -20,4 +20,14 @@
 (add-hook 'c++-mode-hook (lambda () (on-clang-load)))
 (add-hook 'glsl-mode-hook (lambda () (on-clang-load)))
 
+(setq path-to-ctags "/usr/bin/ctags")
+
+(defun create-tags (dir-name)
+  "Create tags file."
+  (interactive "DDirectory: ")
+  (shell-command
+   (format "%s -f TAGS -e -R %s" path-to-ctags (directory-file-name dir-name)))
+)
+
+
 (define-key c++-mode-map (kbd "M-M") 'bazel-compile-run-test)
