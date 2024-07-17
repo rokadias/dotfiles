@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: using type
+# key: ut
+# --
+using $1 = $2::$1;

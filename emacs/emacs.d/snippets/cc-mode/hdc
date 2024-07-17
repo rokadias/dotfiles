@@ -6,6 +6,7 @@
  * @file ${1:$$(file-name-nondirectory (buffer-file-name))}
  * @author Saqib Rokadia (srokadia@electriceratechnologies.com)
  */
+#pragma once
 
 class ${2:$$(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))} {
   $0
