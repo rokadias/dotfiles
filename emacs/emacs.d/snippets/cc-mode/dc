@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: doc_comment
+# key: dc
+# --
+/**
+ * $0
+ */

@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: header class file
+# key: hdc
+# --
+/**
+ * @file ${1:$$(file-name-nondirectory (buffer-file-name))}
+ * @author Saqib Rokadia (srokadia@electriceratechnologies.com)
+ */
+
+class ${2:$$(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))} {
+  $0
+}

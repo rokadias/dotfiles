@@ -14,6 +14,8 @@
             ;; Buffer local hook.
             t))
 
+(define-key c++-mode-map (kbd "M-M") 'bazel-compile-run-test)
+
 (add-hook 'c-mode-hook (lambda () (on-clang-load)))
 (add-hook 'c++-mode-hook (lambda () (on-clang-load)))
 (add-hook 'glsl-mode-hook (lambda () (on-clang-load)))

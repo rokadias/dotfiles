@@ -2,6 +2,7 @@
 (setq is-cygwin (string-equal system-type "cygwin"))
 (setq is-mac (memq window-system '(mac ns)))
 (setq yasnippets-root (concat emacs-dir-root "snippets/"))
+(setq yas-triggers-in-field nil)
 (setq jiralib-url "https://electricera.atlassian.net")
 
 (when (not is-w32)

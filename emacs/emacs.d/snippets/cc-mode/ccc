@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: C++ class definitions
+# key: ccc
+# --
+/**
+ * @file ${1:$$(file-name-nondirectory (buffer-file-name))}
+ * @author Saqib Rokadia (srokadia@electriceratechnologies.com)
+ */
+#include "$2.h"
+
+${2:$$(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))}::$2($0) {}

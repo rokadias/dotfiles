@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: space_fun_delcarations
+# key: sf
+# --
+/**
+ * $0
+ */
+${1:type} ${2:$$(replace-regexp-in-string "[[:space:]]" "_" yas-text)}(${3:args})${4: const};
+
+$1 ${6:$$(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))}::$2($3)$4 {
+        
+}

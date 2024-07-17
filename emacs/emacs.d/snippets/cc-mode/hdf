@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: header file
+# key: hdf
+# --
+/**
+ * @file ${1:$$(file-name-nondirectory (buffer-file-name))}
+ * @author Saqib Rokadia (srokadia@electriceratechnologies.com)
+ */
+#include "$1"
+
+namespace ${2:$$(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))} {
+  $0
+} // namespace $2
