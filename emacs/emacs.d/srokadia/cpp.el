@@ -1,6 +1,7 @@
 (defun on-clang-load ()
   (set-bazel-compile-command)
   (clang-format-save-hook-for-this-buffer)
+  (lsp)
   )
 (defun clang-format-save-hook-for-this-buffer ()
   "Create a buffer local save hook."
