@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: console log info
+# key: clf
+# --
+LOG(INFO) << "$1: " << $1;

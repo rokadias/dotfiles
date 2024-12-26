@@ -90,7 +90,7 @@ myKeys =
     [((controlMask .|. altMask, xK_a), spawn "keepass -auto-type")
     , ((myModMask, xK_b), sendMessage ToggleStruts)
     , ((myModMask, xK_d), spawn "exe=`dmenu_path | dmenu -b -w 0` && eval \"exec $exe\"")
-    , ((altMask, xK_Tab), performPrimaryNeighborView 1)
+    -- , ((altMask, xK_Tab), performPrimaryNeighborView 1)
     , ((myModMask, xK_n), performPrimaryNeighborView 1)
     , ((myModMask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
     , ((myModMask .|. shiftMask, xK_s), spawn "sudo synclient TouchpadOff=1")
@@ -165,6 +165,7 @@ myManageHook = composeAll
     className =? "Moonlight"         --> (doShift "games" <+> unfloat),
     className =? "keepassx2"         --> doShift "keepass",
     className =? "conky"             --> doShift "keepass",
+    className =? "TeamViewer"        --> doShift "video",
     className =? "zoom"              --> (doShift "video" <+> doFloat),
     className ~? "^join\\?action=join" --> (doShift "video" <+> doFloat),
     className =? "pritunl"           --> (doShift "network" <+> doFloat),
