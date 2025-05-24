@@ -52,7 +52,7 @@ ZSH_THEME="ys"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git archlinux docker emacs jira mercurial sudo terminitor npm node systemd history kubectl rust)
+plugins=(git archlinux docker emacs jira mercurial sudo terminitor npm node systemd history kubectl rust tailscale bazel)
 
 # User configuration
 
@@ -164,3 +164,5 @@ if [[ -s /usr/share/zsh/scripts/zplug/init.zsh ]]; then
     source /usr/share/zsh/scripts/zplug/init.zsh
     zplug "code-stats/code-stats-zsh", from:gitlab, use:"codestats.plugin.zsh"
 fi
+
+autoload -U compinit; compinit

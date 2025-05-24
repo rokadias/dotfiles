@@ -107,7 +107,7 @@ function makeGIF {
     local VIDEO=$1
     local FILENAME=$(basename $VIDEO)
     local DIRECTORY=$(dirname $VIDEO)
-    ffmpeg -i $VIDEO -vf "fps=5,split[s0][s1];[s0]palettegen=max_colors=32[p];[s1][p]paletteuse,setpts=PTS/2" -loop -1 $DIRECTORY/${FILENAME%.*}.gif
+    ffmpeg -i $VIDEO -vf "fps=5,split[s0][s1];[s0]palettegen=max_colors=32[p];[s1][p]paletteuse,setpts=PTS/1.5" -loop -1 $DIRECTORY/${FILENAME%.*}.gif
 }
 
 function makeMP4 {
