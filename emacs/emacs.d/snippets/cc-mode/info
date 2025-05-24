@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: glog info
+# key: info
+# --
+LOG(INFO) << "$1";

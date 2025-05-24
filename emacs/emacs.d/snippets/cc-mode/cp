@@ -1,0 +1,6 @@
+# -*- mode: cc -*-
+# name: constructor_parameter
+# key: cp
+# --
+${1:$$(replace-regexp-in-string "[[:space:]]" "_" yas-text)}_(${2:$1}),
+$0
