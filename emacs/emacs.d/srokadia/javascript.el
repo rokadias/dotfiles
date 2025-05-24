@@ -48,6 +48,16 @@
 (add-hook 'js2-mode-hook 'on-javascript-loaded)
 (add-hook 'js2-mode-hook 'comment-fill-mode-hook)
 
+(defun set-rush-compile-command ()
+  "Set the rush compile command which is just check if there's a rush.json."
+  (let ((project-build-file (find-project-file "rush.json")))
+    (when project-build-file
+      (let* ((project-file (find-project-file "rush.json"))
+             (project-dir (directory-parent project-file)))
+        (message "Found build file at %s and workspace at %s" project-file project-dir)
+        (set (make-local-variable 'project-directory) project-dir)
+        (set (make-local-variable 'compile-command) (concat "source ~/.nvm/nvm.sh && nvm use 18.16.1 && rush lint && rush build && rush format" ))))))
+
 ;; Typescript setup
 (defun setup-tide-mode ()
   (interactive)
@@ -68,7 +78,8 @@
         (progn (message "Found project file at %s" project-file)
                (when is-cygwin
                  (setq project-file (concat "$(cygpath -aw " project-file ")")))
-               (set (make-local-variable 'compile-command) "npm run build" ))))))
+               (set (make-local-variable 'compile-command) "npm run build" ))))
+    (set-rush-compile-command)))
 
 (setq tide-tsserver-process-environment '("TSS_LOG=-level verbose -file /tmp/tss.log"))
 

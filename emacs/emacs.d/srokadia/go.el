@@ -19,7 +19,7 @@
          (relative-build-dir (string-replace project-parent-dir "" project-build-dir)))
     (message "Found build file at %s and workspace at %s" project-build-file project-workspace-file)
     (set (make-local-variable 'project-directory) project-parent-dir)
-    (set (make-local-variable 'compile-command) (concat "docker exec -w /electron electron-build bazel build //" relative-build-dir "..." ))))
+    (set (make-local-variable 'compile-command) (concat "bazel build  -c dbg --strip=never //" relative-build-dir "..." ))))
 
 (defun bazel-compile-run-test ()
   (interactive)
@@ -29,10 +29,40 @@
          (project-parent-dir (directory-parent project-workspace-file))
          (relative-build-dir (string-replace project-parent-dir "" project-build-dir)))
     (message "Found build file at %s and workspace at %s" project-build-file project-workspace-file)
-    (compile (concat "docker exec -w /electron electron-build bazel --output_base output test $(bazel query 'tests(//" relative-build-dir "...)')"))
+    (set (make-local-variable 'project-directory) project-parent-dir)
+    (set (make-local-variable 'compile-command) (concat "bazel --output_base output test $(bazel query 'tests(//" relative-build-dir "...)')"))
+    (compile-override)
     (set-bazel-compile-command)
     )
   )
 (define-key go-mode-map (kbd "M-M") 'bazel-compile-run-test)
+
+(setq lsp-log-io nil
+      lsp-file-watch-threshold 4000
+      lsp-headerline-breadcrumb-enable t
+      lsp-headerline-breadcrumb-icons-enable nil
+      lsp-headerline-breadcrumb-segments '(file symbols)
+      lsp-imenu-index-symbol-kinds '(File Module Namespace Package Class Method Enum Interface
+                                          Function Variable Constant Struct Event Operator TypeParameter)
+      )
+(dolist (dir '("[/\\\\]\\.ccls-cache\\'"
+               "[/\\\\]\\.mypy_cache\\'"
+               "[/\\\\]\\.pytest_cache\\'"
+               "[/\\\\]\\.cache\\'"
+               "[/\\\\]\\.clwb\\'"
+               "[/\\\\]__pycache__\\'"
+               "[/\\\\]bazel-bin\\'"
+               "[/\\\\]bazel-code\\'"
+               "[/\\\\]bazel-genfiles\\'"
+               "[/\\\\]bazel-out\\'"
+               "[/\\\\]bazel-testlogs\\'"
+               "[/\\\\]third_party\\'"
+               "[/\\\\]third-party\\'"
+               "[/\\\\]buildtools\\'"
+               "[/\\\\]output\\'"
+               "[/\\\\]build\\'"
+               ))
+  (push dir lsp-file-watch-ignored-directories))
+
 
 (add-hook 'go-mode-hook #'on-go-load)
