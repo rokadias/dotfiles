@@ -28,7 +28,7 @@
 (global-set-key [(control x) (B)] 'windmove-left)
 (global-set-key [(control x) (P)] 'windmove-up)
 (global-set-key [(control x) (N)] 'windmove-down)
-(global-set-key (kbd "C-c C-b") '(lambda () (interactive) (toggle-zoom-frame) (global-display-line-numbers-mode 'toggle)))
+(global-set-key (kbd "C-c C-n") '(lambda () (interactive) (toggle-zoom-frame) (global-display-line-numbers-mode 'toggle)))
 
 ;; Kill Ring
 (global-set-key (kbd "C-M-SPC") 'mark-current-sexp)

@@ -1,4 +1,5 @@
 (defun on-clang-load ()
+  (lsp)
   (set-bazel-compile-command)
   (clang-format-save-hook-for-this-buffer)
   (lsp)
