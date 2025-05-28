@@ -1,2 +1,0 @@
-;;; Generated package description from flymake-ruff.el  -*- no-byte-compile: t -*-
-(define-package "flymake-ruff" "20230128.1739" "A flymake plugin for python files using ruff" '((emacs "26.1")) :commit "1567685414c81a24303058631d6ee81fb78eee73" :authors '(("Erick Navarro" . "erick@navarro.io")) :maintainers '(("Erick Navarro" . "erick@navarro.io")) :maintainer '("Erick Navarro" . "erick@navarro.io") :url "https://github.com/erickgnavar/flymake-ruff")

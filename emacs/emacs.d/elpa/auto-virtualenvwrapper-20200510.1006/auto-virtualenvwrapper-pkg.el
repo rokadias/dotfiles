@@ -1,2 +1,0 @@
-;;; Generated package description from auto-virtualenvwrapper.el  -*- no-byte-compile: t -*-
-(define-package "auto-virtualenvwrapper" "20200510.1006" "Lightweight auto activate python virtualenvs" '((cl-lib "0.6") (s "1.10.0") (virtualenvwrapper "0")) :commit "30fb54aa3c99f3c614ea9a92669d634df30c9439" :authors '(("Marcwebbie" . "marcwebbie@gmail.com") ("Robert Zaremba" . "robert-zaremba@scale-it.pl")) :maintainer '("Marcwebbie" . "marcwebbie@gmail.com") :keywords '("python" "virtualenv" "tools"))

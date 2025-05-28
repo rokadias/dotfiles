@@ -1,2 +1,0 @@
-;;; Generated package description from poly-markdown.el  -*- no-byte-compile: t -*-
-(define-package "poly-markdown" "20220117.2351" "Polymode for markdown-mode" '((emacs "25") (polymode "0.2.2") (markdown-mode "2.3")) :commit "d4ca396ec4a7d674ef0d671a6896f929ce5b504c" :authors '(("Vitalie Spinu")) :maintainer '("Vitalie Spinu") :keywords '("emacs") :url "https://github.com/polymode/poly-markdown")

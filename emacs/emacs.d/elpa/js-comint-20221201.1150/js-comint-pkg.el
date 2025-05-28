@@ -1,2 +1,0 @@
-;;; Generated package description from js-comint.el  -*- no-byte-compile: t -*-
-(define-package "js-comint" "20221201.1150" "JavaScript interpreter in window." '((emacs "24.3")) :commit "30e521ada5806ab780f68e09529715acb88f32cd" :authors '(("Paul Huff" . "paul.huff@gmail.com")) :maintainer '("Chen Bin <chenbin.sh AT gmail DOT com>") :keywords '("javascript" "node" "inferior-mode" "convenience") :url "https://github.com/redguardtoo/js-comint")
