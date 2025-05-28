@@ -164,6 +164,8 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 if [[ -s /usr/share/zsh/scripts/zplug/init.zsh ]]; then
     source /usr/share/zsh/scripts/zplug/init.zsh
     zplug "code-stats/code-stats-zsh", from:gitlab, use:"codestats.plugin.zsh"
+
+    zplug load
 fi
 
 autoload -U compinit; compinit
