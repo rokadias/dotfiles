@@ -99,4 +99,18 @@
 ;; by default, typescript-mode is mapped to the treesitter typescript parser
 ;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
 (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx))
+
+(defun rush-compile-run-test ()
+  (interactive)
+  (let* ((project-build-file (find-project-file "package.json"))
+         (project-build-dir (directory-parent project-build-file)))
+    (message "Found build file for test at %s with directory at %s" project-build-file project-build-dir)
+    (set (make-local-variable 'project-directory) project-build-dir)
+    (set (make-local-variable 'compile-command) (concat "source ~/.nvm/nvm.sh && nvm use 18.16.1 && rushx test"))
+    (compile-override)
+    (set-rush-compile-command)
+    )
+  )
+(define-key typescript-mode-map (kbd "M-M") 'rush-compile-run-test)
+
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
