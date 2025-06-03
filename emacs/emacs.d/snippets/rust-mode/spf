@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: spaceprintformat
+# key: spf
+# --
+println!("${1:$$(replace-regexp-in-string "[[:space:]]" "_" yas-text)}: {}", $1);
