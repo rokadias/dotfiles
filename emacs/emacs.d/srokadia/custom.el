@@ -60,7 +60,7 @@
  '(org-trello-mode-limit-fetch-since "2022-04-20")
  '(orgtrello-log-level 3 nil (org-trello))
  '(package-selected-packages
-   '(ace-jump-mode achievements ack async async-await auto-virtualenvwrapper bazel chatgpt-shell
+   '(ace-jump-mode achievements ack aider async async-await auto-virtualenvwrapper bazel chatgpt-shell
                    clang-format code-review code-stats color-theme company-go company-racer
                    dash-at-point dockerfile-mode doremi-frm edit-server editorconfig
                    editorconfig-core ein eslintd-fix exec-path-from-shell expand-region
@@ -116,7 +116,11 @@
   (add-hook 'kill-emacs-hook (lambda () (code-stats-sync :wait))))
 
 (when (auth-source-search :host "openai")
-    (setq chatgpt-shell-openai-key (funcall (plist-get (car (auth-source-search :host "openai")) :secret))))
+  (setq chatgpt-shell-openai-key (funcall (plist-get (car (auth-source-search :host "openai")) :secret))))
+
+(when (auth-source-search :host "claude")
+  (setenv "ANTHROPIC_API_KEY"
+        (auth-source-pick-first-password :host "claude")))
 
 (setq-default tide-user-preferences '(:importModuleSpecifierPreference "relative" :includeCompletionsForModuleExports t :includeCompletionsWithInsertText t :allowTextChangesInNewFiles t))
 
