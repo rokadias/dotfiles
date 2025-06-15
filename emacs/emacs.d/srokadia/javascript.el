@@ -108,7 +108,7 @@
 
 (require 'tree-sitter)
 (define-derived-mode typescriptreact-mode typescript-mode "Typescript TSX")
-(add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescriptreact-mode))
 ;; by default, typescript-mode is mapped to the treesitter typescript parser
 ;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
 (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx))
