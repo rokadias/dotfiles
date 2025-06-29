@@ -93,6 +93,7 @@ myKeys =
     -- , ((altMask, xK_Tab), performPrimaryNeighborView 1)
     , ((myModMask, xK_n), performPrimaryNeighborView 1)
     , ((myModMask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
+    , ((myModMask .|. shiftMask .|. altMask, xK_z), spawn "systemctl suspend")
     , ((myModMask .|. shiftMask, xK_s), spawn "sudo synclient TouchpadOff=1")
     , ((myModMask, xK_s), spawn "sudo synclient TouchpadOff=0")
     , ((myModMask, xK_grave), spawn "dunstctl history-pop")

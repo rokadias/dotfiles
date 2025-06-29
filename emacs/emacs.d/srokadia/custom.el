@@ -67,10 +67,10 @@
                    find-file-in-repository flatland-theme floobits flycheck-golangci-lint
                    flycheck-rust flymake flymake-go flymake-ruff frame-restore fsharp-mode fsm
                    github-notifier github-review gnu-elpa-keyring-update go-errcheck go-imports
-                   go-mode go-playground go-scratch golint gotham-theme hcl-mode helm "helm" hound
-                   ido-complete-space-or-hyphen ido-vertical-mode importmagic jq-mode js-comint
-                   js-doc json-mode jsonnet-mode jss jsx-mode jupyter key-chord lsp-java lsp-mode
-                   lsp-pyright lsp-ui markdown-preview-eww markdown-preview-mode mediawiki
+                   go-mode go-playground go-scratch golint gotham-theme haskell-mode hcl-mode helm
+                   "helm" hound ido-complete-space-or-hyphen ido-vertical-mode importmagic jq-mode
+                   js-comint js-doc json-mode jsonnet-mode jss jsx-mode jupyter key-chord lsp-java
+                   lsp-mode lsp-pyright lsp-ui markdown-preview-eww markdown-preview-mode mediawiki
                    mermaid-mode multiple-cursors node-resolver nodejs-repl nvm ob-mermaid omnisharp
                    org-jira org-trello ox-clip ox-gfm pabbrev php-mode pivotal-tracker poly-ansible
                    poly-markdown powershell-mode prettier prettier-js protobuf-mode pyenv-mode
