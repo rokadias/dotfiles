@@ -76,6 +76,16 @@
       (kill-new file-path)
       (message "Copied file path '%s' to the clipboard." file-path))))
 
+(defun get-python-version-from-file ()
+  "Attempts to get the version string from the closest .python-version."
+  (when (locate-dominating-file default-directory ".python-version")
+    (let* ((pyenv-version-file (expand-file-name ".python-version" (locate-dominating-file default-directory ".python-version"))))
+      (string-trim (with-temp-buffer
+                                 (insert-file-contents pyenv-version-file)
+                                 (buffer-string)))
+    ))
+  )
+
 (defun set-check-python-compile-command ()
   "Set the python compile command which is just check mypy."
   (let* ((project-file (find-project-file "^mypy\\.ini$"))
@@ -83,15 +93,18 @@
          (check-python-dir (when project-parent-dir (file-name-as-directory (concat (file-name-as-directory project-parent-dir) "scripts"))))
          (check-python-file (when (and check-python-dir (file-directory-p check-python-dir)) (car (directory-files-match check-python-dir "^check_python\\.sh$"))))
          (pyproject-file (find-project-file "^pyproject\\.toml$"))
-         (pyproject-parent-dir (when pyproject-file (directory-parent pyproject-file))))
+         (pyproject-parent-dir (when pyproject-file (directory-parent pyproject-file)))
+         (python-version (get-python-version-from-file))
+         (pyenv-activate-commands "eval \"$(pyenv init --path)\"; eval \"$(pyenv init -)\"; eval \"$(pyenv virtualenv-init -)\"; ")
+         (beginning-of-compile (if python-version (concat pyenv-activate-commands "pyenv activate " python-version "; ") pyenv-activate-commands)))
     (cond ((and check-python-file (file-exists-p check-python-file))
       (message "Found project file at %s and check-python at %s" project-file check-python-file)
       (set (make-local-variable 'project-directory) project-parent-dir)
-      (set (make-local-variable 'compile-command) (concat "set -o pipefail; unset PYENV_VERSION && " check-python-file " --nobuild" " --skip-sdk" " | sed -e 's/\\x1b\\[[0-9;]*m//g'")))
+      (set (make-local-variable 'compile-command) (concat "set -o pipefail; " beginning-of-compile check-python-file " --nobuild" " --skip-sdk" " | sed -e 's/\\x1b\\[[0-9;]*m//g'")))
     ((and pyproject-file (file-exists-p pyproject-file))
       (message "Found project file at %s %s" pyproject-file pyproject-parent-dir)
       (set (make-local-variable 'project-directory) pyproject-parent-dir)
-      (set (make-local-variable 'compile-command) (concat "set -o pipefail; unset PYENV_VERSION; mypy . | sed -e 's/\\x1b\\[[0-9;]*m//g'"))))))
+      (set (make-local-variable 'compile-command) (concat beginning-of-compile "set -o pipefail; mypy . | sed -e 's/\\x1b\\[[0-9;]*m//g'"))))))
 
 (defun set-python-env-if-available ()
   "Set the python compile command which is just check mypy."
