@@ -1,6 +1,0 @@
-# name : Gathers facts about remote hosts
-# key : gather_facts
-# condition: ansible
-# --
-- name: ${1:Gathers facts about remote hosts}
-  gather_facts: $0

@@ -1,6 +1,0 @@
-# name : Manage lines in text files
-# key : lineinfile
-# condition: ansible
-# --
-- name: ${1:Manage lines in text files}
-  lineinfile: path=$2 $0

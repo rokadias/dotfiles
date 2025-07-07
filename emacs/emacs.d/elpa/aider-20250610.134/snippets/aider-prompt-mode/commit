@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: Commit Message
-# key: commit
-# contributor: LorestForest
-# --
-/ask
-Based on the following code changes, generate a clear and informative git commit message:
-${1:code diff}

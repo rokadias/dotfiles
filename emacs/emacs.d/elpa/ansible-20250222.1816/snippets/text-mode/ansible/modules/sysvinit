@@ -1,6 +1,0 @@
-# name : Manage SysV services.
-# key : sysvinit
-# condition: ansible
-# --
-- name: ${1:Manage SysV services.}
-  sysvinit: name=$2 $0

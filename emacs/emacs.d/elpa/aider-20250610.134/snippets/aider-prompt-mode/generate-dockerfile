@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: generate-dockerfile
-# key: dockerfile
-# contributor: Matic Vertačnik
-# --
-/ask Write a Dockerfile for:
-$0
