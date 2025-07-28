@@ -102,8 +102,7 @@
 (add-hook 'js-mode-hook #'setup-tide-mode)
 
 (use-package lsp-mode
-  :hook (web-mode . lsp)
-  :custom)
+  :hook (web-mode . lsp))
 (setq lsp-disabled-clients '(eslint))
 
 (require 'tree-sitter)

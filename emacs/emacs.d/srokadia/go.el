@@ -4,10 +4,12 @@
 ;;; Code:
 (require 'go-mode)
 
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/go/bin:$HOME/go/bin"))
+
 (defun on-go-load ()
   (lsp)
   (set-bazel-compile-command)
-  (add-hook ’before-save-hook ’gofmt-before-save)
+  (add-hook 'before-save-hook 'gofmt-before-save)
   )
 
 (defun set-bazel-compile-command ()

@@ -109,7 +109,7 @@
 (defun set-python-env-if-available ()
   "Set the python compile command which is just check mypy."
   (let* ((python-version-file (find-project-file "^\\.python-version$")))
-    (when (file-exists-p python-version-file)
+    (when (and python-version-file (file-exists-p python-version-file))
       (message "Found python version file at %s" python-version-file)
       (pyenv-mode-set (s-trim (f-read-text python-version-file 'utf-8))))))
 
