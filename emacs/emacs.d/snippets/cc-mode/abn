@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: abort_if_not
+# key: abn
+# --
+ABORT_IF_NOT($1, ${2:false});
