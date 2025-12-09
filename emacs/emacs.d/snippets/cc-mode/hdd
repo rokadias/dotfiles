@@ -1,0 +1,39 @@
+# -*- mode: snippet -*-
+# name: header dispatch class file
+# key: hdd
+# --
+/**
+ * @file ${1:$$(file-name-nondirectory (buffer-file-name))}
+ * @author Saqib Rokadia (srokadia@electriceratechnologies.com)
+ */
+#pragma once
+
+#include "src/mentat/lite/sac.h"
+
+class ${2:$$(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))} {
+public:
+    /**
+     * Constructor
+     */
+    $2($0);
+
+    /**
+     * Initializes the ${3}.
+     *
+     * @return True if initialization was successful, false otherwise.
+     */
+    HAKUNA_NODISCARDTA init();
+
+    /**
+     * Dispatches the ${3}.
+     *
+     * @return True if dispatch was successful, false otherwise.
+     */
+    HAKUNA_NODISCARDTA dispatch();
+
+private:
+    /**
+     * Initialization guard.
+     */
+    bool is_init_;
+};

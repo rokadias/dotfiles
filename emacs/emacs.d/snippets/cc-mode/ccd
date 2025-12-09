@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: C++ dispatch class definitions
+# key: ccd
+# --
+/**
+ * @file ${1:$$(file-name-nondirectory (buffer-file-name))}
+ * @author Saqib Rokadia (srokadia@electriceratechnologies.com)
+ */
+#include "$2.h"
+
+${2:$$(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))}::$2($0) {}
+
+bool $2::init() {
+    ABORT_IF(is_init_, false);
+
+    $0
+
+    return true;
+}
+
+bool $2::dispatch() {
+    ABORT_IF_NOT(is_init_, false);
+
+    return true;
+}

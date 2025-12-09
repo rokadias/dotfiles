@@ -4,7 +4,7 @@
 ;;; Code:
 (require 'go-mode)
 
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/go/bin:$HOME/go/bin"))
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/go/bin"))
 
 (defun on-go-load ()
   (lsp)

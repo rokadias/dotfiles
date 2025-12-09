@@ -166,3 +166,5 @@ if [[ -s /usr/share/zsh/scripts/zplug/init.zsh ]]; then
 fi
 
 autoload -U compinit; compinit
+
+compdef '_dispatch redis-cli_completion redis-cli' valkey-cli

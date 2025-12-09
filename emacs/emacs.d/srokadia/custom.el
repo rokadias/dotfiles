@@ -41,12 +41,17 @@
  '(fill-column 100)
  '(flycheck-check-syntax-automatically '(save idle-change mode-enabled))
  '(frame-zoom-font-difference 3)
+ '(gc-cons-threshold 500000000)
+ '(gc-cons-percentage 0.5)
  '(global-auto-revert-mode t)
  '(haskell-compile-command
    "ghc -Wall -ferror-spans -fforce-recomp -make -dynamic -c %s")
  '(ido-create-new-buffer 'always)
  '(importmagic-style-configuration-alist '((multiline . parentheses) (max_columns . 700)))
  '(jabber-alert-presence-hooks nil)
+ '(jit-lock-stealth-time 1.25)
+ '(jit-lock-stealth-nice 0.5)
+ '(jit-lock-chunk-size 4096)
  '(lsp-pyright-venv-path "~/.pyenv/versions/")
  '(lsp-rust-server 'rls)
  '(lsp-ui-doc-delay 1)
@@ -65,7 +70,7 @@
                    doremi-frm edit-server editorconfig editorconfig-core ein eslintd-fix
                    exec-path-from-shell expand-region find-file-in-repository flatland-theme
                    floobits flycheck-golangci-lint flycheck-rust flymake flymake-go flymake-ruff
-                   frame-restore fsharp-mode fsm github-notifier github-review
+                   frame-restore fsharp-mode fsm github-notifier github-review glab
                    gnu-elpa-keyring-update go-errcheck go-imports go-mode go-playground go-scratch
                    golint gotham-theme haskell-mode hcl-mode helm "helm" hound
                    ido-complete-space-or-hyphen ido-vertical-mode importmagic jq-mode js-comint

@@ -8,6 +8,13 @@
  */
 #pragma once
 
+#include "src/mentat/lite/sac.h"
+
 class ${2:$$(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))} {
-  $0
-}
+public:
+    /**
+     * Constructor
+     */
+    $2($0);
+private:
+};
