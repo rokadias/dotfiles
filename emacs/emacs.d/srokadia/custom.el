@@ -41,17 +41,17 @@
  '(fill-column 100)
  '(flycheck-check-syntax-automatically '(save idle-change mode-enabled))
  '(frame-zoom-font-difference 3)
- '(gc-cons-threshold 500000000)
  '(gc-cons-percentage 0.5)
+ '(gc-cons-threshold 500000000)
  '(global-auto-revert-mode t)
  '(haskell-compile-command
    "ghc -Wall -ferror-spans -fforce-recomp -make -dynamic -c %s")
  '(ido-create-new-buffer 'always)
  '(importmagic-style-configuration-alist '((multiline . parentheses) (max_columns . 700)))
  '(jabber-alert-presence-hooks nil)
- '(jit-lock-stealth-time 1.25)
- '(jit-lock-stealth-nice 0.5)
  '(jit-lock-chunk-size 4096)
+ '(jit-lock-stealth-nice 0.5)
+ '(jit-lock-stealth-time 1.25)
  '(lsp-pyright-venv-path "~/.pyenv/versions/")
  '(lsp-rust-server 'rls)
  '(lsp-ui-doc-delay 1)
@@ -59,30 +59,31 @@
  '(ob-mermaid-cli-path "/usr/bin/mmdc")
  '(org-agenda-files '("~/Documents/Notes/WeightLoss.org" "~/Documents/agenda/"))
  '(org-confirm-babel-evaluate nil)
- '(org-trello-current-prefix-keybinding "C-c o" nil (org-trello))
+ '(org-jira-reverse-comment-order t)
+ '(org-trello-current-prefix-keybinding "C-c o")
  '(org-trello-files
-   '("~/Documents/Notes/MetricPlatform.org" "~/Documents/Notes/PlatformLedGrowth.org") nil (org-trello))
+   '("~/Documents/Notes/MetricPlatform.org" "~/Documents/Notes/PlatformLedGrowth.org"))
  '(org-trello-mode-limit-fetch-since "2022-04-20")
- '(orgtrello-log-level 3 nil (org-trello))
+ '(orgtrello-log-level 3)
  '(package-selected-packages
    '(ace-jump-mode achievements ack aider async async-await auto-virtualenvwrapper bazel chatgpt-shell
                    clang-format code-stats company-go company-racer dash-at-point dockerfile-mode
-                   doremi-frm edit-server editorconfig editorconfig-core ein eslintd-fix
+                   doremi-frm edit-server editorconfig editorconfig-core eglot ein eslintd-fix
                    exec-path-from-shell expand-region find-file-in-repository flatland-theme
-                   floobits flycheck-golangci-lint flycheck-rust flymake flymake-go flymake-ruff
-                   frame-restore fsharp-mode fsm github-notifier github-review glab
+                   floobits flycheck-eglot flycheck-golangci-lint flycheck-rust flymake flymake-go
+                   flymake-ruff frame-restore fsharp-mode fsm github-notifier github-review glab
                    gnu-elpa-keyring-update go-errcheck go-imports go-mode go-playground go-scratch
                    golint gotham-theme haskell-mode hcl-mode helm "helm" hound
                    ido-complete-space-or-hyphen ido-vertical-mode importmagic jq-mode js-comint
                    js-doc json-mode jsonnet-mode jss jsx-mode jupyter key-chord lsp-java lsp-mode
                    lsp-pyright lsp-ui markdown-preview-eww markdown-preview-mode mediawiki
                    mermaid-mode multiple-cursors node-resolver nodejs-repl nvm ob-mermaid omnisharp
-                   org-jira org-trello ox-clip ox-gfm pabbrev php-mode pivotal-tracker poly-ansible
-                   poly-markdown powershell-mode prettier prettier-js protobuf-mode pyenv-mode
-                   pyimport python-black python-isort python-pytest racer react-snippets restclient
-                   rjsx-mode rust-playground scss-mode session smex string-inflection sublime-themes
-                   sx terraform-mode tide todoist tree-sitter tree-sitter-langs typescript-mode
-                   typing typing-practice urlenc vue-mode web wiki ws-trim xml-rpc yafolding
+                   org-jira org-trello ox-clip ox-gfm pabbrev php-mode poly-ansible poly-markdown
+                   powershell-mode prettier prettier-js protobuf-mode pyenv-mode pyimport
+                   python-black python-isort python-pytest racer react-snippets restclient rjsx-mode
+                   rust-playground scss-mode session smex string-inflection sublime-themes sx
+                   terraform-mode tide todoist tree-sitter tree-sitter-langs typescript-mode typing
+                   typing-practice urlenc vue-mode web wiki ws-trim xml-rpc yafolding
                    yasnippet-snippets zoom-frm ztree))
  '(request-backend 'url-retrieve)
  '(session-use-package t nil (session))

@@ -28,19 +28,19 @@ Commands:
 
 Entry to this mode calls the value of `org-jira-mode-hook'.
 
-This is a minor mode.  If called interactively, toggle the
-`Org-jira mode' mode.  If the prefix argument is positive, enable
-the mode, and if it is zero or negative, disable the mode.
+This is a minor mode.  If called interactively, toggle the `Org-jira
+mode' mode.  If the prefix argument is positive, enable the mode, and if
+it is zero or negative, disable the mode.
 
-If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
-the mode if ARG is nil, omitted, or is a positive number.
-Disable the mode if ARG is a negative number.
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable the
+mode if ARG is nil, omitted, or is a positive number.  Disable the mode
+if ARG is a negative number.
 
 To check whether the minor mode is enabled in the current buffer,
-evaluate `org-jira-mode'.
+evaluate the variable `org-jira-mode'.
 
-The mode's hook is called both when the mode is enabled and when
-it is disabled.
+The mode's hook is called both when the mode is enabled and when it is
+disabled.
 
 (fn &optional ARG)" t)
 (autoload 'org-jira-get-projects "org-jira" "\
@@ -102,6 +102,19 @@ ORG-JIRA-PROJ-KEY-OVERRIDE being set before and after running.
 Update a comment for the current issue." t)
 (autoload 'org-jira-update-worklogs-from-org-clocks "org-jira" "\
 Update or add a worklog based on the org clocks." t)
+(autoload 'org-jira-sync-agenda-clocks-to-jira "org-jira" "\
+Iterate agenda items, dedupe by issue, and sync their clocks to Jira.
+
+Collect all agenda headings first, extract unique Jira issue keys, then
+(for each unique issue) invoke `org-jira-update-worklogs-from-org-clocks'.
+
+When DRY-RUN (interactive prefix arg) is non-nil, only report which
+issues would be processed (no Jira API calls).
+
+Non-Jira headings (those where we cannot obtain an issue key) are
+skipped (counted separately; listed in dry-run buffer).
+
+(fn &optional DRY-RUN)" t)
 (autoload 'org-jira-copy-current-issue-key "org-jira" "\
 Copy the current issue's key into clipboard." t)
 (autoload 'org-jira-unassign-issue "org-jira" "\

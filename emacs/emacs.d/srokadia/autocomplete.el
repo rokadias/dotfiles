@@ -1,7 +1,7 @@
 (use-package aider
   :config
   ;; For latest claude sonnet model
-  (setq aider-args '("--model" "haiku" "--no-auto-accept-architect"))
+  (setq aider-args '("--model" "claude-sonnet-4-20250514" "--thinking-tokens" "32k" "--no-auto-accept-architect"))
   ;; (setenv "ANTHROPIC_API_KEY" <your-anthropic-api-key>)
   ;; Or gemini model
   ;; (setq aider-args '("--model" "gemini"))

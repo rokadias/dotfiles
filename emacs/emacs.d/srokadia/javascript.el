@@ -50,13 +50,13 @@
 
 (defun set-rush-compile-command ()
   "Set the rush compile command which is just check if there's a rush.json."
-  (let ((project-build-file (find-project-file "rush.json")))
+  (let ((project-build-file (find-project-file "package.json")))
     (when project-build-file
-      (let* ((project-file (find-project-file "rush.json"))
+      (let* ((project-file (find-project-file "package.json"))
              (project-dir (directory-parent project-file)))
         (message "Found build file at %s and workspace at %s" project-file project-dir)
         (set (make-local-variable 'project-directory) project-dir)
-        (set (make-local-variable 'compile-command) (concat "source ~/.nvm/nvm.sh && nvm use 18.16.1 && rush build && rush lint && rush format" ))))))
+        (set (make-local-variable 'compile-command) (concat "source ~/.nvm/nvm.sh && nvm use 18.16.1 && rushx build && rushx lint && rushx format" ))))))
 
 (defun rush-compile-run-test ()
   (interactive)
@@ -75,7 +75,7 @@
   (interactive)
   (unless (or (string-match-p "\*[^\*]+\*" (buffer-name (current-buffer))) (derived-mode-p 'json-mode))
     (tide-setup)
-    (lsp)
+    (eglot-ensure)
     (prettier-js-mode +1)
     (flycheck-mode +1)
     (flycheck-add-next-checker 'typescript-tide '(t . typescript-tslint) 'append)

@@ -9,8 +9,8 @@
 ;;
 ;; Maintainer: Matthew Carter <m@ahungry.com>
 ;; URL: https://github.com/ahungry/org-jira
-;; Package-Version: 20250424.41
-;; Package-Revision: dfdc26ab8bfb
+;; Package-Version: 20251120.307
+;; Package-Revision: f5ccb0719478
 ;; Keywords: ahungry jira org bug tracker
 ;; Package-Requires: ((emacs "24.5") (cl-lib "0.5") (request "0.2.0") (dash "2.14.1"))
 
@@ -1387,6 +1387,77 @@ Expects input in format such as: [2017-04-05 Wed 01:00]--[2017-04-05 Wed 01:46] 
       (org-jira-update-worklogs-for-issue issue-id filename)
       )))
 
+;;;###autoload
+(defun org-jira-sync-agenda-clocks-to-jira (&optional dry-run)
+  "Iterate agenda items, dedupe by issue, and sync their clocks to Jira.
+
+Collect all agenda headings first, extract unique Jira issue keys, then
+(for each unique issue) invoke `org-jira-update-worklogs-from-org-clocks'.
+
+When DRY-RUN (interactive prefix arg) is non-nil, only report which
+issues would be processed (no Jira API calls).
+
+Non-Jira headings (those where we cannot obtain an issue key) are
+skipped (counted separately; listed in dry-run buffer)."
+  (interactive "P")
+  (let ((agenda-buf (get-buffer "*Org Agenda*"))
+        (issues '())                ; (issue-id . marker)
+        (skipped-non-marker 0)
+        (skipped-non-issue 0)
+        (processed 0)
+        (log-lines '()))
+    (unless (or agenda-buf org-agenda-files)
+      (error "No agenda buffer and no org-agenda-files configured"))
+    (when (not agenda-buf)
+      (org-agenda-list)
+      (setq agenda-buf (get-buffer "*Org Agenda*")))
+    ;; Phase 1: collect unique issue markers.
+    (with-current-buffer agenda-buf
+      (save-excursion
+        (goto-char (point-min))
+        (while (not (eobp))
+          (let ((marker (or (get-text-property (point) 'org-hd-marker)
+                            (get-text-property (point) 'org-marker))))
+            (if (not marker)
+                (setq skipped-non-marker (1+ skipped-non-marker))
+              (with-current-buffer (marker-buffer marker)
+                (save-excursion
+                  (goto-char marker)
+                  (condition-case _err
+                      (let ((issue-id (org-jira-get-from-org 'issue 'key)))
+                        (if (and issue-id (not (assoc issue-id issues)))
+                            (push (cons issue-id marker) issues)
+                          (unless issue-id
+                            (setq skipped-non-issue (1+ skipped-non-issue)))))
+                    (error (setq skipped-non-issue (1+ skipped-non-issue)))))))
+          (forward-line 1))))
+    ;; Phase 2: process each unique issue.
+    (dolist (im (nreverse issues))
+      (let* ((issue-id (car im))
+             (marker (cdr im))
+             (buf (marker-buffer marker)))
+        (when (buffer-live-p buf)
+          (with-current-buffer buf
+            (save-excursion
+              (goto-char marker)
+              (if dry-run
+                  (push (format "DRY-RUN: would sync %s (%s)" issue-id (buffer-name)) log-lines)
+                (condition-case err
+                    (progn
+                      (org-jira-update-worklogs-from-org-clocks)
+                      (setq processed (1+ processed)))
+                  (error (push (format "ERROR syncing %s: %s" issue-id (error-message-string err)) log-lines))))))))
+    (when dry-run
+      (with-current-buffer (get-buffer-create "*org-jira-sync-dry-run*")
+        (erase-buffer)
+        (insert (format "org-jira agenda sync DRY-RUN\nUnique issues: %d\nNon-marker lines: %d\nNon-issue headings: %d\n\nDetails:\n"
+                        (length issues) skipped-non-marker skipped-non-issue))
+        (dolist (l (nreverse log-lines)) (insert l "\n"))
+        (display-buffer (current-buffer))))
+    (unless dry-run
+      (message "org-jira-sync-agenda-clocks-to-jira: processed %d unique issues (non-marker lines: %d, non-issue headings: %d)"
+               processed skipped-non-marker skipped-non-issue))))))
+
 (defun org-jira-update-worklog ()
   "Update a worklog for the current issue."
   (interactive)
@@ -1814,31 +1885,32 @@ that should be bound to an issue."
 
 (defun org-jira-get-issue-struct (project type summary description &optional parent-id)
   "Create an issue struct for PROJECT, of TYPE, with SUMMARY and DESCRIPTION."
-  (if (or (equal project "")
-          (equal type "")
-          (equal summary ""))
+  (if (or (equal project "") (equal type "") (equal summary ""))
       (error "Must provide all information!"))
   (let* ((project-components (jiralib-get-components project))
          (jira-users (org-jira-get-assignable-users project))
-         (user (completing-read "Assignee: " (mapcar 'car jira-users)))
+         (user (completing-read "Assignee: " (mapcar #'car jira-users)))
          (priority (car (rassoc (org-jira-read-priority) (jiralib-get-priorities))))
          (labels (org-jira-read-labels))
-         (ticket-struct
-          `((fields
-             (project (key . ,project))
-             (parent (key . ,parent-id))
-             (issuetype (id . ,(car (rassoc type (if (and (boundp 'parent-id) parent-id)
-                                                     (jiralib-get-subtask-types)
-                                                   (jiralib-get-issue-types-by-project project))))))
-             (summary . ,(format "%s%s" summary
-                                 (if (and (boundp 'parent-id) parent-id)
-                                     (format " (subtask of [jira:%s])" parent-id)
-                                   "")))
-             (description . ,description)
-             (priority (id . ,priority))
-             (labels . ,labels)
-             ;; accountId should be nil if Unassigned, not the key slot.
-             (assignee (accountId . ,(or (cdr (assoc user jira-users)) nil)))))))
+         (ticket-fields
+          `((project (key . ,project))
+            (parent (key . ,parent-id))
+            (issuetype (id . ,(car (rassoc type
+                                           (if (and (boundp 'parent-id) parent-id)
+                                               (jiralib-get-subtask-types)
+                                             (jiralib-get-issue-types-by-project project))))))
+            (summary . ,(format "%s%s" summary
+                                (if (and (boundp 'parent-id) parent-id)
+                                    (format " (subtask of [jira:%s])" parent-id)
+                                  "")))
+            (description . ,description)
+            (priority (id . ,priority))
+            (labels . ,labels)
+            (assignee (accountId . ,(cdr (assoc user jira-users))))))
+         (filtered-fields (jiralib-filter-fields-by-exclude-list
+                           jiralib-update-issue-fields-exclude-list
+                           ticket-fields))
+         (ticket-struct `((fields . ,filtered-fields))))
     ticket-struct))
 
 ;;;###autoload
@@ -2223,6 +2295,7 @@ otherwise it should return:
            (org-issue-type (org-jira-get-issue-val-from-org 'type))
            (org-issue-type-id (org-jira-get-issue-val-from-org 'type-id))
            (org-issue-assignee (cl-getf rest :assignee (org-jira-get-issue-val-from-org 'assignee)))
+           (org-issue-assignee-username (cl-getf rest :assignee-username (org-jira-get-issue-val-from-org 'assignee-username)))
            (org-issue-reporter (cl-getf rest :reporter (org-jira-get-issue-val-from-org 'reporter)))
            (project (replace-regexp-in-string "-[0-9]+" "" issue-id))
            (project-components (jiralib-get-components project)))
@@ -2247,7 +2320,10 @@ otherwise it should return:
                    (cons 'priority (org-jira-get-id-name-alist org-issue-priority
                                                        (jiralib-get-priorities)))
                    (cons 'description org-issue-description)
-                   (cons 'assignee (list (cons 'id (jiralib-get-user-account-id project org-issue-assignee))))
+                   ;; If org-issue-assignee-username is set, grab the username instead of the assignee value
+                   (if (stringp org-issue-assignee-username)
+                          (cons 'assignee (list (cons 'name org-issue-assignee-username)))
+                          (cons 'assignee (list (cons 'id (jiralib-get-user-account-id project org-issue-assignee)))))
                    (cons 'summary (org-jira-strip-priority-tags (org-jira-get-issue-val-from-org 'summary)))
                    (cons 'issuetype `((id . ,org-issue-type-id)
       (name . ,org-issue-type))))))

@@ -95,13 +95,13 @@
 ;; string-inter
 (global-set-key (kbd "C-c C-u") 'string-inflection-underscore)
 
-(require 'lsp)
-(define-key lsp-mode-map (kbd "C-; C-.") 'lsp-describe-thing-at-point)
-(define-key lsp-mode-map (kbd "C-; C-b") 'lsp-goto-implementation)
-(define-key lsp-mode-map (kbd "C-; C-k") 'lsp-find-references)
-(define-key lsp-mode-map (kbd "C-; C-r") 'lsp-rename)
-(define-key lsp-mode-map (kbd "C-; C-i") 'lsp-execute-code-action)
-(define-key lsp-mode-map (kbd "C-; C-f") 'lsp-ui-imenu)
+(require 'eglot)
+(define-key eglot-mode-map (kbd "C-; C-.") 'eldoc)
+(define-key eglot-mode-map (kbd "C-; C-b") 'eglot-find-implementation)
+(define-key eglot-mode-map (kbd "C-; C-k") 'xref-find-references)
+(define-key eglot-mode-map (kbd "C-; C-r") 'eglot-rename)
+(define-key eglot-mode-map (kbd "C-; C-i") 'eglot-code-actions)
+;; (define-key lsp-mode-map (kbd "C-; C-f") 'lsp-ui-imenu)
 
 (require 'lsp-ui)
 (define-key lsp-ui-imenu-mode-map (kbd "p") 'up)
