@@ -82,8 +82,8 @@
                    powershell-mode prettier prettier-js protobuf-mode pyenv-mode pyimport
                    python-black python-isort python-pytest racer react-snippets restclient rjsx-mode
                    rust-playground scss-mode session smex string-inflection sublime-themes sx
-                   terraform-mode tide todoist tree-sitter tree-sitter-langs typescript-mode typing
-                   typing-practice urlenc vue-mode web wiki ws-trim xml-rpc yafolding
+                   terraform-mode tide todoist tree-sitter tree-sitter-langs tsc typescript-mode
+                   typing typing-practice urlenc vue-mode web wiki ws-trim xml-rpc yafolding
                    yasnippet-snippets zoom-frm ztree))
  '(request-backend 'url-retrieve)
  '(session-use-package t nil (session))
