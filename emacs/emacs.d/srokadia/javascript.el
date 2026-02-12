@@ -113,3 +113,5 @@
 (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx))
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+(setq prettier-js-use-modules-bin t)
