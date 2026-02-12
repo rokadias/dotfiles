@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: export_true
+# key: ept
+# --
+EXPECT_TRUE($1);

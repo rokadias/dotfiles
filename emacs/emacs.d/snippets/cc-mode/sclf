@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: slow console log info
+# key: sclf
+# --
+LOG_EVERY_T(INFO, 10) << "$1: " << $1;
