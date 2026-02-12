@@ -21,7 +21,7 @@
          (relative-build-dir (string-replace project-parent-dir "" project-build-dir)))
     (message "Found build file at %s and workspace at %s" project-build-file project-workspace-file)
     (set (make-local-variable 'project-directory) project-parent-dir)
-    (set (make-local-variable 'compile-command) (concat "bazel build  -c dbg --strip=never //" relative-build-dir "..." ))))
+    (set (make-local-variable 'compile-command) (concat "bazel --output_base output-test build  -c dbg --strip=never //" relative-build-dir "..." ))))
 
 (defun bazel-compile-run-test ()
   (interactive)
@@ -32,7 +32,7 @@
          (relative-build-dir (string-replace project-parent-dir "" project-build-dir)))
     (message "Found build file at %s and workspace at %s" project-build-file project-workspace-file)
     (set (make-local-variable 'project-directory) project-parent-dir)
-    (set (make-local-variable 'compile-command) (concat "bazel --output_base output test --test_output=streamed $(bazel query 'tests(//" relative-build-dir "...)')"))
+    (set (make-local-variable 'compile-command) (concat "bazel --output_base output-test test --test_output=streamed $(bazel query 'tests(//" relative-build-dir "...)')"))
     (compile-override)
     (set-bazel-compile-command)
     )
