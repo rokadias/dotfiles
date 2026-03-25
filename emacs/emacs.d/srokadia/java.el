@@ -1,5 +1,5 @@
 (defun on-java-load ()
-  ;;(lsp)
+  (eglot-java-mode)
   )
 
 (add-hook 'java-mode-hook (lambda () (on-java-load)))

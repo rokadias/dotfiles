@@ -11,7 +11,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%StdinReader% }{ %pomobar% | %dynnetwork% | %multicpu% | %memory% | %battery% | %KSEA% | %date%"
+   , template = "%StdinReader% }{ %dynnetwork% | %multicpu% | %memory% | %battery% | %KSEA% | %date%"
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -81,18 +81,18 @@ Config {
         -- battery monitor
         , Run Battery        [ "--template" , "<acstatus>"
                              , "--Low"      , "10"        -- units: %
-                             , "--High"     , "80"        -- units: %
+                             , "--High"     , "40"        -- units: %
                              , "--low"      , "darkred"
                              , "--normal"   , "darkorange"
                              , "--high"     , "darkgreen"
 
                              , "--" -- battery specific options
                                        -- discharging status
-                                       , "-o"	, "<left>% (<timeleft>)"
+                                       , "-o"	, "<left>% (<timeleft>) <watts>W"
                                        -- AC "on" status
-                                       , "-O"	, "<fc=#dAA520>Charging</fc> <left>% (<timeleft>)"
+                                       , "-O"	, "<fc=#dAA520>Charging</fc> <left>% (<timeleft>) <watts>W"
                                        -- charged status
-                                       , "-i"	, "<fc=#006000>Charged</fc>"
+                                       , "-i"	, "<fc=#006000>Charged</fc> <watts>W"
                              ] 50
 
         -- time and date indicator 
@@ -102,6 +102,5 @@ Config {
         , Run Kbd            [ ("us(dvorak)" , "<fc=#00008B>DV</fc>")
                              , ("us"         , "<fc=#8B0000>US</fc>")
                              ]
-        , Run CommandReader "killall pomobar; ~/.local/bin/pomobar --terminatedShellCmd='mpg123 -q ~/Downloads/alarm-sounds/clock-alarm-8762.mp3'" "pomobar"
         ]
 }
