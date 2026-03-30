@@ -56,7 +56,7 @@
              (project-dir (directory-parent project-file)))
         (message "Found build file at %s and workspace at %s" project-file project-dir)
         (set (make-local-variable 'project-directory) project-dir)
-        (set (make-local-variable 'compile-command) (concat "source ~/.nvm/nvm.sh && nvm use 18.16.1 && rushx build && rushx lint && rushx format" ))))))
+        (set (make-local-variable 'compile-command) (concat "source ~/.nvm/nvm.sh && nvm use 18.16.1 && rush build --to . && rushx lint && rushx format" ))))))
 
 (defun rush-compile-run-test ()
   (interactive)

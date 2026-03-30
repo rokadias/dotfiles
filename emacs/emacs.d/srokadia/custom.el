@@ -67,8 +67,8 @@
  '(orgtrello-log-level 3)
  '(package-selected-packages
    '(ace-jump-mode achievements ack aider async async-await auto-virtualenvwrapper bazel chatgpt-shell
-                   clang-format code-stats company-go company-racer dash-at-point dockerfile-mode
-                   doremi-frm edit-server editorconfig editorconfig-core eglot eglot-java ein
+                   clang-format claude-code code-stats company-go company-racer dash-at-point
+                   dockerfile-mode doremi-frm edit-server editorconfig editorconfig-core eglot eglot-java ein
                    eslintd-fix exec-path-from-shell expand-region find-file-in-repository
                    flatland-theme floobits flycheck-eglot flycheck-golangci-lint flycheck-rust
                    flymake flymake-go flymake-ruff frame-restore fsharp-mode fsm github-notifier
