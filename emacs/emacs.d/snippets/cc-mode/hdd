@@ -35,5 +35,5 @@ private:
     /**
      * Initialization guard.
      */
-    bool is_init_;
+    bool is_init_ = false;
 };

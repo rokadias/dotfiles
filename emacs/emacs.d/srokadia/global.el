@@ -8,10 +8,6 @@
 (when (not is-w32)
   (server-start))
 
-(when (and (not is-cygwin) (require 'edit-server nil :noerror))
-  (setq edit-server-new-frame nil)
-  (edit-server-start))
-
 (icomplete-mode 99)
 (ido-mode 1)
 (ido-vertical-mode 1)

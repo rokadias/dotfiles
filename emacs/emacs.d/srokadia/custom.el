@@ -33,8 +33,6 @@
      "a718cd3fde3231c20a8b8a0c342674a39b8916916195448efc2434ffd354e0ed"
      "a2c537c981b4419aa3decac8e565868217fc2995b74e1685c5ff8c6d77b198d6"
      "6e05b0a83b83b5efd63c74698e1ad6feaddf69a50b15a8b4a83b157aac45127c" default))
- '(desktop-restore-eager 100)
- '(desktop-save-mode nil)
  '(erc-irccontrols-mode t)
  '(erc-notifications-mode t)
  '(fci-rule-color "#202325")
@@ -68,7 +66,7 @@
  '(package-selected-packages
    '(ace-jump-mode achievements ack aider async async-await auto-virtualenvwrapper bazel chatgpt-shell
                    clang-format claude-code code-stats company-go company-racer dash-at-point
-                   dockerfile-mode doremi-frm edit-server editorconfig editorconfig-core eglot eglot-java ein
+                   dockerfile-mode doremi-frm editorconfig editorconfig-core eglot eglot-java ein
                    eslintd-fix exec-path-from-shell expand-region find-file-in-repository
                    flatland-theme floobits flycheck-eglot flycheck-golangci-lint flycheck-rust
                    flymake-go flymake-ruff frame-restore fsharp-mode fsm github-notifier
