@@ -15,6 +15,8 @@ bool $2::init() {
 
     $0
 
+    is_init_ = true;
+
     return true;
 }
 
