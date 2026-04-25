@@ -33,6 +33,7 @@
      "a718cd3fde3231c20a8b8a0c342674a39b8916916195448efc2434ffd354e0ed"
      "a2c537c981b4419aa3decac8e565868217fc2995b74e1685c5ff8c6d77b198d6"
      "6e05b0a83b83b5efd63c74698e1ad6feaddf69a50b15a8b4a83b157aac45127c" default))
+ '(eglot-java-java-program "/usr/lib/jvm/java-21-openjdk/bin/java")
  '(erc-irccontrols-mode t)
  '(erc-notifications-mode t)
  '(fci-rule-color "#202325")
