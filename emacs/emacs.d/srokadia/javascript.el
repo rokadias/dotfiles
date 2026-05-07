@@ -56,7 +56,7 @@
              (project-dir (directory-parent project-file)))
         (message "Found build file at %s and workspace at %s" project-file project-dir)
         (set (make-local-variable 'project-directory) project-dir)
-        (set (make-local-variable 'compile-command) (concat "source ~/.nvm/nvm.sh && nvm use 18.16.1 && rush build --to . && rushx lint && rushx format" ))))))
+        (set (make-local-variable 'compile-command) (concat "source ~/.nvm/nvm.sh && nvm use 24.12.0 && rush build --to . && rushx lint && rushx format" ))))))
 
 (defun rush-compile-run-test ()
   (interactive)
@@ -64,7 +64,7 @@
          (project-build-dir (directory-parent project-build-file)))
     (message "Found build file for test at %s with directory at %s" project-build-file project-build-dir)
     (set (make-local-variable 'project-directory) project-build-dir)
-    (set (make-local-variable 'compile-command) (concat "source ~/.nvm/nvm.sh && nvm use 18.16.1 && rushx test"))
+    (set (make-local-variable 'compile-command) (concat "source ~/.nvm/nvm.sh && nvm use 24.12.0 && rushx test"))
     (compile-override)
     (set-rush-compile-command)
     )

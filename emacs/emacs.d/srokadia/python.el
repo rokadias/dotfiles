@@ -157,3 +157,8 @@
 
 (provide 'python)
 ;;; python.el ends here
+
+(provide 'jinja2-mode)
+(setq auto-mode-alist (append '(("\\.jinja$" . jinja2-mode)) auto-mode-alist))
+(when (auth-source-search :host "codestats.net")
+  (add-hook 'jinja2-mode-hook #'code-stats-mode))
