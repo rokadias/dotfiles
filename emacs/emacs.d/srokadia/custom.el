@@ -65,19 +65,19 @@
  '(org-trello-mode-limit-fetch-since "2022-04-20")
  '(orgtrello-log-level 3)
  '(package-selected-packages
-   '(ace-jump-mode achievements ack aider async async-await auto-virtualenvwrapper bazel chatgpt-shell
-                   clang-format claude-code code-stats company-go company-racer dash-at-point
-                   dockerfile-mode doremi-frm editorconfig editorconfig-core eglot eglot-java ein
-                   eslintd-fix exec-path-from-shell expand-region find-file-in-repository
-                   flatland-theme floobits flycheck-eglot flycheck-golangci-lint flycheck-rust
-                   flymake-go flymake-ruff frame-restore fsharp-mode fsm github-notifier
-                   github-review glab gnu-elpa-keyring-update go-errcheck go-imports go-mode
-                   go-playground go-scratch golint gotham-theme haskell-mode hcl-mode helm "helm"
-                   hound ido-complete-space-or-hyphen ido-vertical-mode importmagic jq-mode
-                   js-comint js-doc json-mode jsonnet-mode jss jsx-mode jupyter key-chord lsp-mode
-                   lsp-pyright lsp-ui markdown-preview-eww markdown-preview-mode mediawiki
-                   mermaid-mode multiple-cursors node-resolver nodejs-repl nvm ob-mermaid omnisharp
-                   org-jira org-trello ox-clip ox-gfm pabbrev php-mode poly-ansible poly-markdown
+   '(ace-jump-mode achievements ack aider async async-await auto-virtualenvwrapper bazel clang-format
+                   claude-code code-stats company-go company-racer dash-at-point dockerfile-mode
+                   doremi-frm editorconfig editorconfig-core eglot eglot-java ein eslintd-fix
+                   exec-path-from-shell expand-region find-file-in-repository flatland-theme
+                   floobits flycheck-eglot flycheck-golangci-lint flycheck-rust flymake-go
+                   flymake-ruff frame-restore fsharp-mode fsm github-notifier github-review glab
+                   gnu-elpa-keyring-update go-errcheck go-imports go-mode go-playground go-scratch
+                   golint gotham-theme haskell-mode hcl-mode helm "helm" helm-xref hound
+                   ido-complete-space-or-hyphen ido-vertical-mode importmagic jq-mode js-comint
+                   js-doc json-mode jsonnet-mode jss jsx-mode jupyter key-chord lsp-mode lsp-pyright
+                   lsp-ui markdown-preview-eww markdown-preview-mode mediawiki mermaid-mode
+                   multiple-cursors node-resolver nodejs-repl nvm ob-mermaid omnisharp org-jira
+                   org-trello ox-clip ox-gfm pabbrev php-mode poly-ansible poly-markdown
                    powershell-mode prettier prettier-js protobuf-mode pyenv-mode pyimport
                    python-black python-isort python-pytest racer react-snippets restclient rjsx-mode
                    rust-playground scss-mode smex string-inflection sublime-themes sx terraform-mode
@@ -85,7 +85,7 @@
                    urlenc vue-mode web wiki ws-trim xml-rpc yafolding yasnippet-snippets zoom-frm
                    ztree))
  '(request-backend 'url-retrieve)
- '(session-use-package t nil (session))
+ '(session-use-package t)
  '(tab-stop-list
    '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108 112 116 120))
  '(todoist-backing-buffer "~/Documents/agenda/todoist.org")

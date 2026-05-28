@@ -97,7 +97,7 @@
 
 (require 'eglot)
 (define-key eglot-mode-map (kbd "C-; C-.") 'eldoc)
-(define-key eglot-mode-map (kbd "C-; C-b") 'eglot-find-implementation)
+(define-key eglot-mode-map (kbd "C-; C-b") 'eglot-find-typeDefinition)
 (define-key eglot-mode-map (kbd "C-; C-k") 'xref-find-references)
 (define-key eglot-mode-map (kbd "C-; C-r") 'eglot-rename)
 (define-key eglot-mode-map (kbd "C-; C-i") 'eglot-code-actions)
