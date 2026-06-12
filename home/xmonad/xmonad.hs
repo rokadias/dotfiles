@@ -3,6 +3,7 @@
 import Control.Monad
 import Data.Function (on)
 import Data.List ( findIndex, sortBy )
+import Graphics.X11.ExtraTypes.XF86
 import System.IO
 import Text.Regex.Posix ((=~))
 
@@ -103,6 +104,8 @@ myKeys =
     , ((myModMask .|. shiftMask, xK_y), spawn "pactl set-sink-volume 0 -1%")
     , ((myModMask, xK_u), spawn "pactl set-sink-volume 0 +10%")
     , ((myModMask .|. shiftMask, xK_u), spawn "pactl set-sink-volume 0 +1%")
+    , ((0, xF86XK_AudioPlay), spawn "playerctl play-pause")
+    , ((0, xF86XK_AudioPause), spawn "playerctl pause")
     , ((myModMask .|. shiftMask, xK_bracketright), spawn "dunstctl close-all")
     ] ++ [
         ((myModMask .|. m, xK_f), f horizontalScreenOrderer 2)
