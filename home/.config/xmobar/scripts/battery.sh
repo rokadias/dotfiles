@@ -25,8 +25,39 @@ fi
 CAPACITY=$(cat "$BAT/capacity")
 STATUS=$(cat "$BAT/status") # "Charging", "Discharging", "Full", "Not charging"
 
+# Instantaneous power draw, in microwatts. Prefer power_now; some hardware
+# only exposes current_now/voltage_now, so derive it from those instead.
+if [ -r "$BAT/power_now" ]; then
+  POWER_UW=$(cat "$BAT/power_now")
+elif [ -r "$BAT/current_now" ] && [ -r "$BAT/voltage_now" ]; then
+  POWER_UW=$(( $(cat "$BAT/current_now") * $(cat "$BAT/voltage_now") / 1000000 ))
+fi
+
+# Energy remaining until empty (discharging) or full (charging), in µWh.
+if [ "$STATUS" == "Charging" ] && [ -r "$BAT/energy_now" ] && [ -r "$BAT/energy_full" ]; then
+  REMAINING_UWH=$(( $(cat "$BAT/energy_full") - $(cat "$BAT/energy_now") ))
+elif [ "$STATUS" == "Discharging" ] && [ -r "$BAT/energy_now" ]; then
+  REMAINING_UWH=$(cat "$BAT/energy_now")
+fi
+
+# "<watts>W (<timeleft>)", or empty if the kernel doesn't expose power/energy
+RATE=""
+if [ -n "$POWER_UW" ] && [ "$POWER_UW" -gt 0 ]; then
+  RATE=$(awk -v p="$POWER_UW" -v r="$REMAINING_UWH" 'BEGIN {
+    out = sprintf("%.1fW", p / 1000000)
+    if (r != "") {
+      hrs = r / p
+      h = int(hrs)
+      m = int((hrs - h) * 60)
+      out = out sprintf(" (%d:%02d)", h, m)
+    }
+    printf "%s", out
+  }')
+fi
+
 if [ "$STATUS" == "Charging" ]; then
-  echo " | <fc=$CHARGECOL>Charging</fc> $CAPACITY%"
+  MSG="$CAPACITY%"; [ -n "$RATE" ] && MSG="$MSG $RATE"
+  echo " | <fc=$CHARGECOL>Charging</fc> $MSG"
 elif [ "$STATUS" == "Full" ]; then
   echo " | <fc=$FULLCOL>Charged</fc>"
 else
@@ -37,5 +68,6 @@ else
   else
     COLOUR=$HIGHCOL
   fi
-  echo " | <fc=$COLOUR>$CAPACITY%</fc>"
+  MSG="$CAPACITY%"; [ -n "$RATE" ] && MSG="$MSG $RATE"
+  echo " | <fc=$COLOUR>$MSG</fc>"
 fi
