@@ -106,6 +106,8 @@ myKeys =
     , ((myModMask .|. shiftMask, xK_u), spawn "pactl set-sink-volume 0 +1%")
     , ((0, xF86XK_AudioPlay), spawn "playerctl play-pause")
     , ((0, xF86XK_AudioPause), spawn "playerctl pause")
+    , ((0, xF86XK_AudioNext), spawn "playerctl next")
+    , ((0, xF86XK_AudioPrev), spawn "playerctl previous")
     , ((myModMask .|. shiftMask, xK_bracketright), spawn "dunstctl close-all")
     ] ++ [
         ((myModMask .|. m, xK_f), f horizontalScreenOrderer 2)

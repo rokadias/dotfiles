@@ -48,7 +48,7 @@ linkDirectoriesInDotfilesToPath() {
 }
 export linkDirectoriesInDotfilesToPath
 
-echo $'\nLooking through home/xmonad/'
+echo $'\nLooking through home/scripts/'
 mkdir -p $HOME/scripts
 linkFilesInDotfilesToPath scripts $HOME/scripts/
 
@@ -66,6 +66,10 @@ linkDirectoriesInDotfilesToPath emacs/emacs.d $HOME/.emacs.d
 # Home dotfiles
 echo $'\nLooking through home/'
 linkFilesInDotfilesToPath home/ $HOME "."
+
+echo $'\nLooking through home/.config/xmobar/'
+mkdir -p $HOME/.config/xmobar
+linkDirectoriesInDotfilesToPath home/.config/xmobar $HOME/.config/xmobar
 
 echo $'\nLooking through etc/pacman and etc/systemd/system'
 if [[ $(whoami) == "root" ]]; then

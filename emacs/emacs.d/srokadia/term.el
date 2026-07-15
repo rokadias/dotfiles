@@ -32,5 +32,13 @@ If no PATH is given, it will use the default value of
       (process-send-string name (format (concat cd-str " exec zsh;clear\n")
                        path)))))
 
+(with-eval-after-load 'vterm
+  (add-hook 'vterm-mode-hook
+            (lambda ()
+              (define-key vterm-mode-map (kbd "S-<return>")
+                (lambda ()
+                  (interactive)
+                  (vterm-send-string "\e[13;2u"))))))
+
 (provide 'saqib-term)
 ;;; term.el ends here
