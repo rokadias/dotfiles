@@ -25,6 +25,20 @@ fi
 CAPACITY=$(cat "$BAT/capacity")
 STATUS=$(cat "$BAT/status") # "Charging", "Discharging", "Full", "Not charging"
 
+# Send a single desktop notification when charge drops to/below LOWTHRESH
+# while discharging. A state file dedupes repeat notifications across polls
+# (this script runs every few seconds) and resets once charging or above
+# threshold again, so the next drop below LOWTHRESH re-notifies.
+NOTIFY_STATE="${XDG_RUNTIME_DIR:-/tmp}/xmobar_battery_low_notified"
+if [ "$STATUS" == "Discharging" ] && [ "$CAPACITY" -le "$LOWTHRESH" ]; then
+  if [ ! -e "$NOTIFY_STATE" ] && command -v notify-send >/dev/null 2>&1; then
+    notify-send -u critical "Low battery" "${CAPACITY}% remaining"
+    touch "$NOTIFY_STATE"
+  fi
+else
+  rm -f "$NOTIFY_STATE"
+fi
+
 # Instantaneous power draw, in microwatts. Prefer power_now; some hardware
 # only exposes current_now/voltage_now, so derive it from those instead.
 if [ -r "$BAT/power_now" ]; then
@@ -64,9 +78,9 @@ fi
 
 if [ "$STATUS" == "Charging" ]; then
   MSG="$CAPACITY%"; [ -n "$RATE" ] && MSG="$MSG $RATE"
-  echo " | <fc=$CHARGECOL>Charging</fc> $MSG"
+  echo " | Batt: <fc=$CHARGECOL>Charging</fc> $MSG"
 elif [ "$STATUS" == "Full" ]; then
-  echo " | <fc=$FULLCOL>Charged</fc>"
+  echo " | Batt: <fc=$FULLCOL>Charged</fc>"
 else
   if [ "$CAPACITY" -le "$LOWTHRESH" ]; then
     COLOUR=$LOWCOL
@@ -76,5 +90,5 @@ else
     COLOUR=$HIGHCOL
   fi
   MSG="$CAPACITY%"; [ -n "$RATE" ] && MSG="$MSG $RATE"
-  echo " | <fc=$COLOUR>$MSG</fc>"
+  echo " | Batt: <fc=$COLOUR>$MSG</fc>"
 fi

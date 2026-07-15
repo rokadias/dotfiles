@@ -4,6 +4,9 @@
 # MPRIS-compatible media player, using playerctl) to STDOUT, formatted for xmobar.
 # If nothing is playing or paused, nothing will be written.
 # Note: playerctl errors are written to STDERR; xmobar only looks at STDOUT.
+# The trailing " | " separator is printed here (rather than in xmobarrc's
+# template) so it vanishes along with the value when nothing is playing,
+# instead of leaving a stray leading pipe.
 
 TCOL="cyan"         # The colour to be used to draw the song title when playing
 ACOL="lightblue"    # The colour to be used to draw the song artist when playing
@@ -14,7 +17,7 @@ ARTIST=$(playerctl metadata artist 2>/dev/null)
 TITLE=$(playerctl metadata title 2>/dev/null)
 
 if [ "$STATUS" == "Playing" ]; then
-  echo "<fc=$ACOL>$ARTIST</fc> - <fc=$TCOL>$TITLE</fc>"
+  echo "<fc=$ACOL>$ARTIST</fc> - <fc=$TCOL>$TITLE</fc> | "
 elif [ "$STATUS" == "Paused" ]; then
-  echo "<fc=$PCOL>$ARTIST - $TITLE</fc>"
+  echo "<fc=$PCOL>$ARTIST - $TITLE</fc> | "
 fi
