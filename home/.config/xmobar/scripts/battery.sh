@@ -34,10 +34,17 @@ elif [ -r "$BAT/current_now" ] && [ -r "$BAT/voltage_now" ]; then
 fi
 
 # Energy remaining until empty (discharging) or full (charging), in µWh.
+# Prefer energy_now/energy_full; some hardware (many ThinkPads included)
+# reports charge in µAh instead, which needs converting via voltage_now.
 if [ "$STATUS" == "Charging" ] && [ -r "$BAT/energy_now" ] && [ -r "$BAT/energy_full" ]; then
   REMAINING_UWH=$(( $(cat "$BAT/energy_full") - $(cat "$BAT/energy_now") ))
 elif [ "$STATUS" == "Discharging" ] && [ -r "$BAT/energy_now" ]; then
   REMAINING_UWH=$(cat "$BAT/energy_now")
+elif [ -r "$BAT/voltage_now" ] && [ "$STATUS" == "Charging" ] && [ -r "$BAT/charge_now" ] && [ -r "$BAT/charge_full" ]; then
+  REMAINING_UAH=$(( $(cat "$BAT/charge_full") - $(cat "$BAT/charge_now") ))
+  REMAINING_UWH=$(( REMAINING_UAH * $(cat "$BAT/voltage_now") / 1000000 ))
+elif [ -r "$BAT/voltage_now" ] && [ "$STATUS" == "Discharging" ] && [ -r "$BAT/charge_now" ]; then
+  REMAINING_UWH=$(( $(cat "$BAT/charge_now") * $(cat "$BAT/voltage_now") / 1000000 ))
 fi
 
 # "<watts>W (<timeleft>)", or empty if the kernel doesn't expose power/energy
