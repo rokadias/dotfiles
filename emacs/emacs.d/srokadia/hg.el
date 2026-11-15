@@ -1,4 +1,4 @@
-;; mercurial
+;; mercurial  -*- lexical-binding: t; -*-
 (require 'vc-hg)
 
 (defun hg-pull (&optional arg)

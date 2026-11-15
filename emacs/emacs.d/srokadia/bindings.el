@@ -1,4 +1,4 @@
-;;; delete everything up to a certain char
+;;; delete everything up to a certain char  -*- lexical-binding: t; -*-
 (global-set-key [(meta z)] 'back-zap-to-char)
 
 ;;; Comment and uncomment regions

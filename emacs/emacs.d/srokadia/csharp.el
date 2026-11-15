@@ -1,4 +1,4 @@
-;; c# mode
+;; c# mode  -*- lexical-binding: t; -*-
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
 (require 'csharp-mode)
 (setq auto-mode-alist (append '(("\\.csx$" . csharp-mode)) auto-mode-alist))

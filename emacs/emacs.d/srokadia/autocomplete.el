@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (use-package aider
   :config
   ;; For latest claude sonnet model

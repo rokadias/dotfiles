@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (setq racer-cmd "/usr/bin/racer")
 (setq racer-rust-src-path "~/OpenSource/rust/rust/src")
 

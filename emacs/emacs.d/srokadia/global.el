@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (setq is-w32 (string-equal system-type "windows-nt"))
 (setq is-cygwin (string-equal system-type "cygwin"))
 (setq is-mac (memq window-system '(mac ns)))

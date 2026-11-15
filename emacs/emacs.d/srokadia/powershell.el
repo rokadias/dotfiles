@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (when (package-installed-p 'powershell-mode)
   ;; powershell-mode
   (autoload 'powershell-mode "powershell-mode" "A editing mode for Microsoft Powershell." t)

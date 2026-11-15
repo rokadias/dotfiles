@@ -1,4 +1,4 @@
-;; ERC Stuff
+;; ERC Stuff  -*- lexical-binding: t; -*-
 (setq erc-timestamp-only-if-changed-flag nil
       erc-timestamp-format "%H:%M "
       erc-insert-timestamp-function 'erc-insert-timestamp-left

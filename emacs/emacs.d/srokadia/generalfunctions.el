@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (defun directory-parent (directory)
   (let ((parent (file-name-directory (directory-file-name directory))))
     (if (not (equal directory parent))

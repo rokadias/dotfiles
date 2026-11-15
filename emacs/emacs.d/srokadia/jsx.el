@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (setq jsx-indent-level 2)
 
 (define-innermode poly-jsx-html-innermode

@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require 'key-chord)
 (key-chord-mode 1)
 (key-chord-define-global "jk" 'find-file)

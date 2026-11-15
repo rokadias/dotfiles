@@ -1,4 +1,4 @@
-;;; python --- Saqib's terminal configuration.
+;;; python --- Saqib's terminal configuration.  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Sets general things that I like for working with terminals.
 ;;; Code:

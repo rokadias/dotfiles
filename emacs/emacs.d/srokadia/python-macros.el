@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (fset 'rename-named-args
    (kmacro-lambda-form [?\C-a ?\C-  ?\C-s ?: return ?\C-b ?\M-w ?\C-  ?\C-e ?\C-b ?\C-e backspace ?= ?\C-y ?, ?\C-n ?\C-a] 0 "%d"))
 

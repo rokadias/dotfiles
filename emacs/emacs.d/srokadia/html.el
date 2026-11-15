@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (setq auto-mode-alist (append '(("\\.aspx$" . html-mode)) auto-mode-alist))
 (setq auto-mode-alist (append '(("\\.ascx$" . html-mode)) auto-mode-alist))
 (setq auto-mode-alist (append '(("\\.html$" . html-mode)) auto-mode-alist))

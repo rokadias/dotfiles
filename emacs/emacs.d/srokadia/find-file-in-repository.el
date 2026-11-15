@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (when (package-installed-p 'find-file-in-repository)
   (require 'find-file-in-repository)
   (when is-w32

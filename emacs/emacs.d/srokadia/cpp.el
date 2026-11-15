@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (defun on-clang-load ()
   (set-bazel-compile-command)
   (clang-format-save-hook-for-this-buffer)

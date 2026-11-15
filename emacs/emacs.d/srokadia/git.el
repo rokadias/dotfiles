@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require 'vc)
 (defun vc-git-checkout-branch (retrieve-arg arg)
   (interactive "P\nsNew Branch Name: ")

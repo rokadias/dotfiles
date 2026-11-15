@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (setq theme-preferences '(gotham junio flatland twilight))
 
 (require 'cl)

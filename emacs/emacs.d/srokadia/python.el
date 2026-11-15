@@ -1,4 +1,4 @@
-;;; python --- Saqib's python configuration.
+;;; python --- Saqib's python configuration.  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Sets general things that I like.
 ;;; Code:

@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (when is-w32
   (setq explicit-shell-file-name "C:/cygwin/bin/bash.exe")
   (setq shell-file-name "C:/cygwin/bin/bash.exe")

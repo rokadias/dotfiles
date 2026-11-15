@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require 'package)
 (add-to-list 'package-archives
              '("gnu" . "http://elpa.gnu.org/packages/") t)

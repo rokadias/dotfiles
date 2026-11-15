@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (when (or is-w32 is-cygwin)
   (setq high-dpi nil)
 

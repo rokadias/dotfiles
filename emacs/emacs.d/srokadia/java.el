@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (defun on-java-load ()
   (eglot-java-mode)
   )

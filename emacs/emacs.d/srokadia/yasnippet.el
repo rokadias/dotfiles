@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (require 'yasnippet)
 (when (package-installed-p 'yasnippet)
 

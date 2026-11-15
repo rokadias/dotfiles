@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (defun c-set-style-stroustrup ()
   (c-set-style "java"))
 

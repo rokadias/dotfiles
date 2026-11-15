@@ -1,4 +1,4 @@
-;;; go --- Saqib's go configuration.
+;;; go --- Saqib's go configuration.  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Sets general things that I like.
 ;;; Code:

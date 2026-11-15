@@ -1,4 +1,4 @@
-;; all things javascript
+;; all things javascript  -*- lexical-binding: t; -*-
 ;; Use lexical-binding because it's awesome and will help
 ;; with closures to keep values when defined.
 (set (make-local-variable 'lexical-binding) t)
