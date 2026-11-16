@@ -1,4 +1,4 @@
-;;; company-go-autoloads.el --- automatically extracted autoloads
+;;; company-go-autoloads.el --- automatically extracted autoloads  -*- lexical-binding: t; -*-
 ;;
 ;;; Code:
 

@@ -1,4 +1,4 @@
-;;; company-racer-autoloads.el --- automatically extracted autoloads
+;;; company-racer-autoloads.el --- automatically extracted autoloads  -*- lexical-binding: t; -*-
 ;;
 ;;; Code:
 

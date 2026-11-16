@@ -1,4 +1,4 @@
-;;; dash-at-point-autoloads.el --- automatically extracted autoloads
+;;; dash-at-point-autoloads.el --- automatically extracted autoloads  -*- lexical-binding: t; -*-
 ;;
 ;;; Code:
 
